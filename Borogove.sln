@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Borogove", "Borogove\Borogove.csproj", "{FF3002AA-B2E5-4D27-B723-F92BDAA5A4B8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Borogove.Tests", "Borogove.Tests\Borogove.Tests.csproj", "{D29D40F9-8DCA-4A67-A81A-880C339739D2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Borogove.Model", "Borogove.Model\Borogove.Model.csproj", "{2EC212B3-126E-430B-909D-B251CA79E7C7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FF3002AA-B2E5-4D27-B723-F92BDAA5A4B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF3002AA-B2E5-4D27-B723-F92BDAA5A4B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF3002AA-B2E5-4D27-B723-F92BDAA5A4B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF3002AA-B2E5-4D27-B723-F92BDAA5A4B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D29D40F9-8DCA-4A67-A81A-880C339739D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D29D40F9-8DCA-4A67-A81A-880C339739D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D29D40F9-8DCA-4A67-A81A-880C339739D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D29D40F9-8DCA-4A67-A81A-880C339739D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2EC212B3-126E-430B-909D-B251CA79E7C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EC212B3-126E-430B-909D-B251CA79E7C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2EC212B3-126E-430B-909D-B251CA79E7C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2EC212B3-126E-430B-909D-B251CA79E7C7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
