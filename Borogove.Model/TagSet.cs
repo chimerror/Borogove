@@ -18,6 +18,9 @@ namespace Borogove.Model
         private static readonly char[] ImplicationSeparatorArray = new char[] { ImplicationSeparator };
         private static readonly char[] ListSeparatorArray = new char[] { ListSeparator };
 
+        private readonly Dictionary<string, Tag> _tagDictionary = new Dictionary<string, Tag>();
+        private readonly Dictionary<string, Tag> _implicationDictionary = new Dictionary<string, Tag>();
+
         public TagSet(string initialTagList) : this(SplitTagList(initialTagList))
         {
         }
@@ -68,7 +71,22 @@ namespace Borogove.Model
                     throw new ArgumentException($"Invalid alias specification supplied: Supplied string was: ${tagString}");
                 }
 
-                // TODO: Implement
+                string canonicalizedAliasName = splitAlias[0];
+                Tag aliasTag;
+                bool aliasExists = _tagDictionary.TryGetValue(canonicalizedAliasName, out aliasTag);
+                string canonicalizedResultTagName = splitAlias[1];
+                Tag resultTag;
+                bool resultTagExists = _tagDictionary.TryGetValue(canonicalizedResultTagName, out resultTag);
+
+                if (updateTagSet)
+                {
+                    if (aliasExists && resultTagExists)
+                    {
+                        if (aliasTag.Equals(resultTag))
+                        {
+                        }
+                    }
+                }
             }
             else if (hasImplication)
             {
