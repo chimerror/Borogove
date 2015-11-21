@@ -118,6 +118,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TagSetTests.cs" />
     <Compile Include="WorkMetadataYamlUnpackerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -128,6 +129,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Borogove.Model\Borogove.Model.csproj">
+      <Project>{2ec212b3-126e-430b-909d-b251ca79e7c7}</Project>
+      <Name>Borogove.Model</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Borogove\Borogove.csproj">
       <Project>{ff3002aa-b2e5-4d27-b723-f92bdaa5a4b8}</Project>
       <Name>Borogove</Name>
