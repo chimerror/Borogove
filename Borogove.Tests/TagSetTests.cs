@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NUnit.Framework;
 using Borogove.Model;
 
@@ -89,7 +86,9 @@ namespace Borogove.Tests
             var tagString = "Puma=Cougar, Panther = Cougar, Cougar = Catamount";
             var target = new TagSet(tagString);
             var expectedTagName = Tag.CanonicalizeTagName("Cougar");
-            var expectedAliasNames = new string[] { "Puma", "panther", "Catamount" }.Select(a => Tag.CanonicalizeTagName(a)).ToList();
+            var expectedAliasNames = new string[] { "Puma", "panther", "Catamount" }
+                .Select(a => Tag.CanonicalizeTagName(a))
+                .ToList();
 
             var resultTag = target.ResolveTag("cougar");
             Assert.That(resultTag, Is.Not.Null);
@@ -173,7 +172,8 @@ namespace Borogove.Tests
 
             var firstImplications = firstResult.Implications.Select(i => i.Name).ToList();
             Assert.That(firstImplications, Has.Count.EqualTo(2));
-            var expectedFirstImplications = new List<string>() { expectedFirstImplicationName, expectedSecondImplicationName };
+            var expectedFirstImplications =
+                new List<string>() { expectedFirstImplicationName, expectedSecondImplicationName };
             Assert.That(firstImplications, Is.EquivalentTo(expectedFirstImplications));
 
             var secondResult = target.ResolveTag("Feline");
@@ -185,7 +185,8 @@ namespace Borogove.Tests
 
             var secondImplications = secondResult.Implications.Select(i => i.Name).ToList();
             Assert.That(secondImplications, Has.Count.EqualTo(2));
-            var expectedSecondImplications = new List<string>() { expectedFirstImplicationName, expectedSecondImplicationName };
+            var expectedSecondImplications =
+                new List<string>() { expectedFirstImplicationName, expectedSecondImplicationName };
             Assert.That(secondImplications, Is.EquivalentTo(expectedSecondImplications));
         }
 
@@ -196,7 +197,8 @@ namespace Borogove.Tests
             var expectedFirstTagName = Tag.CanonicalizeTagName("foo");
             var expectedSecondTagName = Tag.CanonicalizeTagName("bar");
             var expectedThirdTagName = Tag.CanonicalizeTagName("baz");
-            var expectedTagNames = new List<string>() { expectedFirstTagName, expectedSecondTagName, expectedThirdTagName };
+            var expectedTagNames =
+                new List<string>() { expectedFirstTagName, expectedSecondTagName, expectedThirdTagName };
             var target = new TagSet(tagString);
 
             foreach (string expectedTagName in expectedTagNames)
@@ -209,7 +211,8 @@ namespace Borogove.Tests
                 Assert.That(actualTagAliases, Is.Empty);
 
                 var actualTagImplications = actualTag.Implications.ToList();
-                Assert.That(actualTagImplications.Select(t => t.Name), Is.EquivalentTo(expectedTagNames.Where(tn => !tn.Equals(expectedTagName))));
+                Assert.That(actualTagImplications.Select(t => t.Name),
+                    Is.EquivalentTo(expectedTagNames.Where(tn => !tn.Equals(expectedTagName))));
             }
         }
 
@@ -304,7 +307,8 @@ namespace Borogove.Tests
             var expectedAlias = Tag.CanonicalizeTagName("mountain lion");
             var expectedImplicationTagName = Tag.CanonicalizeTagName("feline");
             var expectedOtherTagName = Tag.CanonicalizeTagName("canine");
-            var expectedResultTagNames = new List<string>() { expectedRootTagName, expectedOtherTagName, expectedImplicationTagName };
+            var expectedResultTagNames =
+                new List<string>() { expectedRootTagName, expectedOtherTagName, expectedImplicationTagName };
             var target = new TagSet();
 
             var result = target.ResolveTagList(tagString, true, true).ToList();

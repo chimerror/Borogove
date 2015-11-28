@@ -206,7 +206,10 @@ namespace Borogove.Model
 
             var tagName = tag.Name;
             var rootTag = _tagDictionary[tagName];
-            return _tagDictionary.Where(kvp => kvp.Value == rootTag && kvp.Key != tagName).Select(kvp => kvp.Key).Distinct();
+            return _tagDictionary
+                .Where(kvp => kvp.Value == rootTag && kvp.Key != tagName)
+                .Select(kvp => kvp.Key)
+                .Distinct();
 
         }
 
