@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Wyam.Common;
 using Wyam.Core.Modules;
 using Wyam.Modules.Yaml;
 using YamlDotNet.RepresentationModel;
 using YamlDotNet.Dynamic;
-using System.Diagnostics;
-using Model = Borogove.Model;
 using static Borogove.WorkMetadataCanonicalNames;
 using System.Globalization;
 

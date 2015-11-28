@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NUnit.Framework;
 using NSubstitute;
 using Wyam.Common;
-using Wyam.Core.Modules;
-using NSubstitute.Core;
-using YamlDotNet.Dynamic;
 
 namespace Borogove.Tests
 {
