@@ -108,7 +108,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="WorkMetadataCanonicalNames.cs" />
-    <Compile Include="WorkMetadataYamlUnpacker.cs" />
+    <Compile Include="WorkMetadataUnpacker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

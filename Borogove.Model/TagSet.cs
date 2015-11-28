@@ -40,7 +40,21 @@ namespace Borogove.Model
 
         public IEnumerable<Tag> ResolveTagList(string tagList, bool updateTagSet = false, bool resolveImplications = true)
         {
-            var result = SplitTagList(tagList)?.Select(ts => ResolveTag(ts, updateTagSet)).Distinct();
+            if (string.IsNullOrEmpty(tagList))
+            {
+                throw new ArgumentNullException(nameof(tagList));
+            }
+
+            var splitTags = SplitTagList(tagList);
+
+            // If we want to update the tag list, force enumeration now.
+            if (updateTagSet)
+            {
+                splitTags.Select(ts => ResolveTag(ts, true)).ToList();
+            }
+
+            // The result is *not* enumerated yet, so the user can enumerate it later and possibly get future changes.
+            var result = splitTags.Select(ts => ResolveTag(ts, false)).Distinct();
             if (resolveImplications)
             {
                 result = result.Concat(result.SelectMany(t => t.Implications)).Distinct();

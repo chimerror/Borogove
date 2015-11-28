@@ -15,27 +15,29 @@ using System.Globalization;
 
 namespace Borogove
 {
-    public class WorkMetadataYamlUnpacker : IModule
+    public class WorkMetadataUnpacker : IModule
     {
         public const string DefaultKeyName = "Borogove";
+        public const string TagSetKeySuffix = "TagSet";
 
         private readonly string _key;
         private readonly bool _flatten;
         private readonly IModule[] _modules;
+        private Model.TagSet _defaultTagSet = null;
 
-        public WorkMetadataYamlUnpacker() : this(DefaultKeyName, false)
+        public WorkMetadataUnpacker() : this(DefaultKeyName, false)
         {
         }
 
-        public WorkMetadataYamlUnpacker(string key) : this(key, false)
+        public WorkMetadataUnpacker(string key) : this(key, false)
         {
         }
 
-        public WorkMetadataYamlUnpacker(bool flatten) : this(DefaultKeyName, flatten)
+        public WorkMetadataUnpacker(bool flatten) : this(DefaultKeyName, flatten)
         {
         }
 
-        public WorkMetadataYamlUnpacker(string key, bool flatten, params IModule[] modules)
+        public WorkMetadataUnpacker(string key, bool flatten, params IModule[] modules)
         {
             if (string.IsNullOrEmpty(key))
             {
@@ -49,8 +51,6 @@ namespace Borogove
 
             _key = key;
             _flatten = flatten;
-            var test2 = new FrontMatter(new Yaml(_key, _flatten));
-            var test = new IModule[] { test2, };
             _modules = modules.Length == 0 ? new IModule[] { new FrontMatter(new Yaml(_key, _flatten)), } : modules;
         }
 
@@ -67,6 +67,7 @@ namespace Borogove
             }
 
             var processedDocuments = context.Execute(_modules, inputs);
+            var tagSetKey = _key + TagSetKeySuffix;
             foreach (IDocument document in processedDocuments)
             {
                 Dictionary<string, object> processedMetadata = document.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
@@ -77,6 +78,24 @@ namespace Borogove
                     continue;
                 }
 
+                if (_defaultTagSet == null)
+                {
+                    if (processedMetadata.ContainsKey(tagSetKey))
+                    {
+                        _defaultTagSet = (Model.TagSet)processedMetadata[tagSetKey];
+                    }
+                    else
+                    {
+                        _defaultTagSet = new Model.TagSet();
+                    }
+                }
+
+                if (!processedMetadata.ContainsKey(tagSetKey))
+                {
+                    processedMetadata[tagSetKey] = _defaultTagSet;
+                }
+
+                var currentTagSet = (Model.TagSet)processedMetadata[tagSetKey];
                 Dictionary<string, object> borogroveDictionary = borogroveObject;
                 foreach (KeyValuePair<string, object> keyValuePair in borogroveDictionary)
                 {
@@ -150,6 +169,10 @@ namespace Borogove
 
                         case ContentDescriptors:
                             processedMetadata.Add(ContentDescriptors, Model.ContentDescriptorUtilities.ParseContentDescriptor(stringValue));
+                            continue;
+
+                        case Tags:
+                            processedMetadata.Add(Tags, currentTagSet.ResolveTagList(stringValue, true, true));
                             continue;
 
                         default:

@@ -13,7 +13,7 @@ using YamlDotNet.Dynamic;
 namespace Borogove.Tests
 {
     [TestFixture]
-    public class WorkMetadataYamlUnpackerTests
+    public class WorkMetadataUnpackerTests
     {
         [Test]
         public void DefaultConstructorWorks()
@@ -111,7 +111,7 @@ Doesn't _exist_ yet. :p";
                         return module.Execute(inputs.ToList(), executionContextMock).ToList();
                     });
 
-            var target = new WorkMetadataYamlUnpacker();
+            var target = new WorkMetadataUnpacker();
             var result = target.Execute(inputDocuments, executionContextMock).ToList();
 
             Assert.That(resultMetadata, Is.Not.Null);
@@ -119,7 +119,7 @@ Doesn't _exist_ yet. :p";
 
             Assert.That(finalMetadata, Is.Not.Null);
 
-            dynamic resultBorogoveObject = resultMetadata[WorkMetadataYamlUnpacker.DefaultKeyName];
+            dynamic resultBorogoveObject = resultMetadata[WorkMetadataUnpacker.DefaultKeyName];
             Assert.NotNull(resultBorogoveObject);
         }
     }
