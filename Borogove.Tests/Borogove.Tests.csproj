@@ -42,11 +42,12 @@
       <HintPath>..\packages\Microsoft.Web.Xdt.2.1.1\lib\net40\Microsoft.Web.XmlTransform.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="NSubstitute">
-      <HintPath>..\packages\NSubstitute.1.8.2.0\lib\net45\NSubstitute.dll</HintPath>
+    <Reference Include="NSubstitute, Version=1.9.2.0, Culture=neutral, PublicKeyToken=92dd2e9066daa5ca, processorArchitecture=MSIL">
+      <HintPath>..\packages\NSubstitute.1.9.2.0\lib\net45\NSubstitute.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="NuGet.Core, Version=2.8.60717.93, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\NuGet.Core.2.8.6\lib\net40-Client\NuGet.Core.dll</HintPath>
+    <Reference Include="NuGet.Core, Version=2.9.0.729, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\NuGet.Core.2.9.0\lib\net40-Client\NuGet.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="NuGet.Frameworks, Version=3.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -73,8 +74,9 @@
       <HintPath>..\packages\NuGet.Versioning.3.2.0\lib\net45\NuGet.Versioning.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="nunit.framework">
-      <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
+    <Reference Include="nunit.framework, Version=3.0.5797.27534, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUnit.3.0.0\lib\net45\nunit.framework.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Collections.Immutable, Version=1.1.37.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -83,8 +85,8 @@
     </Reference>
     <Reference Include="System.Core" />
     <Reference Include="System.IO.Compression" />
-    <Reference Include="System.Reflection.Metadata, Version=1.0.22.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Reflection.Metadata.1.0.22\lib\dotnet\System.Reflection.Metadata.dll</HintPath>
+    <Reference Include="System.Reflection.Metadata, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Reflection.Metadata.1.1.0\lib\dotnet5.2\System.Reflection.Metadata.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Xml.Linq" />

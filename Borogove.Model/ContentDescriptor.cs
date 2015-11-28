@@ -121,9 +121,10 @@ namespace Borogove.Model
             foreach (string entry in splitInput)
             {
                 ContentDescriptor parsedContentDescriptor = ContentDescriptor.None;
-                if (_friendlyNameToDescriptorDictionary.ContainsKey(entry.ToLowerInvariant()))
+                var entryLower = entry.ToLowerInvariant();
+                if (_friendlyNameToDescriptorDictionary.ContainsKey(entryLower))
                 {
-                    result |= _friendlyNameToDescriptorDictionary[entry];
+                    result |= _friendlyNameToDescriptorDictionary[entryLower];
                 }
                 else if (Enum.TryParse(entry, true, out parsedContentDescriptor))
                 {
