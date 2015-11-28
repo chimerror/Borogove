@@ -217,6 +217,37 @@ namespace Borogove.Tests
         }
 
         [Test]
+        public void CanAddAndResolveTagWithMultipleImplications()
+        {
+            var tagString = "gryphon > hybrid, gryphon > lion, gryphon > eagle";
+            var expectedRootTagName = Tag.CanonicalizeTagName("gryphon");
+            var expectedImplications = new List<string>() { "hybrid", "lion", "eagle" }
+                .Select(tn => Tag.CanonicalizeTagName(tn))
+                .ToList();
+            var target = new TagSet(tagString);
+
+            var rootTag = target.ResolveTag("Gryphon");
+            Assert.That(rootTag, Is.Not.Null);
+            Assert.That(rootTag.Name, Is.EqualTo(expectedRootTagName));
+
+            var rootTagAliases = rootTag.Aliases.ToList();
+            Assert.That(rootTagAliases, Is.Empty);
+
+            var rootTagImplications = rootTag.Implications.ToList();
+            Assert.That(rootTagImplications, Has.Count.EqualTo(3));
+            Assert.That(rootTagImplications.Select(t => t.Name), Is.EquivalentTo(expectedImplications));
+
+            foreach (var implication in rootTagImplications)
+            {
+                var implicationAliases = implication.Aliases.ToList();
+                Assert.That(implicationAliases, Is.Empty);
+
+                var implicationImplications = implication.Implications.ToList();
+                Assert.That(implicationImplications, Is.Empty);
+            }
+        }
+
+        [Test]
         public void CanAddAndResolveMixedSpecifications()
         {
             var tagString = "Puma, Mountain Lion = Puma, Puma > Feline, Canine";
@@ -256,6 +287,86 @@ namespace Borogove.Tests
 
             var otherImplications = otherTag.Implications.ToList();
             Assert.That(otherImplications, Is.Empty);
+        }
+
+        [Test]
+        public void CanMakeUpdatesToTagSet()
+        {
+            var tagString1 = "lion, tiger, bear";
+            var target = new TagSet(tagString1);
+
+            var firstExpectedTagNames = new List<string>() { "lion", "tiger", "bear", }
+                .Select(Tag.CanonicalizeTagName);
+            var firstActualTagNames = target.Select(t => t.Name);
+            Assert.That(firstActualTagNames, Is.EquivalentTo(firstExpectedTagNames));
+
+            var tagString2 = "tiger, lion, leopard";
+            target.ResolveTagList(tagString2, true, false);
+
+            var secondExpectedTagNames = new List<string>() { "lion", "tiger", "bear", "leopard" }
+                .Select(Tag.CanonicalizeTagName);
+            var secondActualTagNames = target.Select(t => t.Name);
+            Assert.That(secondActualTagNames, Is.EquivalentTo(secondExpectedTagNames));
+        }
+
+        [Test]
+        public void AliasUpdatesAreReflectedInPreviousTags()
+        {
+            var target = new TagSet();
+            var firstTagString = "puma";
+            var expectedCanonicalTagName = Tag.CanonicalizeTagName("puma");
+
+            var firstTag = target.ResolveTag(firstTagString, true);
+            Assert.That(firstTag, Is.Not.Null);
+            Assert.That(firstTag.Name, Is.EqualTo(expectedCanonicalTagName));
+
+            var firstAliasesBeforeUpdate = firstTag.Aliases.ToList();
+            Assert.That(firstAliasesBeforeUpdate, Is.Empty);
+
+            var expectedAliasTagName = Tag.CanonicalizeTagName("mountain lion");
+            var secondTag = target.ResolveTag("mountain lion = puma", true);
+            Assert.That(secondTag, Is.Not.Null);
+            Assert.That(secondTag.Name, Is.EqualTo(expectedCanonicalTagName));
+
+            var secondAliases = secondTag.Aliases.ToList();
+            Assert.That(secondAliases, Has.Count.EqualTo(1));
+            Assert.That(secondAliases.First(), Is.EqualTo(expectedAliasTagName));
+
+            var firstAliasesAfterUpdate = firstTag.Aliases.ToList();
+            Assert.That(firstAliasesAfterUpdate, Has.Count.EqualTo(1));
+            Assert.That(firstAliasesAfterUpdate.First(), Is.EqualTo(expectedAliasTagName));
+        }
+
+        [Test]
+        public void ImplicationUpdatesAreReflectedInPreviousTags()
+        {
+            var target = new TagSet();
+            var firstTagString = "puma";
+            var expectedCanonicalTagName = Tag.CanonicalizeTagName("puma");
+
+            var firstTag = target.ResolveTag(firstTagString, true);
+            Assert.That(firstTag, Is.Not.Null);
+            Assert.That(firstTag.Name, Is.EqualTo(expectedCanonicalTagName));
+
+            var firstImplicationsBeforeUpdate = firstTag.Implications.ToList();
+            Assert.That(firstImplicationsBeforeUpdate, Is.Empty);
+
+            var expectedImplicationTagName = Tag.CanonicalizeTagName("feline");
+            var secondTag = target.ResolveTag("puma > feline", true);
+            Assert.That(secondTag, Is.Not.Null);
+            Assert.That(secondTag.Name, Is.EqualTo(expectedCanonicalTagName));
+
+            var secondImplications = secondTag.Implications.ToList();
+            Assert.That(secondImplications, Has.Count.EqualTo(1));
+
+            var secondImplicationTag = secondImplications.First();
+            Assert.That(secondImplicationTag.Name, Is.EqualTo(expectedImplicationTagName));
+
+            var firstImplicationsAfterUpdate = firstTag.Implications.ToList();
+            Assert.That(firstImplicationsAfterUpdate, Has.Count.EqualTo(1));
+
+            var firstImplicationTag = firstImplicationsAfterUpdate.First();
+            Assert.That(firstImplicationTag.Name, Is.EqualTo(expectedImplicationTagName));
         }
 
         [Test]
