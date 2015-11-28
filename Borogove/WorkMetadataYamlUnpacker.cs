@@ -11,30 +11,33 @@ using System.Globalization;
 
 namespace Borogove
 {
-    public class WorkMetadataUnpacker : IModule
+    public class WorkMetadataYamlUnpacker : IModule
     {
         public const string DefaultKeyName = "Borogove";
         public const string TagSetKeySuffix = "TagSet";
         public const string DefaultTagSetKey = DefaultKeyName + TagSetKeySuffix;
+        public const char ListSeparator = ',';
+
+        private static readonly char[] _listSeparatorArray = new char[] { ListSeparator };
 
         private readonly string _key;
         private readonly bool _flatten;
         private readonly IModule[] _modules;
         private Model.TagSet _defaultTagSet = null;
 
-        public WorkMetadataUnpacker() : this(DefaultKeyName, false)
+        public WorkMetadataYamlUnpacker() : this(DefaultKeyName, false)
         {
         }
 
-        public WorkMetadataUnpacker(string key) : this(key, false)
+        public WorkMetadataYamlUnpacker(string key) : this(key, false)
         {
         }
 
-        public WorkMetadataUnpacker(bool flatten) : this(DefaultKeyName, flatten)
+        public WorkMetadataYamlUnpacker(bool flatten) : this(DefaultKeyName, flatten)
         {
         }
 
-        public WorkMetadataUnpacker(string key, bool flatten, params IModule[] modules)
+        public WorkMetadataYamlUnpacker(string key, bool flatten, params IModule[] modules)
         {
             if (string.IsNullOrEmpty(key))
             {
@@ -103,12 +106,19 @@ namespace Borogove
                     {
                         case Identifier:
                         case Parent:
-                        case Previous:
-                        case Next:
                         case DraftOf:
                         case ArtifactOf:
                         case CommentsOn:
                             processedMetadata.Add(canonicalizedKey, Guid.Parse(stringValue));
+                            continue;
+
+                        case Previous:
+                        case Next:
+                            processedMetadata.Add(canonicalizedKey,
+                                stringValue
+                                    .Split(_listSeparatorArray, StringSplitOptions.RemoveEmptyEntries)
+                                    .Select(w => Guid.Parse(w))
+                                    .ToList());
                             continue;
 
                         case Title:

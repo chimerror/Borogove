@@ -121,7 +121,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="TagSetTests.cs" />
-    <Compile Include="WorkMetadataUnpackerTests.cs" />
+    <Compile Include="WorkMetadataYamlUnpackerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

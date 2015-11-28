@@ -7,7 +7,7 @@ using Wyam.Common;
 namespace Borogove.Tests
 {
     [TestFixture]
-    public class WorkMetadataUnpackerTests
+    public class WorkMetadataYamlUnpackerTests
     {
         [Test]
         public void DefaultConstructorWorks()
@@ -29,7 +29,7 @@ Content Rating: T12
 Content Descriptors: Alcohol Reference, Crude Humor, Drug Reference, Partial Nudity, Cartoon Violence, Suggestive Themes
 Tags: transformation, cartoon, furry, coyote, rabbit, magic, fantasy, satire, male, female, mind shift, reality shift
 Parent: 47983827-2601-46c3-aee9-4f9a198d5d19
-Previous: bc243614-e943-4e7d-a3b2-574a928adb06
+Previous: bc243614-e943-4e7d-a3b2-574a928adb06, b6f5e79e-94a4-4e4b-9b85-de30316f7034
 Next: 51cd27cc-79ab-403f-8866-2aabb19a17dd
 Draft of: c01b57d8-cca0-4dd3-ab0c-99acbd8e3343
 Draft identifier: 1.3
@@ -105,7 +105,7 @@ Doesn't _exist_ yet. :p";
                         return module.Execute(inputs.ToList(), executionContextMock).ToList();
                     });
 
-            var target = new WorkMetadataUnpacker();
+            var target = new WorkMetadataYamlUnpacker();
             var result = target.Execute(inputDocuments, executionContextMock).ToList();
 
             Assert.That(resultMetadata, Is.Not.Null);
@@ -113,7 +113,7 @@ Doesn't _exist_ yet. :p";
 
             Assert.That(finalMetadata, Is.Not.Null);
 
-            dynamic resultBorogoveObject = resultMetadata[WorkMetadataUnpacker.DefaultKeyName];
+            dynamic resultBorogoveObject = resultMetadata[WorkMetadataYamlUnpacker.DefaultKeyName];
             Assert.NotNull(resultBorogoveObject);
         }
     }
