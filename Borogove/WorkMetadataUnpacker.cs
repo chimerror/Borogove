@@ -15,6 +15,7 @@ namespace Borogove
     {
         public const string DefaultKeyName = "Borogove";
         public const string TagSetKeySuffix = "TagSet";
+        public const string DefaultTagSetKey = DefaultKeyName + TagSetKeySuffix;
 
         private readonly string _key;
         private readonly bool _flatten;
