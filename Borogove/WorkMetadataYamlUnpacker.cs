@@ -137,6 +137,10 @@ namespace Borogove
                                     Text = (string)creator["text"],
                                     FileAs = (string)creator["file-as"],
                                 };
+                                if (string.IsNullOrWhiteSpace(creatorObject.Text))
+                                {
+                                    creatorObject.Text = "Anonymous";
+                                }
                                 creators.Add(creatorObject);
                             }
                             processedMetadata.Add(Creator, creators);

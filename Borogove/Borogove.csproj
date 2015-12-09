@@ -116,6 +116,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ListExtensions.cs" />
     <Compile Include="WorkMetadataCanonicalNames.cs" />
     <Compile Include="WorkMetadataPersister.cs" />
     <Compile Include="WorkMetadataYamlUnpacker.cs" />

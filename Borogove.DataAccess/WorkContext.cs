@@ -6,5 +6,10 @@ namespace Borogove.DataAccess
     public class WorkContext : DbContext
     {
         public DbSet<Work> Works { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }
