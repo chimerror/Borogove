@@ -5,12 +5,12 @@ using System.Text.RegularExpressions;
 
 namespace Borogove.Model
 {
-    public sealed class Tag : IEquatable<Tag>
+    public class Tag : IEquatable<Tag>
     {
         public const char WhitespaceReplacement = '_';
         public static readonly Regex WhitespaceRegex = new Regex(@"[\s_]+");
 
-        internal Tag(string name)
+        protected internal Tag(string name)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
@@ -21,8 +21,8 @@ namespace Borogove.Model
         }
 
         public string Name { get; }
-        public IEnumerable<string> Aliases { get; internal set; }
-        public IEnumerable<Tag> Implications { get; internal set; }
+        public IEnumerable<string> Aliases { get; protected internal set; }
+        public IEnumerable<Tag> Implications { get; protected internal set; }
 
         public static string CanonicalizeTagName(string tagName)
         {

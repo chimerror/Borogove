@@ -9,72 +9,106 @@ namespace Borogove.Model
     {
         /// <summary>Abridger</summary>
         abr,
+        Abridger = abr,
         /// <summary>Art copyist</summary>
         acp,
+        ArtCopyist = acp,
         /// <summary>Actor</summary>
         act,
+        Actor = act,
         /// <summary>Art director</summary>
         adi,
+        ArtDirector = adi,
         /// <summary>Adapter</summary>
         adp,
+        Adapter = adp,
         /// <summary>Author of afterword, colophon, etc.</summary>
         aft,
+        AfterwordAuthor = aft,
         /// <summary>Analyst</summary>
         anl,
+        Analyst = anl,
         /// <summary>Animator</summary>
         anm,
+        Animator = anm,
         /// <summary>Annotator</summary>
         ann,
+        Annotator = ann,
         /// <summary>Bibliographic antecedent</summary>
         ant,
+        BibliographicAntecedent = ant,
         /// <summary>Appellee</summary>
         ape,
+        Appellee = ape,
         /// <summary>Appellant</summary>
         apl,
+        Appellant = apl,
         /// <summary>Applicant</summary>
         app,
+        Applicant = app,
         /// <summary>Author in quotations or text abstracts</summary>
         aqt,
+        QuotationAuthor = aqt,
         /// <summary>Architect</summary>
         arc,
+        Architect = arc,
         /// <summary>Artistic director</summary>
         ard,
+        ArtisticDirector = ard,
         /// <summary>Arranger</summary>
         arr,
+        Arranger = arr,
         /// <summary>Artist</summary>
         art,
+        Artist = art,
         /// <summary>Assignee</summary>
         asg,
+        Assignee = asg,
         /// <summary>Associated name</summary>
         asn,
+        AssociatedName = asn,
         /// <summary>Autographer</summary>
         ato,
+        Autographer = ato,
         /// <summary>Attributed name</summary>
         att,
+        AttributedName = att,
         /// <summary>Auctioneer</summary>
         auc,
+        Auctioneer = auc,
         /// <summary>Author of dialog</summary>
         aud,
+        DialogAuthor = aud,
         /// <summary>Author of introduction, etc.</summary>
         aui,
+        IntroductionAuthor = aui,
         /// <summary>Screenwriter</summary>
         aus,
+        Screenwriter = aus,
         /// <summary>Author</summary>
         aut,
+        Author = aut,
         /// <summary>Binding designer</summary>
         bdd,
+        BindingDesigner = bdd,
         /// <summary>Bookjacket designer</summary>
         bjd,
+        BookjacketDesigner = bjd,
         /// <summary>Book designer</summary>
         bkd,
+        BookDesigner = bkd,
         /// <summary>Book producer</summary>
         bkp,
+        BookProducer = bkp,
         /// <summary>Blurb writer</summary>
         blw,
+        BlurbWriter = blw,
         /// <summary>Binder</summary>
         bnd,
+        Binder = bnd,
         /// <summary>Bookplate designer</summary>
         bpd,
+        BookplateDesigner = bpd,
         /// <summary>Broadcaster</summary>
         brd,
         /// <summary>Braille embosser</summary>
