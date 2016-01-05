@@ -15,7 +15,7 @@ namespace Borogove.Model
         public DateTime PublishedDate { get; set; }
         public string Rights { get; set; }
         public License License { get; set; }
-        public CultureInfo Language { get; set; }
+        public virtual CultureInfo Language { get; set; }
         public WorkType WorkType { get; set; }
         public ContentRating ContentRating { get; set; }
         public ContentDescriptor ContentDescriptor { get; set; }

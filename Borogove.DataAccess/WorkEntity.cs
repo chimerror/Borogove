@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Borogove.Model;
 
@@ -6,6 +7,12 @@ namespace Borogove.DataAccess
 {
     public class WorkEntity : Work
     {
+        private LanguageEntity _languageEntity;
+
+        public WorkEntity()
+        {
+        }
+
         public WorkEntity(Work work)
         {
             Identifier = work.Identifier;
@@ -36,7 +43,32 @@ namespace Borogove.DataAccess
             Comments = work.Comments;
         }
 
-        public LanguageEntity LanguageEntity => Language == null ? null : new LanguageEntity(Language);
+        public override CultureInfo Language
+        {
+            get
+            {
+                return _languageEntity;
+            }
+
+            set
+            {
+                _languageEntity = value;
+            }
+        }
+
+        public LanguageEntity LanguageEntity
+        {
+            get
+            {
+                return _languageEntity;
+            }
+
+            set
+            {
+                _languageEntity = value;
+            }
+        }
+
         public IEnumerable<TagEntity> TagEntities => Tags?.Select(t => new TagEntity(t));
         public IEnumerable<WorkCreatorEntity> WorkCreatorEntities => this.GetWorkCreatorEntities();
     }
