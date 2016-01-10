@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Borogove.Model;
 
 namespace Borogove.DataAccess
@@ -7,29 +9,56 @@ namespace Borogove.DataAccess
     {
         public const string AnonymousName = "Anonymous";
 
+        private string _name;
+
         public CreatorInfoEntity()
         {
             Name = AnonymousName;
+            Aliases = new List<AliasEntity>();
+        }
+
+        public CreatorInfoEntity(string name, params string[] aliases)
+        {
+            Name = string.IsNullOrEmpty(name) ? AnonymousName : name;
+            Aliases = aliases.Select(a => new AliasEntity(a, Name)).ToList();
         }
 
         public CreatorInfoEntity(Creator creator)
         {
-            bool textIsEmpty = string.IsNullOrEmpty(creator.Text);
+            if (creator == null)
+            {
+                throw new ArgumentNullException(nameof(creator));
+            }
+
+            Aliases = new List<AliasEntity>();
+
+            bool textExists = string.IsNullOrEmpty(creator.Text);
             if (string.IsNullOrEmpty(creator.FileAs))
             {
-                Name = textIsEmpty ? AnonymousName : creator.Text;
+                Name = textExists ? creator.Text : AnonymousName;
             }
             else
             {
                 Name = creator.FileAs;
-                if (!textIsEmpty)
+                if (textExists)
                 {
-                    Aliases = new List<string>() { creator.Text };
+                    Aliases.Add(new AliasEntity(creator.Text, Name));
                 }
             }
         }
 
-        public string Name { get; set; }
-        public IEnumerable<string> Aliases { get; set; }
+        public string Name
+        {
+            get
+            {
+                return _name;
+            }
+
+            set
+            {
+                _name = string.IsNullOrEmpty(value) ? AnonymousName : value;
+            }
+        }
+        public List<AliasEntity> Aliases { get; set; }
     }
 }

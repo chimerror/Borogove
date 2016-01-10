@@ -70,6 +70,5 @@ namespace Borogove.DataAccess
         }
 
         public IEnumerable<TagEntity> TagEntities => Tags?.Select(t => new TagEntity(t));
-        public IEnumerable<WorkCreatorEntity> WorkCreatorEntities => this.GetWorkCreatorEntities();
     }
 }
