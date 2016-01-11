@@ -12,6 +12,7 @@ namespace Borogove.DataAccess
         public DbSet<LanguageEntity> Languages { get; set; }
         public DbSet<CreatorInfoEntity> Creators { get; set; }
         public DbSet<WorkCreatorEntity> WorkCreators { get; set; }
+        public DbSet<TagEntity> Tags { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -75,6 +76,28 @@ namespace Borogove.DataAccess
             workCreatorEntityModel
                 .HasRequired(wce => wce.Creator)
                 .WithMany();
+
+            var tagAliasEntityModel = modelBuilder.Entity<TagAliasEntity>()
+                .HasKey(ta => ta.Alias)
+                .ToTable("TagAliases");
+
+            var tagEntityModel = modelBuilder.Entity<TagEntity>()
+                .HasKey(t => t.TagName)
+                .ToTable("Tags");
+            tagEntityModel
+                .HasMany(t => t.Aliases)
+                .WithRequired()
+                .HasForeignKey(ta => ta.TagName)
+                .WillCascadeOnDelete(true);
+            tagEntityModel
+                .HasMany(t => t.Implications)
+                .WithMany()
+                .Map(m =>
+                {
+                    m.MapLeftKey("Tag");
+                    m.MapRightKey("Implication");
+                    m.ToTable("TagImplications");
+                });
         }
     }
 }

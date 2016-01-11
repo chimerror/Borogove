@@ -54,6 +54,7 @@
     <Compile Include="CreatorInfoEntity.cs" />
     <Compile Include="DbSetExtensions.cs" />
     <Compile Include="LanguageEntity.cs" />
+    <Compile Include="TagAliasEntity.cs" />
     <Compile Include="TagEntity.cs" />
     <Compile Include="WorkContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

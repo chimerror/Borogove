@@ -68,7 +68,5 @@ namespace Borogove.DataAccess
                 _languageEntity = value;
             }
         }
-
-        public IEnumerable<TagEntity> TagEntities => Tags?.Select(t => new TagEntity(t));
     }
 }
