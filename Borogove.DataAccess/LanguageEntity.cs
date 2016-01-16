@@ -40,12 +40,12 @@ namespace Borogove.DataAccess
             }
         }
 
-        public static implicit operator LanguageEntity(CultureInfo cultureInfo)
+        public static explicit operator LanguageEntity(CultureInfo cultureInfo)
         {
             return cultureInfo == null ? null : new LanguageEntity(cultureInfo);
         }
 
-        public static implicit operator CultureInfo(LanguageEntity languageEntity)
+        public static explicit operator CultureInfo(LanguageEntity languageEntity)
         {
             return languageEntity == null ? null : CultureInfo.GetCultureInfo(languageEntity.Name);
         }

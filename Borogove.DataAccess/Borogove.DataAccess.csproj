@@ -50,7 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AliasEntity.cs" />
+    <Compile Include="CreatorAliasEntity.cs" />
     <Compile Include="CreatorInfoEntity.cs" />
     <Compile Include="DbSetExtensions.cs" />
     <Compile Include="LanguageEntity.cs" />

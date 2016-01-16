@@ -10,7 +10,7 @@ namespace Borogove.DataAccess
         public WorkEntity Work { get; set; }
         public CreatorInfoEntity Creator { get; set; }
         public Role Role { get; set; }
-        public AliasEntity WorkedAs { get; set; }
+        public CreatorAliasEntity WorkedAs { get; set; }
 
         public Guid WorkIdentifier
         {
@@ -62,6 +62,21 @@ namespace Borogove.DataAccess
             }
         }
 
+        public static explicit operator Creator(WorkCreatorEntity entity)
+        {
+            if (entity == null)
+            {
+                return null;
+            }
+
+            return new Creator()
+            {
+                Role = entity.Role,
+                FileAs = entity.CreatorName,
+                Text = entity.WorkedAsName,
+            };
+        }
+
         public static ValidationResult Validate(WorkCreatorEntity entity)
         {
             if (entity == null)
@@ -87,37 +102,4 @@ namespace Borogove.DataAccess
             return ValidationResult.Success;
         }
     }
-
-    //public static class WorkCreatorUtilities
-    //{
-    //    public static IEnumerable<WorkCreatorEntity> GetWorkCreatorEntities(this WorkEntity workEntity)
-    //    {
-    //        if (workEntity == null)
-    //        {
-    //            throw new ArgumentNullException(nameof(workEntity));
-    //        }
-
-    //        return workEntity.Creators
-    //            ?.Select(c =>
-    //            {
-    //                var workCreatorEntity = new WorkCreatorEntity()
-    //                {
-    //                    WorkEntity = workEntity,
-    //                    Role = c.Role,
-    //                    CreatorInfoEntity = new CreatorInfoEntity(c),
-    //                };
-
-    //                if (string.IsNullOrEmpty(c.Text))
-    //                {
-    //                    workCreatorEntity.WorkedAs = string.IsNullOrEmpty(c.FileAs) ? CreatorInfoEntity.AnonymousName : c.FileAs;
-    //                }
-    //                else
-    //                {
-    //                    workCreatorEntity.WorkedAs = c.Text;
-    //                }
-
-    //                return workCreatorEntity;
-    //            });
-    //    }
-    //}
 }

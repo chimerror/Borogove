@@ -33,7 +33,7 @@ namespace Borogove
                         metadata.Add(Names.Identifier, workGuid.Value);
                     }
 
-                    Work work = workContext.Works.FindOrCreateEntity(workGuid.Value);
+                    WorkEntity work = workContext.Works.FindOrCreateEntity(workGuid.Value);
                     work.Identifier = workGuid.Value;
                     work.Content = document.Content;
                     UpdateWorkFromMetadata(work, metadata);
@@ -44,7 +44,7 @@ namespace Borogove
                 {
                     Dictionary<string, object> metadata = document.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
                     Guid targetWorkGuid = (Guid)metadata.Single(kvp => Names.CanonicalizeString(kvp.Key).Equals(Names.Identifier) && kvp.Value is Guid).Value;
-                    Work targetWork = workContext.Works.Find(targetWorkGuid);
+                    WorkEntity targetWork = workContext.Works.Find(targetWorkGuid);
 
                     if(targetWork == null)
                     {
@@ -66,12 +66,12 @@ namespace Borogove
                                 }
                                 var parentWork = workContext.Works.FindOrCreateEntity(guidValue.Value);
                                 parentWork.Identifier = guidValue.Value;
-                                parentWork.Children.AddOrCreateList(targetWork);
-                                if (targetWork.Parent != null)
+                                parentWork.ChildrenEntities.AddOrCreateList(targetWork);
+                                if (targetWork.ParentEntity != null)
                                 {
                                     context.Trace.Warning($"Overwriting parent of Work {targetWorkGuid} to {guidValue.Value}");
                                 }
-                                targetWork.Parent = parentWork;
+                                targetWork.ParentEntity = parentWork;
                                 continue;
 
                             default:
@@ -85,7 +85,7 @@ namespace Borogove
             return finalProcessedDocuments;
         }
 
-        static private void UpdateWorkFromMetadata(Work work, Dictionary<string, object> metadata)
+        static private void UpdateWorkFromMetadata(WorkEntity work, Dictionary<string, object> metadata)
         {
             if (work == null)
             {

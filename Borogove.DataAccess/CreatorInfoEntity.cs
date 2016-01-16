@@ -14,13 +14,13 @@ namespace Borogove.DataAccess
         public CreatorInfoEntity()
         {
             Name = AnonymousName;
-            Aliases = new List<AliasEntity>();
+            Aliases = new List<CreatorAliasEntity>();
         }
 
         public CreatorInfoEntity(string name, params string[] aliases)
         {
             Name = string.IsNullOrEmpty(name) ? AnonymousName : name;
-            Aliases = aliases.Select(a => new AliasEntity(a, Name)).ToList();
+            Aliases = aliases.Select(a => new CreatorAliasEntity(a, Name)).ToList();
         }
 
         public CreatorInfoEntity(Creator creator)
@@ -30,7 +30,7 @@ namespace Borogove.DataAccess
                 throw new ArgumentNullException(nameof(creator));
             }
 
-            Aliases = new List<AliasEntity>();
+            Aliases = new List<CreatorAliasEntity>();
 
             bool textExists = string.IsNullOrEmpty(creator.Text);
             if (string.IsNullOrEmpty(creator.FileAs))
@@ -42,7 +42,7 @@ namespace Borogove.DataAccess
                 Name = creator.FileAs;
                 if (textExists)
                 {
-                    Aliases.Add(new AliasEntity(creator.Text, Name));
+                    Aliases.Add(new CreatorAliasEntity(creator.Text, Name));
                 }
             }
         }
@@ -59,6 +59,6 @@ namespace Borogove.DataAccess
                 _name = string.IsNullOrEmpty(value) ? AnonymousName : value;
             }
         }
-        public List<AliasEntity> Aliases { get; set; }
+        public List<CreatorAliasEntity> Aliases { get; set; }
     }
 }

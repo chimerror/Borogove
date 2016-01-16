@@ -19,13 +19,8 @@ namespace Borogove.DataAccess
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Ignore<Creator>();
-            modelBuilder.Ignore<Tag>();
             modelBuilder.Ignore<CultureInfo>();
-            modelBuilder.Ignore<Work>();
-
-            var languageEntityModel = modelBuilder.Entity<LanguageEntity>()
-                .HasKey(l => l.Name)
-                .ToTable("Languages");
+            modelBuilder.Ignore<Tag>();
 
             var workEntityModel = modelBuilder.Entity<WorkEntity>()
                 .HasKey(w => w.Identifier)
@@ -34,11 +29,48 @@ namespace Borogove.DataAccess
                 .Ignore(w => w.Language)
                 .ToTable("Works");
             workEntityModel
+                .HasMany(w => w.WorkCreators)
+                .WithRequired(w => w.Work);
+            workEntityModel
                 .HasOptional(w => w.LanguageEntity)
                 .WithMany()
                 .Map(m => m.MapKey("Language"));
+            workEntityModel
+                .HasMany(w => w.TagEntities)
+                .WithMany()
+                .Map(m =>
+                {
+                    m.MapLeftKey("Work");
+                    m.MapRightKey("Tag");
+                    m.ToTable("WorkTags");
+                });
+            workEntityModel
+                .HasOptional(w => w.ParentEntity)
+                .WithMany(w => w.ChildrenEntities)
+                .Map(m => m.MapKey("Parent"));
+            workEntityModel
+                .HasMany(w => w.NextWorkEntities)
+                .WithMany(w => w.PreviousWorkEntities)
+                .Map(m =>
+                {
+                    m.MapLeftKey("Work");
+                    m.MapRightKey("NextWork");
+                    m.ToTable("NextWorks");
+                });
+            workEntityModel
+                .HasOptional(w => w.DraftOfEntity)
+                .WithMany(w => w.DraftEntities)
+                .Map(m => m.MapKey("DraftOf"));
+            workEntityModel
+                .HasOptional(w => w.ArtifactOfEntity)
+                .WithMany(w => w.ArtifactEntities)
+                .Map(m => m.MapKey("ArtifiactOf"));
+            workEntityModel
+                .HasOptional(w => w.CommentsOnEntity)
+                .WithMany(w => w.CommentEntities)
+                .Map(m => m.MapKey("CommentsOn"));
 
-            var aliasEntityModel = modelBuilder.Entity<AliasEntity>()
+            var creatorAliasEntityModel = modelBuilder.Entity<CreatorAliasEntity>()
                 .HasKey(a => a.Alias)
                 .ToTable("Aliases");
 
@@ -76,6 +108,10 @@ namespace Borogove.DataAccess
             workCreatorEntityModel
                 .HasRequired(wce => wce.Creator)
                 .WithMany();
+
+            var languageEntityModel = modelBuilder.Entity<LanguageEntity>()
+                .HasKey(l => l.Name)
+                .ToTable("Languages");
 
             var tagAliasEntityModel = modelBuilder.Entity<TagAliasEntity>()
                 .HasKey(ta => ta.Alias)
