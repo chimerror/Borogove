@@ -59,6 +59,6 @@ namespace Borogove.DataAccess
                 _name = string.IsNullOrEmpty(value) ? AnonymousName : value;
             }
         }
-        public List<CreatorAliasEntity> Aliases { get; set; }
+        public virtual List<CreatorAliasEntity> Aliases { get; set; }
     }
 }

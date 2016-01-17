@@ -23,29 +23,29 @@ namespace Borogove.DataAccess
         public Guid Identifier { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-        public List<WorkCreatorEntity> WorkCreators { get; set; }
+        public virtual List<WorkCreatorEntity> WorkCreators { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime ModifiedDate { get; set; }
         public DateTime PublishedDate { get; set; }
         public string Rights { get; set; }
         public License License { get; set; }
-        public LanguageEntity LanguageEntity { get; set; }
+        public virtual LanguageEntity LanguageEntity { get; set; }
         public WorkType WorkType { get; set; }
         public ContentRating ContentRating { get; set; }
         public ContentDescriptor ContentDescriptor { get; set; }
-        public List<TagEntity> TagEntities { get; set; }
+        public virtual List<TagEntity> TagEntities { get; set; }
         public string Content { get; set; }
-        public WorkEntity ParentEntity { get; set; }
-        public List<WorkEntity> ChildrenEntities { get; set; }
-        public List<WorkEntity> PreviousWorkEntities { get; set; }
-        public List<WorkEntity> NextWorkEntities { get; set; }
+        public virtual WorkEntity ParentEntity { get; set; }
+        public virtual List<WorkEntity> ChildrenEntities { get; set; }
+        public virtual List<WorkEntity> PreviousWorkEntities { get; set; }
+        public virtual List<WorkEntity> NextWorkEntities { get; set; }
         public string DraftIdentifier { get; set; }
-        public WorkEntity DraftOfEntity { get; set; }
-        public List<WorkEntity> DraftEntities { get; set; }
-        public WorkEntity ArtifactOfEntity { get; set; }
-        public List<WorkEntity> ArtifactEntities { get; set; }
-        public WorkEntity CommentsOnEntity { get; set; }
-        public List<WorkEntity> CommentEntities { get; set; }
+        public virtual WorkEntity DraftOfEntity { get; set; }
+        public virtual List<WorkEntity> DraftEntities { get; set; }
+        public virtual WorkEntity ArtifactOfEntity { get; set; }
+        public virtual List<WorkEntity> ArtifactEntities { get; set; }
+        public virtual WorkEntity CommentsOnEntity { get; set; }
+        public virtual List<WorkEntity> CommentEntities { get; set; }
 
         public IEnumerable<Creator> Creators
         {

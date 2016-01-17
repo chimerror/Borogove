@@ -7,20 +7,26 @@ namespace Borogove.DataAccess
     [CustomValidation(typeof(WorkCreatorEntity), "Validate")]
     public class WorkCreatorEntity
     {
-        public WorkEntity Work { get; set; }
-        public CreatorInfoEntity Creator { get; set; }
+        private string _workedAsName;
+
+        public virtual WorkEntity Work { get; set; }
+        public virtual CreatorInfoEntity Creator { get; set; }
         public Role Role { get; set; }
-        public CreatorAliasEntity WorkedAs { get; set; }
 
         public Guid WorkIdentifier
         {
             get
             {
-                return Work.Identifier;
+                return Work?.Identifier ?? Guid.Empty;
             }
 
             set
             {
+                if (Work == null)
+                {
+                    Work = new WorkEntity();
+                }
+
                 Work.Identifier = value;
             }
         }
@@ -29,11 +35,16 @@ namespace Borogove.DataAccess
         {
             get
             {
-                return Creator.Name;
+                return Creator?.Name;
             }
 
             set
             {
+                if (Creator == null)
+                {
+                    Creator = new CreatorInfoEntity();
+                }
+
                 Creator.Name = value;
             }
         }
@@ -42,23 +53,25 @@ namespace Borogove.DataAccess
         {
             get
             {
-                return WorkedAs?.Alias ?? CreatorName;
+                return _workedAsName ?? CreatorName;
             }
 
             set
             {
-                if (WorkedAs == null)
-                {
-                    CreatorName = value;
-                }
-                else if (!CreatorName.Equals(value))
-                {
-                    WorkedAs.Alias = value;
-                }
-                else
-                {
-                    throw new ArgumentException("Cannot set alias to be same as creator name.");
-                }
+                _workedAsName = value;
+            }
+        }
+
+        public CreatorAliasEntity WorkedAs
+        {
+            get
+            {
+                return CreatorName.Equals(WorkedAsName) ? null : new CreatorAliasEntity(CreatorName, WorkedAsName);
+            }
+
+            set
+            {
+                WorkedAsName = value?.Alias;
             }
         }
 
@@ -92,11 +105,6 @@ namespace Borogove.DataAccess
             if (entity.Creator == null)
             {
                 return new ValidationResult("Creator must not be null.");
-            }
-
-            if (entity.WorkedAs != null && entity.CreatorName.Equals(entity.WorkedAs.Alias))
-            {
-                return new ValidationResult("Alias cannot match creator name if supplied");
             }
 
             return ValidationResult.Success;

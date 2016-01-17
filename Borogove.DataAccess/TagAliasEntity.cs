@@ -8,6 +8,12 @@ namespace Borogove.DataAccess
 {
     public class TagAliasEntity
     {
+        public TagAliasEntity()
+        {
+            TagName = null;
+            Alias = null;
+        }
+
         public TagAliasEntity(string tagName = null, string alias = null)
         {
             TagName = tagName;

@@ -11,8 +11,10 @@ namespace Borogove.DataAccess
         public DbSet<WorkEntity> Works { get; set; }
         public DbSet<LanguageEntity> Languages { get; set; }
         public DbSet<CreatorInfoEntity> Creators { get; set; }
+        public DbSet<CreatorAliasEntity> CreatorAliases { get; set; }
         public DbSet<WorkCreatorEntity> WorkCreators { get; set; }
         public DbSet<TagEntity> Tags { get; set; }
+        public DbSet<TagAliasEntity> TagAliases { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -72,7 +74,7 @@ namespace Borogove.DataAccess
 
             var creatorAliasEntityModel = modelBuilder.Entity<CreatorAliasEntity>()
                 .HasKey(a => a.Alias)
-                .ToTable("Aliases");
+                .ToTable("CreatorAliases");
 
             var creatorInfoEntityModel = modelBuilder.Entity<CreatorInfoEntity>()
                 .HasKey(ci => ci.Name)
@@ -91,7 +93,7 @@ namespace Borogove.DataAccess
                     wce.WorkedAsName,
                 })
                 .Ignore(wce => wce.WorkedAs)
-                .ToTable("WorkCreatorEntities");
+                .ToTable("WorkCreators");
             workCreatorEntityModel.Property(wce => wce.WorkIdentifier)
                 .IsRequired()
                 .HasColumnName("Work");
