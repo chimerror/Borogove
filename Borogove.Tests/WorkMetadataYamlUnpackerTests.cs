@@ -2,7 +2,9 @@
 using System.Linq;
 using NUnit.Framework;
 using NSubstitute;
-using Wyam.Common;
+using Wyam.Common.Documents;
+using Wyam.Common.Pipelines;
+using Wyam.Common.Modules;
 
 namespace Borogove.Tests
 {

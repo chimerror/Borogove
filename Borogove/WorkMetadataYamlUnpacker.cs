@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
-using Wyam.Common;
-using Wyam.Core.Modules;
+using Wyam.Common.Documents;
+using Wyam.Common.Modules;
+using Wyam.Common.Pipelines;
+using Wyam.Core.Modules.Control;
 using Wyam.Modules.Yaml;
 using YamlDotNet.RepresentationModel;
 using YamlDotNet.Dynamic;
+
 using static Borogove.WorkMetadataCanonicalNames;
-using System.Globalization;
 
 namespace Borogove
 {

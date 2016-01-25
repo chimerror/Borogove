@@ -39,8 +39,8 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="Wyam.Modules.Yaml, Version=0.10.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Wyam.Modules.Yaml.0.10.0-beta\lib\net46\Wyam.Modules.Yaml.dll</HintPath>
+    <Reference Include="Wyam.Modules.Yaml, Version=0.11.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Wyam.Modules.Yaml.0.11.1-beta\lib\net46\Wyam.Modules.Yaml.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="YamlDotNet, Version=3.7.0.0, Culture=neutral, processorArchitecture=MSIL">

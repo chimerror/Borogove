@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Globalization;
 using System.Linq;
-using Wyam.Common;
-using System.Data.Entity;
-using Borogove.Model;
+using Wyam.Common.Documents;
+using Wyam.Common.Modules;
+using Wyam.Common.Pipelines;
+
 using Borogove.DataAccess;
+using Borogove.Model;
 using Names = Borogove.WorkMetadataCanonicalNames;
 
 namespace Borogove

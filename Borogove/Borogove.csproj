@@ -38,41 +38,43 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.CodeAnalysis">
-      <HintPath>..\packages\Microsoft.CodeAnalysis.Common.1.0.0\lib\net45\Microsoft.CodeAnalysis.dll</HintPath>
+    <Reference Include="Microsoft.CodeAnalysis, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeAnalysis.Common.1.1.1\lib\net45\Microsoft.CodeAnalysis.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.CodeAnalysis.CSharp">
-      <HintPath>..\packages\Microsoft.CodeAnalysis.CSharp.1.0.0\lib\net45\Microsoft.CodeAnalysis.CSharp.dll</HintPath>
+    <Reference Include="Microsoft.CodeAnalysis.CSharp, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeAnalysis.CSharp.1.1.1\lib\net45\Microsoft.CodeAnalysis.CSharp.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Web.XmlTransform">
       <HintPath>..\packages\Microsoft.Web.Xdt.2.1.1\lib\net40\Microsoft.Web.XmlTransform.dll</HintPath>
     </Reference>
-    <Reference Include="NuGet.Core, Version=2.9.0.729, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\NuGet.Core.2.9.0\lib\net40-Client\NuGet.Core.dll</HintPath>
+    <Reference Include="NuGet.Core, Version=2.10.1.766, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\NuGet.Core.2.10.1\lib\net40-Client\NuGet.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="NuGet.Frameworks, Version=3.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\NuGet.Frameworks.3.2.0\lib\net45\NuGet.Frameworks.dll</HintPath>
+    <Reference Include="NuGet.Frameworks, Version=3.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\NuGet.Frameworks.3.3.0\lib\net45\NuGet.Frameworks.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="NuGet.Logging, Version=3.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\NuGet.Logging.3.2.0\lib\net45\NuGet.Logging.dll</HintPath>
+    <Reference Include="NuGet.Logging, Version=3.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\NuGet.Logging.3.3.0\lib\net45\NuGet.Logging.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="NuGet.Packaging, Version=3.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\NuGet.Packaging.3.2.0\lib\net45\NuGet.Packaging.dll</HintPath>
+    <Reference Include="NuGet.Packaging, Version=3.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\NuGet.Packaging.3.3.0\lib\net45\NuGet.Packaging.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="NuGet.Packaging.Core, Version=3.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\NuGet.Packaging.Core.3.2.0\lib\net45\NuGet.Packaging.Core.dll</HintPath>
+    <Reference Include="NuGet.Packaging.Core, Version=3.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\NuGet.Packaging.Core.3.3.0\lib\net45\NuGet.Packaging.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="NuGet.Packaging.Core.Types, Version=3.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\NuGet.Packaging.Core.Types.3.2.0\lib\net45\NuGet.Packaging.Core.Types.dll</HintPath>
+    <Reference Include="NuGet.Packaging.Core.Types, Version=3.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\NuGet.Packaging.Core.Types.3.3.0\lib\net45\NuGet.Packaging.Core.Types.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="NuGet.Versioning, Version=3.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\NuGet.Versioning.3.2.0\lib\net45\NuGet.Versioning.dll</HintPath>
+    <Reference Include="NuGet.Versioning, Version=3.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\NuGet.Versioning.3.3.0\lib\net45\NuGet.Versioning.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -95,16 +97,16 @@
     <Reference Include="UniversalTypeConverter">
       <HintPath>..\packages\UniversalTypeConverter.1.0.2\lib\net40\UniversalTypeConverter.dll</HintPath>
     </Reference>
-    <Reference Include="Wyam.Common, Version=0.10.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Wyam.Common.0.10.0-beta\lib\net46\Wyam.Common.dll</HintPath>
+    <Reference Include="Wyam.Common, Version=0.11.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Wyam.Common.0.11.1-beta\lib\net46\Wyam.Common.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Wyam.Core, Version=0.10.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Wyam.Core.0.10.0-beta\lib\net46\Wyam.Core.dll</HintPath>
+    <Reference Include="Wyam.Core, Version=0.11.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Wyam.Core.0.11.1-beta\lib\net46\Wyam.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Wyam.Modules.Yaml, Version=0.10.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Wyam.Modules.Yaml.0.10.0-beta\lib\net46\Wyam.Modules.Yaml.dll</HintPath>
+    <Reference Include="Wyam.Modules.Yaml, Version=0.11.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Wyam.Modules.Yaml.0.11.1-beta\lib\net46\Wyam.Modules.Yaml.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="YamlDotNet, Version=3.7.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -135,6 +137,10 @@
       <Project>{2ec212b3-126e-430b-909d-b251ca79e7c7}</Project>
       <Name>Borogove.Model</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.1.1.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.Analyzers.dll" />
+    <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.1.1.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CSharp.Analyzers.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
