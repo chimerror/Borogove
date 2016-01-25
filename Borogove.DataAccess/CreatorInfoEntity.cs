@@ -32,7 +32,7 @@ namespace Borogove.DataAccess
 
             Aliases = new List<CreatorAliasEntity>();
 
-            bool textExists = string.IsNullOrEmpty(creator.Text);
+            bool textExists = !string.IsNullOrEmpty(creator.Text);
             if (string.IsNullOrEmpty(creator.FileAs))
             {
                 Name = textExists ? creator.Text : AnonymousName;
@@ -59,6 +59,6 @@ namespace Borogove.DataAccess
                 _name = string.IsNullOrEmpty(value) ? AnonymousName : value;
             }
         }
-        public virtual List<CreatorAliasEntity> Aliases { get; set; }
+        public virtual ICollection<CreatorAliasEntity> Aliases { get; set; }
     }
 }

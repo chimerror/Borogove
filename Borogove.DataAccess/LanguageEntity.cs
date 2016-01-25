@@ -9,7 +9,7 @@ namespace Borogove.DataAccess
 
         public LanguageEntity()
         {
-            Name = "Unknown Language";
+            Name = CultureInfo.InvariantCulture.Name;
         }
 
         public LanguageEntity(CultureInfo cultureInfo)

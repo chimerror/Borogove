@@ -4,50 +4,39 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Borogove.DataAccess
 {
-    [CustomValidation(typeof(WorkCreatorEntity), "Validate")]
     public class WorkCreatorEntity
     {
         private string _workedAsName;
 
-        public virtual WorkEntity Work { get; set; }
-        public virtual CreatorInfoEntity Creator { get; set; }
+        public WorkCreatorEntity()
+        {
+        }
+
+        public WorkCreatorEntity(WorkEntity work, CreatorInfoEntity creator, Role role, string workedAs = null)
+        {
+            if (work == null)
+            {
+                throw new ArgumentNullException(nameof(work));
+            }
+
+            if (creator == null)
+            {
+                throw new ArgumentNullException(nameof(creator));
+            }
+
+            Work = work;
+            WorkIdentifier = Work.Identifier;
+            Creator = creator;
+            CreatorName = creator.Name;
+            Role = role;
+            WorkedAsName = workedAs;
+        }
+
+        public Guid WorkIdentifier { get; set; }
+        public WorkEntity Work { get; set; }
+        public string CreatorName { get; set; }
+        public CreatorInfoEntity Creator { get; set; }
         public Role Role { get; set; }
-
-        public Guid WorkIdentifier
-        {
-            get
-            {
-                return Work?.Identifier ?? Guid.Empty;
-            }
-
-            set
-            {
-                if (Work == null)
-                {
-                    Work = new WorkEntity();
-                }
-
-                Work.Identifier = value;
-            }
-        }
-
-        public string CreatorName
-        {
-            get
-            {
-                return Creator?.Name;
-            }
-
-            set
-            {
-                if (Creator == null)
-                {
-                    Creator = new CreatorInfoEntity();
-                }
-
-                Creator.Name = value;
-            }
-        }
 
         public string WorkedAsName
         {
@@ -58,20 +47,14 @@ namespace Borogove.DataAccess
 
             set
             {
-                _workedAsName = value;
-            }
-        }
-
-        public CreatorAliasEntity WorkedAs
-        {
-            get
-            {
-                return CreatorName.Equals(WorkedAsName) ? null : new CreatorAliasEntity(CreatorName, WorkedAsName);
-            }
-
-            set
-            {
-                WorkedAsName = value?.Alias;
+                if (CreatorName == null)
+                {
+                    _workedAsName = value;
+                }
+                else
+                {
+                    _workedAsName = CreatorName.Equals(value) ? null : value;
+                }
             }
         }
 

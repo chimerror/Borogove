@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Globalization;
 using System.Linq;
 using Borogove.Model;
@@ -8,6 +9,8 @@ namespace Borogove.DataAccess
 {
     public class WorkEntity
     {
+        public static readonly DateTime MinimumDateTime = (DateTime)SqlDateTime.MinValue;
+
         public WorkEntity()
         {
             WorkCreators = new List<WorkCreatorEntity>();
@@ -20,10 +23,30 @@ namespace Borogove.DataAccess
             CommentEntities = new List<WorkEntity>();
         }
 
+        public WorkEntity(Guid? identifier = null,
+                          DateTime? createdDate = null,
+                          DateTime? modifiedDate = null,
+                          DateTime? publishedDate = null,
+                          License license = License.None,
+                          WorkType workType = WorkType.Other,
+                          ContentRating contentRating = ContentRating.NotRated,
+                          ContentDescriptor contentDescriptor = ContentDescriptor.None)
+            : this()
+        {
+            Identifier = identifier ?? Guid.Empty;
+            CreatedDate = createdDate ?? MinimumDateTime;
+            ModifiedDate = modifiedDate ?? MinimumDateTime;
+            PublishedDate = publishedDate ?? MinimumDateTime;
+            License = license;
+            WorkType = workType;
+            ContentRating = contentRating;
+            ContentDescriptor = contentDescriptor;
+        }
+
         public Guid Identifier { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-        public virtual List<WorkCreatorEntity> WorkCreators { get; set; }
+        public virtual ICollection<WorkCreatorEntity> WorkCreators { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime ModifiedDate { get; set; }
         public DateTime PublishedDate { get; set; }
@@ -33,76 +56,76 @@ namespace Borogove.DataAccess
         public WorkType WorkType { get; set; }
         public ContentRating ContentRating { get; set; }
         public ContentDescriptor ContentDescriptor { get; set; }
-        public virtual List<TagEntity> TagEntities { get; set; }
+        public virtual ICollection<TagEntity> TagEntities { get; set; }
         public string Content { get; set; }
         public virtual WorkEntity ParentEntity { get; set; }
-        public virtual List<WorkEntity> ChildrenEntities { get; set; }
-        public virtual List<WorkEntity> PreviousWorkEntities { get; set; }
-        public virtual List<WorkEntity> NextWorkEntities { get; set; }
+        public virtual ICollection<WorkEntity> ChildrenEntities { get; set; }
+        public virtual ICollection<WorkEntity> PreviousWorkEntities { get; set; }
+        public virtual ICollection<WorkEntity> NextWorkEntities { get; set; }
         public string DraftIdentifier { get; set; }
         public virtual WorkEntity DraftOfEntity { get; set; }
-        public virtual List<WorkEntity> DraftEntities { get; set; }
+        public virtual ICollection<WorkEntity> DraftEntities { get; set; }
         public virtual WorkEntity ArtifactOfEntity { get; set; }
-        public virtual List<WorkEntity> ArtifactEntities { get; set; }
+        public virtual ICollection<WorkEntity> ArtifactEntities { get; set; }
         public virtual WorkEntity CommentsOnEntity { get; set; }
-        public virtual List<WorkEntity> CommentEntities { get; set; }
+        public virtual ICollection<WorkEntity> CommentEntities { get; set; }
 
-        public IEnumerable<Creator> Creators
-        {
-            get
-            {
-                return WorkCreators?.Select(wce => (Creator)wce);
-            }
+        //public IEnumerable<Creator> Creators
+        //{
+        //    get
+        //    {
+        //        return WorkCreators?.Select(wce => (Creator)wce);
+        //    }
 
-            set
-            {
-                WorkCreators = value
-                    ?.Select(c =>
-                    {
-                        var wce = new WorkCreatorEntity();
-                        wce.Work = this;
-                        wce.Role = c.Role;
+        //    set
+        //    {
+        //        WorkCreators = value
+        //            ?.Select(c =>
+        //            {
+        //                var wce = new WorkCreatorEntity();
+        //                wce.Work = this;
+        //                wce.Role = c.Role;
 
-                        var ce = new CreatorInfoEntity(c.Text);
-                        bool hasText = string.IsNullOrEmpty(c.Text);
-                        if (!string.IsNullOrEmpty(c.FileAs))
-                        {
-                            ce = hasText ? new CreatorInfoEntity(c.FileAs, c.Text) : new CreatorInfoEntity(c.FileAs);
-                        }
-                        wce.Creator = ce;
-                        wce.WorkedAs = ce.Aliases.FirstOrDefault();
+        //                var ce = new CreatorInfoEntity(c.Text);
+        //                bool hasText = string.IsNullOrEmpty(c.Text);
+        //                if (!string.IsNullOrEmpty(c.FileAs))
+        //                {
+        //                    ce = hasText ? new CreatorInfoEntity(c.FileAs, c.Text) : new CreatorInfoEntity(c.FileAs);
+        //                }
+        //                wce.Creator = ce;
+        //                wce.WorkedAs = ce.Aliases.FirstOrDefault();
 
-                        return wce;
-                    })
-                    .ToList();
-            }
-        }
+        //                return wce;
+        //            })
+        //            .ToList();
+        //    }
+        //}
 
-        public CultureInfo Language
-        {
-            get
-            {
-                return (CultureInfo)LanguageEntity;
-            }
+        //public CultureInfo Language
+        //{
+        //    get
+        //    {
+        //        return (CultureInfo)LanguageEntity;
+        //    }
 
-            set
-            {
-                LanguageEntity = (LanguageEntity)value;
-            }
-        }
+        //    set
+        //    {
+        //        LanguageEntity = (LanguageEntity)value;
+        //    }
+        //}
 
-        public IEnumerable<Tag> Tags
-        {
-            get
-            {
-                return TagEntities?.Select(te => (Tag)te);
-            }
+        //public IEnumerable<Tag> Tags
+        //{
+        //    get
+        //    {
+        //        return TagEntities?.Select(te => (Tag)te);
+        //    }
 
-            set
-            {
-                TagEntities = value?.Select(t => (TagEntity)t).ToList();
-            }
-        }
+        //    set
+        //    {
+        //        TagEntities = value?.Select(t => (TagEntity)t).ToList();
+        //    }
+        //}
     }
 
     public static class WorkExtensions
@@ -119,17 +142,17 @@ namespace Borogove.DataAccess
                 Identifier = work.Identifier,
                 Title = work.Title,
                 Description = work.Description,
-                Creators = work.Creators,
+                //Creators = work.Creators,
                 CreatedDate = work.CreatedDate,
                 ModifiedDate = work.ModifiedDate,
                 PublishedDate = work.PublishedDate,
                 Rights = work.Rights,
                 License = work.License,
-                Language = work.Language,
+                //Language = work.Language,
                 WorkType = work.WorkType,
                 ContentRating = work.ContentRating,
                 ContentDescriptor = work.ContentDescriptor,
-                Tags = work.Tags,
+                //Tags = work.Tags,
                 Content = work.Content,
                 ParentEntity = work.Parent.ToWorkEntity(),
                 ChildrenEntities = work.Children?.Select(w => w.ToWorkEntity()).ToList(),

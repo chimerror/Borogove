@@ -16,6 +16,31 @@ namespace Borogove.DataAccess
         public DbSet<TagEntity> Tags { get; set; }
         public DbSet<TagAliasEntity> TagAliases { get; set; }
 
+        public TagSet GetTagSet()
+        {
+            var tagSet = new TagSet();
+
+            foreach (TagEntity tag in Tags)
+            {
+                tagSet.ResolveTag(tag.TagName, true);
+            }
+
+            foreach (TagAliasEntity tagAlias in TagAliases)
+            {
+                tagSet.ResolveTag($"{tagAlias.Alias}{TagSet.AliasSeparator}{tagAlias.TagName}", true);
+            }
+
+            foreach (TagEntity tag in Tags)
+            {
+                foreach (TagEntity implication in tag.Implications)
+                {
+                    tagSet.ResolveTag($"{tag.TagName}{TagSet.ImplicationSeparator}{implication.TagName}", true);
+                }
+            }
+
+            return tagSet;
+        }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -26,13 +51,10 @@ namespace Borogove.DataAccess
 
             var workEntityModel = modelBuilder.Entity<WorkEntity>()
                 .HasKey(w => w.Identifier)
-                .Ignore(w => w.Tags)
-                .Ignore(w => w.Creators)
-                .Ignore(w => w.Language)
                 .ToTable("Works");
             workEntityModel
                 .HasMany(w => w.WorkCreators)
-                .WithRequired(w => w.Work);
+                .WithRequired(wce => wce.Work);
             workEntityModel
                 .HasOptional(w => w.LanguageEntity)
                 .WithMany()
@@ -92,7 +114,6 @@ namespace Borogove.DataAccess
                     wce.Role,
                     wce.WorkedAsName,
                 })
-                .Ignore(wce => wce.WorkedAs)
                 .ToTable("WorkCreators");
             workCreatorEntityModel.Property(wce => wce.WorkIdentifier)
                 .IsRequired()
@@ -102,14 +123,15 @@ namespace Borogove.DataAccess
                 .HasColumnName("Creator");
             workCreatorEntityModel.Property(wce => wce.WorkedAsName)
                 .IsRequired()
-                .HasMaxLength(128)
                 .HasColumnName("WorkedAs");
             workCreatorEntityModel
                 .HasRequired(wce => wce.Work)
-                .WithMany();
+                .WithMany(w => w.WorkCreators)
+                .HasForeignKey(wce => wce.WorkIdentifier);
             workCreatorEntityModel
                 .HasRequired(wce => wce.Creator)
-                .WithMany();
+                .WithMany()
+                .HasForeignKey(wce => wce.CreatorName);
 
             var languageEntityModel = modelBuilder.Entity<LanguageEntity>()
                 .HasKey(l => l.Name)

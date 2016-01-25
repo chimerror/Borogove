@@ -12,7 +12,7 @@ namespace Borogove
 {
     class WorkMetadataPersister : IModule
     {
-        private readonly Dictionary<Guid, Work> _workDictionary = new Dictionary<Guid, Work>();
+        private readonly Dictionary<Guid, WorkEntity> _workDictionary = new Dictionary<Guid, WorkEntity>();
 
         public IEnumerable<IDocument> Execute(IReadOnlyList<IDocument> inputs, IExecutionContext context)
         {
@@ -21,71 +21,43 @@ namespace Borogove
             var finalProcessedDocuments = new List<IDocument>();
             using (var workContext = new WorkContext())
             {
-                var firstProcessedDocuments = new List<IDocument>();
                 foreach (var document in inputs)
                 {
                     Dictionary<string, object> metadata = document.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
 
-                    Guid? workGuid = metadata.SingleOrDefault(kvp => Names.CanonicalizeString(kvp.Key).Equals(Names.Identifier) && kvp.Value is Guid).Value as Guid?;
+                    Guid? workGuid = metadata
+                        .SingleOrDefault(kvp => Names.CanonicalizeString(kvp.Key).Equals(Names.Identifier) && kvp.Value is Guid)
+                        .Value as Guid?;
                     if (!workGuid.HasValue)
                     {
                         workGuid = Guid.NewGuid();
                         metadata.Add(Names.Identifier, workGuid.Value);
                     }
 
-                    WorkEntity work = workContext.Works.FindOrCreateEntity(workGuid.Value);
-                    work.Identifier = workGuid.Value;
+                    WorkEntity work = workContext.Works
+                        .Include(w => w.WorkCreators)
+                        .Include(w => w.LanguageEntity)
+                        .Include(w => w.TagEntities)
+                        .Include(w => w.ParentEntity)
+                        .Include(w => w.PreviousWorkEntities)
+                        .Include(w => w.NextWorkEntities)
+                        .Include(w => w.DraftOfEntity)
+                        .Include(w => w.ArtifactOfEntity)
+                        .Include(w => w.CommentsOnEntity)
+                        .SingleOrDefault(w => w.Identifier.Equals(workGuid)) ??
+                        workContext.Works.Add(new WorkEntity(workGuid));
                     work.Content = document.Content;
-                    UpdateWorkFromMetadata(work, metadata);
-                    firstProcessedDocuments.Add(document.Clone(metadata));
+                    UpdateWorkEntityFromMetadata(work, metadata, workContext);
+                    finalProcessedDocuments.Add(document.Clone(metadata));
                 }
 
-                foreach (var document in firstProcessedDocuments)
-                {
-                    Dictionary<string, object> metadata = document.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-                    Guid targetWorkGuid = (Guid)metadata.Single(kvp => Names.CanonicalizeString(kvp.Key).Equals(Names.Identifier) && kvp.Value is Guid).Value;
-                    WorkEntity targetWork = workContext.Works.Find(targetWorkGuid);
-
-                    if(targetWork == null)
-                    {
-                        throw new InvalidOperationException($"Unable to find expected target work {targetWorkGuid} in context.");
-                    }
-
-                    foreach (var keyValuePair in metadata)
-                    {
-                        var canonicalizedKey = Names.CanonicalizeString(keyValuePair.Key);
-                        object value = keyValuePair.Value;
-                        Guid? guidValue = value as Guid?;
-                        List<Guid> guidListValue = value as List<Guid>;
-                        switch (canonicalizedKey)
-                        {
-                            case Names.Parent:
-                                if (!guidValue.HasValue)
-                                {
-                                    continue;
-                                }
-                                var parentWork = workContext.Works.FindOrCreateEntity(guidValue.Value);
-                                parentWork.Identifier = guidValue.Value;
-                                parentWork.ChildrenEntities.AddOrCreateList(targetWork);
-                                if (targetWork.ParentEntity != null)
-                                {
-                                    context.Trace.Warning($"Overwriting parent of Work {targetWorkGuid} to {guidValue.Value}");
-                                }
-                                targetWork.ParentEntity = parentWork;
-                                continue;
-
-                            default:
-                                // Ignore anything else
-                                continue;
-                        }
-                    }
-                }
+                workContext.SaveChanges();
             }
 
             return finalProcessedDocuments;
         }
 
-        static private void UpdateWorkFromMetadata(WorkEntity work, Dictionary<string, object> metadata)
+        static private void UpdateWorkEntityFromMetadata(WorkEntity work, Dictionary<string, object> metadata, WorkContext workContext)
         {
             if (work == null)
             {
@@ -112,19 +84,49 @@ namespace Borogove
                         continue;
 
                     case Names.Creator:
-                        work.Creators = value as List<Creator> ?? new List<Creator>();
+                        var metadataCreators = value as IEnumerable<Creator> ?? new List<Creator>();
+
+                        var workCreatorEntities = new List<WorkCreatorEntity>();
+                        foreach (Creator creator in metadataCreators)
+                        {
+                            var creatorName = string.IsNullOrEmpty(creator.FileAs) ? creator.Text : creator.FileAs;
+                            creatorName = string.IsNullOrEmpty(creatorName) ?
+                                CreatorInfoEntity.AnonymousName :
+                                creatorName;
+                            var creatorInfo =
+                                workContext.Creators.Find(creatorName) ??
+                                workContext.Creators.Add(new CreatorInfoEntity(creator));
+
+                            var workedAsName = string.IsNullOrEmpty(creator.Text) ? creatorName : creator.Text;
+                            CreatorAliasEntity aliasEntity =
+                                creatorInfo.Aliases.FirstOrDefault(a => a.Alias.Equals(workedAsName));
+                            if (aliasEntity == null && !workedAsName.Equals(creatorName))
+                            {
+                                aliasEntity = workContext.CreatorAliases.Find(workedAsName) ??
+                                    workContext.CreatorAliases.Add(new CreatorAliasEntity(workedAsName, creatorName));
+                                creatorInfo.Aliases.Add(aliasEntity);
+                            }
+
+                            var workCreator = workContext.WorkCreators
+                                .Find(work.Identifier, creatorName, creator.Role, workedAsName) ??
+                                workContext.WorkCreators.Add(
+                                    new WorkCreatorEntity(work, creatorInfo, creator.Role, aliasEntity?.Alias));
+                            workCreatorEntities.Add(workCreator);
+                        }
+
+                        work.WorkCreators = workCreatorEntities;
                         continue;
 
                     case Names.CreatedDate:
-                        work.CreatedDate = value is DateTime ? (DateTime)value : DateTime.MinValue;
+                        work.CreatedDate = value is DateTime ? (DateTime)value : WorkEntity.MinimumDateTime;
                         continue;
 
                     case Names.ModifiedDate:
-                        work.ModifiedDate = value is DateTime ? (DateTime)value : DateTime.MinValue;
+                        work.ModifiedDate = value is DateTime ? (DateTime)value : WorkEntity.MinimumDateTime;
                         continue;
 
                     case Names.PublishedDate:
-                        work.PublishedDate = value is DateTime ? (DateTime)value : DateTime.MinValue;
+                        work.PublishedDate = value is DateTime ? (DateTime)value : WorkEntity.MinimumDateTime;
                         continue;
 
                     case Names.Rights:
@@ -136,7 +138,9 @@ namespace Borogove
                         continue;
 
                     case Names.Language:
-                        work.Language = value as CultureInfo ?? CultureInfo.CurrentCulture;
+                        var langauge = value as CultureInfo ?? CultureInfo.CurrentCulture;
+                        work.LanguageEntity = workContext.Languages.Find(langauge.Name) ??
+                            workContext.Languages.Add(new LanguageEntity(langauge));
                         continue;
 
                     case Names.WorkType:
@@ -152,7 +156,136 @@ namespace Borogove
                         continue;
 
                     case Names.Tags:
-                        work.Tags = value as List<Tag> ?? new List<Tag>();
+                        var tags = value as IEnumerable<Tag> ?? new List<Tag>();
+                        var tagEntities = new List<TagEntity>();
+                        foreach(Tag tag in tags)
+                        {
+                            var tagEntity = workContext.Tags.Find(tag.Name);
+                            if (tagEntity == null)
+                            {
+                                tagEntity = workContext.Tags.Add(new TagEntity(tag.Name));
+                            }
+                            else if (workContext.Entry(tagEntity).State != EntityState.Added)
+                            {
+                                workContext.Entry(tagEntity).Collection(t => t.Aliases).Load();
+                                workContext.Entry(tagEntity).Collection(t => t.Implications).Load();
+                            }
+
+                            var tagAliases = new List<TagAliasEntity>();
+                            foreach (string alias in tag.Aliases)
+                            {
+                                var aliasEntity = workContext.TagAliases.Find(alias) ?? workContext.TagAliases.Add(new TagAliasEntity(tag.Name, alias));
+                                tagAliases.Add(aliasEntity);
+                            }
+                            tagEntity.Aliases = tagAliases;
+
+                            var tagImplications = new List<TagEntity>();
+                            foreach (Tag implication in tag.Implications)
+                            {
+                                var implicationEntity = workContext.Tags.Find(implication.Name) ?? workContext.Tags.Add(new TagEntity(implication.Name));
+                                tagImplications.Add(implicationEntity);
+                                // We assume that the original tag list includes the implication, so we'll get around to setting its aliases and implications eventually.
+                            }
+                            tagEntity.Implications = tagImplications;
+
+                            tagEntities.Add(tagEntity);
+                        }
+
+                        work.TagEntities = tagEntities;
+                        continue;
+
+                    case Names.Parent:
+                        var parentGuid = value as Guid?;
+                        if (parentGuid.HasValue)
+                        {
+                            work.ParentEntity = workContext.Works.Find(parentGuid.Value) ??
+                                workContext.Works.Add(new WorkEntity(parentGuid.Value));
+                        }
+                        else
+                        {
+                            work.ParentEntity = null;
+                        }
+                        continue;
+
+                    case Names.Previous:
+                        var previousWorks = value as IEnumerable<Guid>;
+                        if (work.PreviousWorkEntities == null)
+                        {
+                            work.PreviousWorkEntities = new List<WorkEntity>();
+                        }
+
+                        if (previousWorks == null)
+                        {
+                            work.PreviousWorkEntities.Clear();
+                        }
+                        else
+                        {
+                            foreach (Guid previousWorkGuid in previousWorks)
+                            {
+                                var previousWorkEntity = workContext.Works.Find(previousWorkGuid) ?? workContext.Works.Add(new WorkEntity(previousWorkGuid));
+                                work.PreviousWorkEntities.Add(previousWorkEntity);
+                            }
+                        }
+                        continue;
+
+                    case Names.Next:
+                        var nextWorks = value as IEnumerable<Guid>;
+                        if (work.NextWorkEntities == null)
+                        {
+                            work.NextWorkEntities = new List<WorkEntity>();
+                        }
+
+                        if (nextWorks == null)
+                        {
+                            work.NextWorkEntities.Clear();
+                        }
+                        else
+                        {
+                            foreach (Guid nextWorkGuid in nextWorks)
+                            {
+                                var nextWorkEntity = workContext.Works.Find(nextWorkGuid) ?? workContext.Works.Add(new WorkEntity(nextWorkGuid));
+                                work.NextWorkEntities.Add(nextWorkEntity);
+                            }
+                        }
+                        continue;
+
+                    case Names.DraftOf:
+                        var draftOfGuid = value as Guid?;
+                        if (draftOfGuid.HasValue)
+                        {
+                            work.DraftOfEntity = workContext.Works.Find(draftOfGuid.Value) ??
+                                workContext.Works.Add(new WorkEntity(draftOfGuid.Value));
+                        }
+                        else
+                        {
+                            work.DraftOfEntity = null;
+                        }
+                        continue;
+
+                    case Names.ArtifactOf:
+                        var artifactOfGuid = value as Guid?;
+                        if (artifactOfGuid.HasValue)
+                        {
+                            work.ArtifactOfEntity = workContext.Works.Find(artifactOfGuid.Value) ??
+                                workContext.Works.Add(new WorkEntity(artifactOfGuid.Value));
+                        }
+                        else
+                        {
+                            work.ArtifactOfEntity = null;
+                        }
+                        continue;
+
+                    case Names.CommentsOn:
+                        var commentsOnGuid = value as Guid?;
+                        if (commentsOnGuid.HasValue)
+                        {
+                            work.CommentsOnEntity = workContext.Works.Find(commentsOnGuid.Value) ??
+                                workContext.Works.Add(new WorkEntity(commentsOnGuid.Value));
+                        }
+                        else
+                        {
+                            work.CommentsOnEntity = null;
+                        }
                         continue;
 
                     case Names.DraftIdentifier:
