@@ -73,32 +73,24 @@ namespace Borogove
             var tagSetKey = _key + TagSetKeySuffix;
             foreach (IDocument document in processedDocuments)
             {
-                Dictionary<string, object> processedMetadata = document.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+                Dictionary<string, object> newMetadata = new Dictionary<string, object>();
 
                 dynamic borogroveObject = document.Get(_key);
                 if (borogroveObject == null)
                 {
+                    // Nothing to unpack, just return this document.
+                    yield return document;
                     continue;
                 }
 
                 if (_defaultTagSet == null)
                 {
-                    if (processedMetadata.ContainsKey(tagSetKey))
-                    {
-                        _defaultTagSet = (Model.TagSet)processedMetadata[tagSetKey];
-                    }
-                    else
-                    {
-                        _defaultTagSet = new Model.TagSet();
-                    }
+                    _defaultTagSet = document.Get(tagSetKey, new Model.TagSet());
                 }
 
-                if (!processedMetadata.ContainsKey(tagSetKey))
-                {
-                    processedMetadata[tagSetKey] = _defaultTagSet;
-                }
+                var currentTagSet = document.Get(tagSetKey, _defaultTagSet);
+                newMetadata.Add(tagSetKey, currentTagSet);
 
-                var currentTagSet = (Model.TagSet)processedMetadata[tagSetKey];
                 Dictionary<string, object> borogroveDictionary = borogroveObject;
                 foreach (KeyValuePair<string, object> keyValuePair in borogroveDictionary)
                 {
@@ -112,12 +104,12 @@ namespace Borogove
                         case DraftOf:
                         case ArtifactOf:
                         case CommentsOn:
-                            processedMetadata.Add(canonicalizedKey, Guid.Parse(stringValue));
+                            newMetadata.Add(canonicalizedKey, Guid.Parse(stringValue));
                             continue;
 
                         case Previous:
                         case Next:
-                            processedMetadata.Add(canonicalizedKey,
+                            newMetadata.Add(canonicalizedKey,
                                 stringValue
                                     .Split(_listSeparatorArray, StringSplitOptions.RemoveEmptyEntries)
                                     .Select(w => Guid.Parse(w))
@@ -127,7 +119,7 @@ namespace Borogove
                         case Title:
                         case Description:
                         case DraftIdentifier:
-                            processedMetadata.Add(canonicalizedKey, stringValue);
+                            newMetadata.Add(canonicalizedKey, stringValue);
                             continue;
 
                         case Creator:
@@ -146,22 +138,22 @@ namespace Borogove
                                 }
                                 creators.Add(creatorObject);
                             }
-                            processedMetadata.Add(Creator, creators);
+                            newMetadata.Add(Creator, creators);
                             continue;
 
                         case CreatedDate:
                         case ModifiedDate:
                         case PublishedDate:
-                            processedMetadata.Add(canonicalizedKey, DateTime.Parse(stringValue));
+                            newMetadata.Add(canonicalizedKey, DateTime.Parse(stringValue));
                             continue;
 
                         case Rights:
                         case License:
-                            processedMetadata.Add(Rights, stringValue);
+                            newMetadata.Add(Rights, stringValue);
                             Model.License parsedLicense;
                             if (Model.LicenseUtilities.TryParseLicense(stringValue, out parsedLicense))
                             {
-                                processedMetadata.Add(License, parsedLicense);
+                                newMetadata.Add(License, parsedLicense);
                             }
                             else
                             {
@@ -170,27 +162,27 @@ namespace Borogove
                             continue;
 
                         case Language:
-                            processedMetadata.Add(Language, CultureInfo.GetCultureInfo(stringValue));
+                            newMetadata.Add(Language, CultureInfo.GetCultureInfo(stringValue));
                             continue;
 
                         case WorkType:
-                            processedMetadata.Add(WorkType, Model.WorkTypeUtilities.ParseFriendlyName(stringValue));
+                            newMetadata.Add(WorkType, Model.WorkTypeUtilities.ParseFriendlyName(stringValue));
                             continue;
 
                         case ContentRating:
-                            processedMetadata.Add(ContentRating, Model.ContentRatingUtilities.ParseShortName(stringValue));
+                            newMetadata.Add(ContentRating, Model.ContentRatingUtilities.ParseShortName(stringValue));
                             continue;
 
                         case ContentDescriptors:
-                            processedMetadata.Add(ContentDescriptors, Model.ContentDescriptorUtilities.ParseContentDescriptor(stringValue));
+                            newMetadata.Add(ContentDescriptors, Model.ContentDescriptorUtilities.ParseContentDescriptor(stringValue));
                             continue;
 
                         case Tags:
-                            processedMetadata.Add(Tags, currentTagSet.ResolveTagList(stringValue, true, true));
+                            newMetadata.Add(Tags, currentTagSet.ResolveTagList(stringValue, true, true));
                             continue;
 
                         default:
-                            if (processedMetadata.ContainsKey(keyValuePair.Key))
+                            if (document.ContainsKey(keyValuePair.Key))
                             {
                                 // Don't replace extant keys, we assume flatten or previous processing got it right.
                                 break;
@@ -209,7 +201,7 @@ namespace Borogove
                                 // If it is not scalar, we'll save the original DynamicYaml object.
 
                                 // Add under the original key.
-                                processedMetadata.Add(keyValuePair.Key, processedValue);
+                                newMetadata.Add(keyValuePair.Key, processedValue);
                                 break;
                             }
                     }
@@ -223,7 +215,7 @@ namespace Borogove
 
                 // The return value of execute will be all the input documents with
                 // the metadata added. If this can be done with lazy processing, do it.
-                yield return document.Clone(document.Source, document.Content, processedMetadata);
+                yield return document.Clone(newMetadata);
             }
 
             yield break;

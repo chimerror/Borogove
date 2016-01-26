@@ -80,11 +80,18 @@ Doesn't _exist_ yet. :p";
                     Assert.That(resultMetadata.ContainsKey(key));
                     return resultMetadata[key];
                 });
+            resultDocumentMock.Get(Arg.Any<string>(), Arg.Any<Model.TagSet>()).Returns(
+                ci =>
+                {
+                    var key = ci.Arg<string>();
+                    var defaultValue = ci.Arg<Model.TagSet>();
+                    return resultMetadata.ContainsKey(key) ? resultMetadata[key] : defaultValue;
+                });
             resultDocumentMock.Source
                 .Returns("DefaultConstructorWorks.md");
             resultDocumentMock.Content
                 .Returns(testContent);
-            resultDocumentMock.Clone(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<Dictionary<string, object>>())
+            resultDocumentMock.Clone(Arg.Any<Dictionary<string, object>>())
                 .Returns(finalDocumentMock)
                 .AndDoes(ci => finalMetadata = ci.Arg<Dictionary<string, object>>());
             var inputDocuments = new List<IDocument>() { inputDocumentMock };

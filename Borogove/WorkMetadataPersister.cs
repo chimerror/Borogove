@@ -13,7 +13,7 @@ using Names = Borogove.WorkMetadataCanonicalNames;
 
 namespace Borogove
 {
-    class WorkMetadataPersister : IModule
+    public class WorkMetadataPersister : IModule
     {
         private readonly Dictionary<Guid, WorkEntity> _workDictionary = new Dictionary<Guid, WorkEntity>();
 
@@ -26,32 +26,37 @@ namespace Borogove
             {
                 foreach (var document in inputs)
                 {
-                    Dictionary<string, object> metadata = document.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+                    Dictionary<string, object> newMetadata = new Dictionary<string, object>();
 
-                    Guid? workGuid = metadata
+                    Guid? workGuid = document
                         .SingleOrDefault(kvp => Names.CanonicalizeString(kvp.Key).Equals(Names.Identifier) && kvp.Value is Guid)
                         .Value as Guid?;
                     if (!workGuid.HasValue)
                     {
                         workGuid = Guid.NewGuid();
-                        metadata.Add(Names.Identifier, workGuid.Value);
+                        newMetadata.Add(Names.Identifier, workGuid.Value);
                     }
 
-                    WorkEntity work = workContext.Works
-                        .Include(w => w.WorkCreators)
-                        .Include(w => w.LanguageEntity)
-                        .Include(w => w.TagEntities)
-                        .Include(w => w.ParentEntity)
-                        .Include(w => w.PreviousWorkEntities)
-                        .Include(w => w.NextWorkEntities)
-                        .Include(w => w.DraftOfEntity)
-                        .Include(w => w.ArtifactOfEntity)
-                        .Include(w => w.CommentsOnEntity)
-                        .SingleOrDefault(w => w.Identifier.Equals(workGuid)) ??
-                        workContext.Works.Add(new WorkEntity(workGuid));
+                    WorkEntity work = workContext.Works.Find(workGuid.Value);
+                    if (work == null)
+                    {
+                        work = workContext.Works.Add(new WorkEntity(workGuid.Value));
+                    }
+                    else if (workContext.Entry(work).State != EntityState.Added)
+                    {
+                        workContext.Entry(work).Collection(w => w.WorkCreators).Load();
+                        workContext.Entry(work).Reference(w => w.LanguageEntity).Load();
+                        workContext.Entry(work).Collection(w => w.TagEntities).Load();
+                        workContext.Entry(work).Reference(w => w.ParentEntity).Load();
+                        workContext.Entry(work).Collection(w => w.PreviousWorkEntities).Load();
+                        workContext.Entry(work).Collection(w => w.NextWorkEntities).Load();
+                        workContext.Entry(work).Reference(w => w.DraftOfEntity).Load();
+                        workContext.Entry(work).Reference(w => w.ArtifactOfEntity).Load();
+                        workContext.Entry(work).Reference(w => w.CommentsOnEntity).Load();
+                    }
                     work.Content = document.Content;
-                    UpdateWorkEntityFromMetadata(work, metadata, workContext);
-                    finalProcessedDocuments.Add(document.Clone(metadata));
+                    UpdateWorkEntityFromMetadata(work, document, workContext);
+                    finalProcessedDocuments.Add(document.Clone(newMetadata));
                 }
 
                 workContext.SaveChanges();
@@ -60,7 +65,7 @@ namespace Borogove
             return finalProcessedDocuments;
         }
 
-        static private void UpdateWorkEntityFromMetadata(WorkEntity work, Dictionary<string, object> metadata, WorkContext workContext)
+        private static void UpdateWorkEntityFromMetadata(WorkEntity work, IEnumerable<KeyValuePair<string, object>> metadata, WorkContext workContext)
         {
             if (work == null)
             {
@@ -142,7 +147,7 @@ namespace Borogove
 
                     case Names.Language:
                         var langauge = value as CultureInfo ?? CultureInfo.CurrentCulture;
-                        work.LanguageEntity = workContext.Languages.Find(langauge.Name) ??
+                        work.LanguageEntity = workContext.Languages.Find(langauge.Name.ToLowerInvariant()) ??
                             workContext.Languages.Add(new LanguageEntity(langauge));
                         continue;
 
@@ -225,7 +230,8 @@ namespace Borogove
                         {
                             foreach (Guid previousWorkGuid in previousWorks)
                             {
-                                var previousWorkEntity = workContext.Works.Find(previousWorkGuid) ?? workContext.Works.Add(new WorkEntity(previousWorkGuid));
+                                var previousWorkEntity = workContext.Works.Find(previousWorkGuid) ??
+                                    workContext.Works.Add(new WorkEntity(previousWorkGuid));
                                 work.PreviousWorkEntities.Add(previousWorkEntity);
                             }
                         }
@@ -246,7 +252,8 @@ namespace Borogove
                         {
                             foreach (Guid nextWorkGuid in nextWorks)
                             {
-                                var nextWorkEntity = workContext.Works.Find(nextWorkGuid) ?? workContext.Works.Add(new WorkEntity(nextWorkGuid));
+                                var nextWorkEntity = workContext.Works.Find(nextWorkGuid) ??
+                                    workContext.Works.Add(new WorkEntity(nextWorkGuid));
                                 work.NextWorkEntities.Add(nextWorkEntity);
                             }
                         }
