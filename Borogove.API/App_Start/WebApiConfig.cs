@@ -42,8 +42,10 @@ namespace Borogove.API
             languagesConfiguration.Function("GetWorks")
                 .ReturnsCollectionFromEntitySet<WorkEntity>("Works");
 
-            builder.EntitySet<TagEntity>("Tags")
+            var tagsConfiguration = builder.EntitySet<TagEntity>("Tags")
                 .EntityType.HasKey(t => t.TagName);
+            tagsConfiguration.Function("GetWorks")
+                .ReturnsCollectionFromEntitySet<WorkEntity>("Works");
 
             builder.EntitySet<TagAliasEntity>("TagAliases")
                 .EntityType.HasKey(ta => ta.Alias);
