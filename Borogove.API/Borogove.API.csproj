@@ -129,10 +129,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Borogove.DataAccess\Borogove.DataAccess.csproj">
       <Project>{5ddc3d66-38c8-42b0-b9cf-6d86fa0c804e}</Project>
