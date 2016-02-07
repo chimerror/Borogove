@@ -23,26 +23,26 @@ namespace Borogove.API.Controllers
         [EnableQuery]
         public SingleResult<TagEntity> Get([FromODataUri] string key)
         {
-            var result = db.Tags.Where(t => t.TagName.Equals(key, StringComparison.InvariantCultureIgnoreCase));
+            var result = GetTagOrAlias(key);
             return SingleResult.Create(result);
         }
 
         [EnableQuery]
         public IQueryable<TagAliasEntity> GetAliases([FromODataUri] string key)
         {
-            return GetTagOrThrowNotFound(key).Aliases.AsQueryable();
+            return GetTagOrAliasOrThrowNotFound(key).Aliases.AsQueryable();
         }
 
         [EnableQuery]
         public IQueryable<TagEntity> GetImplications([FromODataUri] string key)
         {
-            return GetTagOrThrowNotFound(key).Implications.AsQueryable();
+            return GetTagOrAliasOrThrowNotFound(key).Implications.AsQueryable();
         }
 
         [EnableQuery]
         public IQueryable<WorkEntity> GetWorks([FromODataUri] string key)
         {
-            var tag = GetTagOrThrowNotFound(key);
+            var tag = GetTagOrAliasOrThrowNotFound(key);
             return db.Works
                 .Where(w => w.Tags.Select(t => t.TagName).Contains(tag.TagName));
         }
@@ -53,9 +53,25 @@ namespace Borogove.API.Controllers
             base.Dispose(disposing);
         }
 
-        private TagEntity GetTagOrThrowNotFound(string tagName)
+        private IQueryable<TagEntity> GetTagOrAlias(string tagName)
         {
-            var result = db.Tags.SingleOrDefault(l => l.TagName.Equals(tagName, StringComparison.InvariantCultureIgnoreCase));
+            var result = ExactTagExists(tagName) ?
+                db.Tags
+                    .Where(t => t.TagName.Equals(tagName, StringComparison.InvariantCultureIgnoreCase)) :
+                db.TagAliases
+                    .Where(ta => ta.Alias.Equals(tagName, StringComparison.InvariantCultureIgnoreCase))
+                    .Join(db.Tags, ta => ta.TagName, t => t.TagName, (ta, t) => t);
+            return result;
+        }
+
+        private bool ExactTagExists(string tagName)
+        {
+            return db.Tags.Any(t => t.TagName.Equals(tagName, StringComparison.InvariantCultureIgnoreCase));
+        }
+
+        private TagEntity GetTagOrAliasOrThrowNotFound(string tagName)
+        {
+            var result = GetTagOrAlias(tagName).SingleOrDefault();
             if (result == null)
             {
                 throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
