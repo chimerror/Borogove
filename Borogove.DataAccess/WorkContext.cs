@@ -56,11 +56,10 @@ namespace Borogove.DataAccess
                 .HasMany(w => w.WorkCreators)
                 .WithRequired(wce => wce.Work);
             workEntityModel
-                .HasOptional(w => w.LanguageEntity)
-                .WithMany()
-                .Map(m => m.MapKey("Language"));
+                .HasOptional(w => w.Language)
+                .WithMany();
             workEntityModel
-                .HasMany(w => w.TagEntities)
+                .HasMany(w => w.Tags)
                 .WithMany()
                 .Map(m =>
                 {
@@ -69,12 +68,11 @@ namespace Borogove.DataAccess
                     m.ToTable("WorkTags");
                 });
             workEntityModel
-                .HasOptional(w => w.ParentEntity)
-                .WithMany(w => w.ChildrenEntities)
-                .Map(m => m.MapKey("Parent"));
+                .HasOptional(w => w.Parent)
+                .WithMany(w => w.Children);
             workEntityModel
-                .HasMany(w => w.NextWorkEntities)
-                .WithMany(w => w.PreviousWorkEntities)
+                .HasMany(w => w.NextWorks)
+                .WithMany(w => w.PreviousWorks)
                 .Map(m =>
                 {
                     m.MapLeftKey("Work");
@@ -82,17 +80,14 @@ namespace Borogove.DataAccess
                     m.ToTable("NextWorks");
                 });
             workEntityModel
-                .HasOptional(w => w.DraftOfEntity)
-                .WithMany(w => w.DraftEntities)
-                .Map(m => m.MapKey("DraftOf"));
+                .HasOptional(w => w.DraftOf)
+                .WithMany(w => w.Drafts);
             workEntityModel
-                .HasOptional(w => w.ArtifactOfEntity)
-                .WithMany(w => w.ArtifactEntities)
-                .Map(m => m.MapKey("ArtifiactOf"));
+                .HasOptional(w => w.ArtifactOf)
+                .WithMany(w => w.Artifacts);
             workEntityModel
-                .HasOptional(w => w.CommentsOnEntity)
-                .WithMany(w => w.CommentEntities)
-                .Map(m => m.MapKey("CommentsOn"));
+                .HasOptional(w => w.CommentsOn)
+                .WithMany(w => w.Comments);
 
             var creatorAliasEntityModel = modelBuilder.Entity<CreatorAliasEntity>()
                 .HasKey(a => a.Alias)

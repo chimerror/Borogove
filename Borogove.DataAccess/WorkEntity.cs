@@ -14,13 +14,13 @@ namespace Borogove.DataAccess
         public WorkEntity()
         {
             WorkCreators = new List<WorkCreatorEntity>();
-            TagEntities = new List<TagEntity>();
-            ChildrenEntities = new List<WorkEntity>();
-            PreviousWorkEntities = new List<WorkEntity>();
-            NextWorkEntities = new List<WorkEntity>();
-            DraftEntities = new List<WorkEntity>();
-            ArtifactEntities = new List<WorkEntity>();
-            CommentEntities = new List<WorkEntity>();
+            Tags = new List<TagEntity>();
+            Children = new List<WorkEntity>();
+            PreviousWorks = new List<WorkEntity>();
+            NextWorks = new List<WorkEntity>();
+            Drafts = new List<WorkEntity>();
+            Artifacts = new List<WorkEntity>();
+            Comments = new List<WorkEntity>();
         }
 
         public WorkEntity(Guid? identifier = null,
@@ -52,22 +52,22 @@ namespace Borogove.DataAccess
         public DateTime PublishedDate { get; set; }
         public string Rights { get; set; }
         public License License { get; set; }
-        public virtual LanguageEntity LanguageEntity { get; set; }
+        public virtual LanguageEntity Language { get; set; }
         public WorkType WorkType { get; set; }
         public ContentRating ContentRating { get; set; }
         public ContentDescriptor ContentDescriptor { get; set; }
-        public virtual ICollection<TagEntity> TagEntities { get; set; }
+        public virtual ICollection<TagEntity> Tags { get; set; }
         public string Content { get; set; }
-        public virtual WorkEntity ParentEntity { get; set; }
-        public virtual ICollection<WorkEntity> ChildrenEntities { get; set; }
-        public virtual ICollection<WorkEntity> PreviousWorkEntities { get; set; }
-        public virtual ICollection<WorkEntity> NextWorkEntities { get; set; }
+        public virtual WorkEntity Parent { get; set; }
+        public virtual ICollection<WorkEntity> Children { get; set; }
+        public virtual ICollection<WorkEntity> PreviousWorks { get; set; }
+        public virtual ICollection<WorkEntity> NextWorks { get; set; }
         public string DraftIdentifier { get; set; }
-        public virtual WorkEntity DraftOfEntity { get; set; }
-        public virtual ICollection<WorkEntity> DraftEntities { get; set; }
-        public virtual WorkEntity ArtifactOfEntity { get; set; }
-        public virtual ICollection<WorkEntity> ArtifactEntities { get; set; }
-        public virtual WorkEntity CommentsOnEntity { get; set; }
-        public virtual ICollection<WorkEntity> CommentEntities { get; set; }
+        public virtual WorkEntity DraftOf { get; set; }
+        public virtual ICollection<WorkEntity> Drafts { get; set; }
+        public virtual WorkEntity ArtifactOf { get; set; }
+        public virtual ICollection<WorkEntity> Artifacts { get; set; }
+        public virtual WorkEntity CommentsOn { get; set; }
+        public virtual ICollection<WorkEntity> Comments { get; set; }
     }
 }

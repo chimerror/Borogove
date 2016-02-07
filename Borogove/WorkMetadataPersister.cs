@@ -45,14 +45,14 @@ namespace Borogove
                     else if (workContext.Entry(work).State != EntityState.Added)
                     {
                         workContext.Entry(work).Collection(w => w.WorkCreators).Load();
-                        workContext.Entry(work).Reference(w => w.LanguageEntity).Load();
-                        workContext.Entry(work).Collection(w => w.TagEntities).Load();
-                        workContext.Entry(work).Reference(w => w.ParentEntity).Load();
-                        workContext.Entry(work).Collection(w => w.PreviousWorkEntities).Load();
-                        workContext.Entry(work).Collection(w => w.NextWorkEntities).Load();
-                        workContext.Entry(work).Reference(w => w.DraftOfEntity).Load();
-                        workContext.Entry(work).Reference(w => w.ArtifactOfEntity).Load();
-                        workContext.Entry(work).Reference(w => w.CommentsOnEntity).Load();
+                        workContext.Entry(work).Reference(w => w.Language).Load();
+                        workContext.Entry(work).Collection(w => w.Tags).Load();
+                        workContext.Entry(work).Reference(w => w.Parent).Load();
+                        workContext.Entry(work).Collection(w => w.PreviousWorks).Load();
+                        workContext.Entry(work).Collection(w => w.NextWorks).Load();
+                        workContext.Entry(work).Reference(w => w.DraftOf).Load();
+                        workContext.Entry(work).Reference(w => w.ArtifactOf).Load();
+                        workContext.Entry(work).Reference(w => w.CommentsOn).Load();
                     }
                     work.Content = document.Content;
                     UpdateWorkEntityFromMetadata(work, document, workContext);
@@ -147,7 +147,7 @@ namespace Borogove
 
                     case Names.Language:
                         var langauge = value as CultureInfo ?? CultureInfo.CurrentCulture;
-                        work.LanguageEntity = workContext.Languages.Find(langauge.Name.ToLowerInvariant()) ??
+                        work.Language = workContext.Languages.Find(langauge.Name.ToLowerInvariant()) ??
                             workContext.Languages.Add(new LanguageEntity(langauge));
                         continue;
 
@@ -199,32 +199,32 @@ namespace Borogove
                             tagEntities.Add(tagEntity);
                         }
 
-                        work.TagEntities = tagEntities;
+                        work.Tags = tagEntities;
                         continue;
 
                     case Names.Parent:
                         var parentGuid = value as Guid?;
                         if (parentGuid.HasValue)
                         {
-                            work.ParentEntity = workContext.Works.Find(parentGuid.Value) ??
+                            work.Parent = workContext.Works.Find(parentGuid.Value) ??
                                 workContext.Works.Add(new WorkEntity(parentGuid.Value));
                         }
                         else
                         {
-                            work.ParentEntity = null;
+                            work.Parent = null;
                         }
                         continue;
 
                     case Names.Previous:
                         var previousWorks = value as IEnumerable<Guid>;
-                        if (work.PreviousWorkEntities == null)
+                        if (work.PreviousWorks == null)
                         {
-                            work.PreviousWorkEntities = new List<WorkEntity>();
+                            work.PreviousWorks = new List<WorkEntity>();
                         }
 
                         if (previousWorks == null)
                         {
-                            work.PreviousWorkEntities.Clear();
+                            work.PreviousWorks.Clear();
                         }
                         else
                         {
@@ -232,21 +232,21 @@ namespace Borogove
                             {
                                 var previousWorkEntity = workContext.Works.Find(previousWorkGuid) ??
                                     workContext.Works.Add(new WorkEntity(previousWorkGuid));
-                                work.PreviousWorkEntities.Add(previousWorkEntity);
+                                work.PreviousWorks.Add(previousWorkEntity);
                             }
                         }
                         continue;
 
                     case Names.Next:
                         var nextWorks = value as IEnumerable<Guid>;
-                        if (work.NextWorkEntities == null)
+                        if (work.NextWorks == null)
                         {
-                            work.NextWorkEntities = new List<WorkEntity>();
+                            work.NextWorks = new List<WorkEntity>();
                         }
 
                         if (nextWorks == null)
                         {
-                            work.NextWorkEntities.Clear();
+                            work.NextWorks.Clear();
                         }
                         else
                         {
@@ -254,7 +254,7 @@ namespace Borogove
                             {
                                 var nextWorkEntity = workContext.Works.Find(nextWorkGuid) ??
                                     workContext.Works.Add(new WorkEntity(nextWorkGuid));
-                                work.NextWorkEntities.Add(nextWorkEntity);
+                                work.NextWorks.Add(nextWorkEntity);
                             }
                         }
                         continue;
@@ -263,12 +263,12 @@ namespace Borogove
                         var draftOfGuid = value as Guid?;
                         if (draftOfGuid.HasValue)
                         {
-                            work.DraftOfEntity = workContext.Works.Find(draftOfGuid.Value) ??
+                            work.DraftOf = workContext.Works.Find(draftOfGuid.Value) ??
                                 workContext.Works.Add(new WorkEntity(draftOfGuid.Value));
                         }
                         else
                         {
-                            work.DraftOfEntity = null;
+                            work.DraftOf = null;
                         }
                         continue;
 
@@ -276,12 +276,12 @@ namespace Borogove
                         var artifactOfGuid = value as Guid?;
                         if (artifactOfGuid.HasValue)
                         {
-                            work.ArtifactOfEntity = workContext.Works.Find(artifactOfGuid.Value) ??
+                            work.ArtifactOf = workContext.Works.Find(artifactOfGuid.Value) ??
                                 workContext.Works.Add(new WorkEntity(artifactOfGuid.Value));
                         }
                         else
                         {
-                            work.ArtifactOfEntity = null;
+                            work.ArtifactOf = null;
                         }
                         continue;
 
@@ -289,12 +289,12 @@ namespace Borogove
                         var commentsOnGuid = value as Guid?;
                         if (commentsOnGuid.HasValue)
                         {
-                            work.CommentsOnEntity = workContext.Works.Find(commentsOnGuid.Value) ??
+                            work.CommentsOn = workContext.Works.Find(commentsOnGuid.Value) ??
                                 workContext.Works.Add(new WorkEntity(commentsOnGuid.Value));
                         }
                         else
                         {
-                            work.CommentsOnEntity = null;
+                            work.CommentsOn = null;
                         }
                         continue;
 
