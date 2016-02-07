@@ -28,6 +28,12 @@ namespace Borogove.API.Controllers
         }
 
         [EnableQuery]
+        public IQueryable<CreatorAliasEntity> GetAliases([FromODataUri] string key)
+        {
+            return GetCreatorOrThrowNotFound(key).Aliases.AsQueryable();
+        }
+
+        [EnableQuery]
         public IQueryable<WorkEntity> GetWorks([FromODataUri] string key)
         {
             var creator = GetCreatorOrThrowNotFound(key);
