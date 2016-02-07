@@ -28,8 +28,14 @@ namespace Borogove.API
             creatorsConfiguration.Function("GetWorks")
                 .ReturnsCollectionFromEntitySet<WorkEntity>("Works");
 
-            builder.EntitySet<CreatorAliasEntity>("CreatorAliases")
+            var creatorAliasesConfiguration = builder.EntitySet<CreatorAliasEntity>("CreatorAliases")
                 .EntityType.HasKey(ca => ca.Alias);
+            creatorAliasesConfiguration.Function("GetCreator")
+                .ReturnsFromEntitySet<CreatorInfoEntity>("Creators");
+            creatorAliasesConfiguration.Function("GetOtherAliases")
+                .ReturnsCollectionFromEntitySet<CreatorAliasEntity>("CreatorAliases");
+            creatorAliasesConfiguration.Function("GetWorks")
+                .ReturnsCollectionFromEntitySet<WorkEntity>("Works");
 
             builder.EntitySet<LanguageEntity>("Languages")
                 .EntityType.HasKey(l => l.Name);

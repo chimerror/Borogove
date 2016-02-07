@@ -23,7 +23,7 @@ namespace Borogove.API.Controllers
         [EnableQuery]
         public SingleResult<CreatorInfoEntity> Get([FromODataUri] string key)
         {
-            var result = db.Creators.Where(w => w.Name.Equals(key));
+            var result = db.Creators.Where(c => c.Name.Equals(key, StringComparison.InvariantCultureIgnoreCase));
             return SingleResult.Create(result);
         }
 
