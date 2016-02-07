@@ -1,10 +1,7 @@
-﻿using System;
-using System.Linq;
-using System.Web.Http;
+﻿using System.Linq;
 using System.Web.OData;
-using Borogove.DataAccess;
-using Borogove.Model;
 using System.Web.OData.Routing;
+using Borogove.DataAccess;
 
 namespace Borogove.API.Controllers
 {
@@ -14,7 +11,6 @@ namespace Borogove.API.Controllers
         WorkContext db = new WorkContext();
 
         [EnableQuery]
-        [ODataRoute]
         public IQueryable<WorkCreatorEntity> Get()
         {
             return db.WorkCreators;
