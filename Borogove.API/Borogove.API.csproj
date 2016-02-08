@@ -114,6 +114,7 @@
     <Compile Include="Controllers\CreatorAliasesController.cs" />
     <Compile Include="Controllers\CreatorsController.cs" />
     <Compile Include="Controllers\LanguagesController.cs" />
+    <Compile Include="Controllers\TagAliasesController.cs" />
     <Compile Include="Controllers\TagsController.cs" />
     <Compile Include="Controllers\WorkCreatorsController.cs" />
     <Compile Include="Controllers\WorksController.cs" />
