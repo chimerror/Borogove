@@ -1,0 +1,16 @@
+Pipelines.Add("Posts",
+              ReadFiles(@"posts\*.md"),
+              FrontMatter(Yaml()),
+              Markdown(),
+              Meta("Post", @doc.Content),
+              ReadFiles(@"posts\Post.cshtml"),
+              Razor(),
+              Meta("PostFile", string.Format(@"posts\{0}.html", ((string)@doc["Title"]).ToLower().Replace(' ', '-'))),
+              WriteFiles((string)@doc["PostFile"])
+);
+
+Pipelines.Add("Home",
+              ReadFiles(@"*.cshtml").FromTopDirectoryOnly().Where(x => Path.GetFileName(x)[0] != '_'),
+              Razor(),
+              WriteFiles(".html")
+ );
