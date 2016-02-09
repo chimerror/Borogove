@@ -14,9 +14,9 @@ before_build:
 
 after_build:
   - ..\Wyam\Wyam.exe Borogove.TestSite --output ..\Output
-  - dir ..\Output
+  - dir Output
 
 artifacts:
-  - path: ..\Output
+  - path: Output
     name: wyam output
     type: zip
