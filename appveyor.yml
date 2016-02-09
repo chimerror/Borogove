@@ -14,7 +14,7 @@ before_build:
 
 after_build:
   - ..\Wyam\Wyam.exe Borogove.TestSite --output ..\Output
-  - dir %APPVEYOR_BUILD_FOLDER%\out
+  - dir ..\Output
 
 artifacts:
   - path: ..\Output
