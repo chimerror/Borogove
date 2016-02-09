@@ -9,7 +9,10 @@ install:
   - ps: Start-FileDownload "https://github.com/Wyamio/Wyam/releases/download/$env:WYAMVERSION/Wyam-$env:WYAMVERSION.zip" -FileName "..\Wyam\Wyam.zip"
   - 7z x ..\Wyam\Wyam.zip -o..\Wyam -r
 
-build_script:
+before_build:
+  - nuget restore
+
+after_build:
   - ..\Wyam\Wyam.exe Borogove.TestSite --output ..\Output
 
 artifacts:
