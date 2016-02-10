@@ -1,11 +1,39 @@
+Assemblies
+        .LoadDirectory(@"..\Borogove\bin\Debug");
+
+===
+
+using Borogove;
+using Borogove.DataAccess;
+using Borogove.Model;
+
+public static class Helpers
+{
+        public static readonly string WorkContextConnectionString =
+Environment.GetEnvironmentVariable("BorogoveConnectionString") ?? WorkMetadataPersister.DefaultDatabaseName;
+
+        public static TagSet GetTagSet()
+        {
+                using (var context = new WorkContext(WorkContextConnectionString))
+                {
+                        return context.GetTagSet();
+                }
+        }
+}
+
+---
+
+Metadata.Add(Borogove.WorkMetadataYamlUnpacker.DefaultTagSetKey, Helpers.GetTagSet());
+
 Pipelines.Add("Posts",
               ReadFiles(@"posts\*.md"),
-              FrontMatter(Yaml()),
+              WorkMetadataYamlUnpacker(),
+              WorkMetadataPersister(Helpers.WorkContextConnectionString),
               Markdown(),
               Meta("Post", @doc.Content),
               ReadFiles(@"posts\Post.cshtml"),
               Razor(),
-              Meta("PostFile", string.Format(@"posts\{0}.html", ((string)@doc["Title"]).ToLower().Replace(' ', '-'))),
+              Meta("PostFile", string.Format(@"posts\{0}.html", ((string)@doc["title"]).ToLower().Replace(' ', '-'))),
               WriteFiles((string)@doc["PostFile"])
 );
 

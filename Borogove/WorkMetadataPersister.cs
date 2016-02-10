@@ -15,14 +15,24 @@ namespace Borogove
 {
     public class WorkMetadataPersister : IModule
     {
+        public const string DefaultDatabaseName = "Borogove";
+
         private readonly Dictionary<Guid, WorkEntity> _workDictionary = new Dictionary<Guid, WorkEntity>();
+        private readonly string _nameOrConnectionString;
+
+        public WorkMetadataPersister() : this(DefaultDatabaseName)
+        {
+        }
+
+        public WorkMetadataPersister(string nameOrConnectionString)
+        {
+            _nameOrConnectionString = nameOrConnectionString;
+        }
 
         public IEnumerable<IDocument> Execute(IReadOnlyList<IDocument> inputs, IExecutionContext context)
         {
-            Database.SetInitializer(new CreateDatabaseIfNotExists<WorkContext>());
-
             var finalProcessedDocuments = new List<IDocument>();
-            using (var workContext = new WorkContext())
+            using (var workContext = new WorkContext(_nameOrConnectionString))
             {
                 foreach (var document in inputs)
                 {

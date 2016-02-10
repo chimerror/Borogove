@@ -7,6 +7,6 @@ This is a test site for the Borogove metadata library. Carroll's Jabberwocky use
 <ul>
 @foreach(var doc in Documents.FromPipeline("Posts"))
 {
-        <li><a href="@doc["PostFile"]">@doc["Title"]</a> - @doc["Published"]</li>
+        <li><a href="@doc["PostFile"]">@doc["title"]</a> - @doc["createddate"]</li>
 }
 </ul>

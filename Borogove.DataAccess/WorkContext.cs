@@ -7,6 +7,7 @@ namespace Borogove.DataAccess
     public class WorkContext : DbContext
     {
         public WorkContext() : base("Borogove") { }
+        public WorkContext(string nameOrConnectionString) : base(nameOrConnectionString) { }
 
         public DbSet<WorkEntity> Works { get; set; }
         public DbSet<LanguageEntity> Languages { get; set; }
