@@ -13,6 +13,31 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Borogove.DataAccess", "Boro
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Borogove.API", "Borogove.API\Borogove.API.csproj", "{0AED8C3E-C161-464F-8B65-5CDED6233FAD}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4008E3CE-E2D2-4414-95F5-03C2838ADC63}"
+	ProjectSection(SolutionItems) = preProject
+		appveyor.yml = appveyor.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Borogove.TestSite", "Borogove.TestSite", "{C29F7E5B-F83C-4885-9575-ABAD80D7A847}"
+	ProjectSection(SolutionItems) = preProject
+		Borogove.TestSite\config.wyam = Borogove.TestSite\config.wyam
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Input", "Input", "{08363E02-2717-4E2D-8FB5-5039E6DB48DB}"
+	ProjectSection(SolutionItems) = preProject
+		Borogove.TestSite\Input\_Layout.cshtml = Borogove.TestSite\Input\_Layout.cshtml
+		Borogove.TestSite\Input\_ViewStart.cshtml = Borogove.TestSite\Input\_ViewStart.cshtml
+		Borogove.TestSite\Input\favicon.ico = Borogove.TestSite\Input\favicon.ico
+		Borogove.TestSite\Input\home.cshtml = Borogove.TestSite\Input\home.cshtml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Posts", "Posts", "{B1797F0A-29ED-434F-9B61-52EC3B73268F}"
+	ProjectSection(SolutionItems) = preProject
+		Borogove.TestSite\Input\Posts\bar.md = Borogove.TestSite\Input\Posts\bar.md
+		Borogove.TestSite\Input\Posts\foo.md = Borogove.TestSite\Input\Posts\foo.md
+		Borogove.TestSite\Input\Posts\post.cshtml = Borogove.TestSite\Input\Posts\post.cshtml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,5 +67,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{08363E02-2717-4E2D-8FB5-5039E6DB48DB} = {C29F7E5B-F83C-4885-9575-ABAD80D7A847}
+		{B1797F0A-29ED-434F-9B61-52EC3B73268F} = {08363E02-2717-4E2D-8FB5-5039E6DB48DB}
 	EndGlobalSection
 EndGlobal
