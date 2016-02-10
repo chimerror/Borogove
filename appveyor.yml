@@ -19,7 +19,7 @@ before_build:
   - nuget restore
 
 after_build:
-  - ..\Wyam\Wyam.exe Borogove.TestSite --output ..\Output
+  - ..\Wyam\Wyam.exe Borogove.TestSite --output ..\Output --verbose
   - dir Output
 
 artifacts:
