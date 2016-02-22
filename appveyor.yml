@@ -27,7 +27,7 @@ artifacts:
 
 deploy:
   - provider: WebDeploy
-    server: borogovedevo.scm.azurewebsites.net:443
+    server: borogovedevo.scm.azurewebsites.net/deploy
     website: BorogoveDevo
     username: $BorogoveDevo
     password:
