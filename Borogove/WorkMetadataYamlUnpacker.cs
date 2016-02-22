@@ -5,6 +5,7 @@ using System.Linq;
 using Wyam.Common.Documents;
 using Wyam.Common.Modules;
 using Wyam.Common.Pipelines;
+using Wyam.Common.Tracing;
 using Wyam.Core.Modules.Control;
 using Wyam.Modules.Yaml;
 using YamlDotNet.RepresentationModel;
@@ -157,7 +158,7 @@ namespace Borogove
                             }
                             else
                             {
-                                context.Trace.Warning($"Unable to parse license: {stringValue}");
+                                Trace.Warning($"Unable to parse license: {stringValue}");
                             }
                             continue;
 
@@ -215,7 +216,7 @@ namespace Borogove
 
                 // The return value of execute will be all the input documents with
                 // the metadata added. If this can be done with lazy processing, do it.
-                yield return document.Clone(newMetadata);
+                yield return context.GetDocument(document, newMetadata);
             }
 
             yield break;

@@ -23,7 +23,7 @@ Environment.GetEnvironmentVariable("BorogoveConnectionString") ?? WorkMetadataPe
 
 ---
 
-Metadata.Add(Borogove.WorkMetadataYamlUnpacker.DefaultTagSetKey, Helpers.GetTagSet());
+InitialMetadata.Add(Borogove.WorkMetadataYamlUnpacker.DefaultTagSetKey, Helpers.GetTagSet());
 
 Pipelines.Add("Posts",
               ReadFiles(@"posts\*.md"),
@@ -31,7 +31,9 @@ Pipelines.Add("Posts",
               WorkMetadataPersister(Helpers.WorkContextConnectionString),
               Markdown(),
               Meta("Post", @doc.Content),
-              ReadFiles(@"posts\Post.cshtml"),
+              Merge(
+                  ReadFiles(@"posts\Post.cshtml")
+              ),
               Razor(),
               Meta("PostFile", string.Format(@"posts\{0}.html", ((string)@doc["title"]).ToLower().Replace(' ', '-'))),
               WriteFiles((string)@doc["PostFile"])

@@ -66,7 +66,7 @@ namespace Borogove
                     }
                     work.Content = document.Content;
                     UpdateWorkEntityFromMetadata(work, document, workContext);
-                    finalProcessedDocuments.Add(document.Clone(newMetadata));
+                    finalProcessedDocuments.Add(context.GetDocument(document, newMetadata));
                 }
 
                 workContext.SaveChanges();

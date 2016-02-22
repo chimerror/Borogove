@@ -58,15 +58,8 @@ Doesn't _exist_ yet. :p";
 
             inputDocumentMock.Content
                 .Returns(testDocument);
-            inputDocumentMock.Clone(Arg.Any<string>(), Arg.Any<IEnumerable<KeyValuePair<string, object>>>())
-                .Returns(frontMatterDocumentMock);
             frontMatterDocumentMock.Content
                 .Returns(testFrontMatter);
-            frontMatterDocumentMock.Clone(Arg.Any<Dictionary<string, object>>())
-                .Returns(frontMatterResultDocumentMock)
-                .AndDoes(ci => resultMetadata = ci.Arg<Dictionary<string, object>>());
-            frontMatterResultDocumentMock.Clone(Arg.Any<string>(), Arg.Any<IEnumerable<KeyValuePair<string, object>>>())
-                .Returns(resultDocumentMock);
             resultDocumentMock.GetEnumerator().Returns(
                 ci =>
                 {
@@ -91,9 +84,6 @@ Doesn't _exist_ yet. :p";
                 .Returns("DefaultConstructorWorks.md");
             resultDocumentMock.Content
                 .Returns(testContent);
-            resultDocumentMock.Clone(Arg.Any<Dictionary<string, object>>())
-                .Returns(finalDocumentMock)
-                .AndDoes(ci => finalMetadata = ci.Arg<Dictionary<string, object>>());
             var inputDocuments = new List<IDocument>() { inputDocumentMock };
 
             var executionContextMock = Substitute.For<IExecutionContext>();
@@ -113,6 +103,16 @@ Doesn't _exist_ yet. :p";
 
                         return module.Execute(inputs.ToList(), executionContextMock).ToList();
                     });
+            executionContextMock.GetDocument(inputDocumentMock, Arg.Any<string>(), Arg.Any<IEnumerable<KeyValuePair<string, object>>>())
+                .Returns(frontMatterDocumentMock);
+            executionContextMock.GetDocument(frontMatterDocumentMock, Arg.Any<Dictionary<string, object>>())
+                .Returns(frontMatterResultDocumentMock)
+                .AndDoes(ci => resultMetadata = ci.Arg<Dictionary<string, object>>());
+            executionContextMock.GetDocument(resultDocumentMock, Arg.Any<Dictionary<string, object>>())
+                .Returns(finalDocumentMock)
+                .AndDoes(ci => finalMetadata = ci.Arg<Dictionary<string, object>>());
+            executionContextMock.GetDocument(frontMatterResultDocumentMock, Arg.Any<string>(), Arg.Any<IEnumerable<KeyValuePair<string, object>>>())
+                .Returns(resultDocumentMock);
 
             var target = new WorkMetadataYamlUnpacker();
             var result = target.Execute(inputDocuments, executionContextMock).ToList();
