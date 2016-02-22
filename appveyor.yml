@@ -15,6 +15,9 @@ install:
   - ps: Start-FileDownload "https://github.com/Wyamio/Wyam/releases/download/$env:WYAMVERSION/Wyam-$env:WYAMVERSION.zip" -FileName "..\Wyam\Wyam.zip"
   - 7z x ..\Wyam\Wyam.zip -o..\Wyam -r
 
+build:
+  publish_wap: true
+
 before_build:
   - nuget restore
 
@@ -26,3 +29,13 @@ artifacts:
   - path: Output
     name: wyam output
     type: zip
+
+deploy:
+  - provider: WebDeploy
+    server: borogovedevo.scm.azurewebsites.net:443
+    website: BorogoveDevo
+    username: $BorogoveDevo
+    password:
+      secure: NrYg8zLiW7Ex1ll0qVMorkj7+IcwQ1L7bYOXhTQR9KBJ2La9UUw5zyoU91R+hDh1NBpoMZYV5kv27KGGBuTsVA==
+    remove_files: true
+    app_offline: false
