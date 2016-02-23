@@ -52,7 +52,7 @@ namespace Borogove.API
 
             config.MapODataServiceRoute(
                 "ODataRoute",
-                "api",
+                null,
                 builder.GetEdmModel(),
                 defaultHandler: new ODataNullValueMessageHandler() { InnerHandler = new HttpControllerDispatcher(config) });
         }
