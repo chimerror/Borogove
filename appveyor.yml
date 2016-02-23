@@ -23,7 +23,6 @@ after_build:
 artifacts:
   - path: Output\**\*.*
     name: wyam output
-    type: zip
 
 deploy:
   - provider: FTP
