@@ -26,6 +26,15 @@ artifacts:
     type: zip
 
 deploy:
+  - provider: WebDeploy
+    server: https://borogovedevo.scm.azurewebsites.net:443/msdeploy.axd?site=BorogoveDevo
+    website: BorogoveDevo
+    username: $BorogoveDevo
+    password:
+      secure: NrYg8zLiW7Ex1ll0qVMorkj7+IcwQ1L7bYOXhTQR9KBJ2La9UUw5zyoU91R+hDh1NBpoMZYV5kv27KGGBuTsVA==
+    remove_files: true
+    app_offline: false
+    ntlm: false
   - provider: FTP
     protocol: ftps
     host: waws-prod-bay-041.ftp.azurewebsites.windows.net
@@ -34,12 +43,3 @@ deploy:
       secure: uZ0JN3HNXcFOc+xgFgpKsA==
     folder: site/wwwroot
     application: /Output/
-  - provider: WebDeploy
-    server: https://borogovedevo.scm.azurewebsites.net:443/msdeploy.axd?site=BorogoveDevo
-    website: BorogoveDevo
-    username: $BorogoveDevo
-    password:
-      secure: NrYg8zLiW7Ex1ll0qVMorkj7+IcwQ1L7bYOXhTQR9KBJ2La9UUw5zyoU91R+hDh1NBpoMZYV5kv27KGGBuTsVA==
-    remove_files: false
-    app_offline: false
-    ntlm: false
