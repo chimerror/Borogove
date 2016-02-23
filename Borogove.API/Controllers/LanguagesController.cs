@@ -12,7 +12,7 @@ namespace Borogove.API.Controllers
     [ODataRoutePrefix("Languages")]
     public class LanguagesController : ODataController
     {
-        WorkContext db = new WorkContext();
+        WorkContext db = new WorkContext("name=WorkContext");
 
         [EnableQuery]
         public IQueryable<LanguageEntity> Get()

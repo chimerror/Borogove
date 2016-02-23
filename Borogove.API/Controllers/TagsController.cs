@@ -12,7 +12,7 @@ namespace Borogove.API.Controllers
     [ODataRoutePrefix("Tags")]
     public class TagsController : ODataController
     {
-        WorkContext db = new WorkContext();
+        WorkContext db = new WorkContext("name=WorkContext");
 
         [EnableQuery]
         public IQueryable<TagEntity> Get()

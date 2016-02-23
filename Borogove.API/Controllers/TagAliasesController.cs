@@ -8,7 +8,7 @@ namespace Borogove.API.Controllers
     [ODataRoutePrefix("TagAliases")]
     public class TagAliasesController : ODataController
     {
-        WorkContext db = new WorkContext();
+        WorkContext db = new WorkContext("name=WorkContext");
 
         [EnableQuery]
         public IQueryable<TagAliasEntity> Get()

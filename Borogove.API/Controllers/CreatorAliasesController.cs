@@ -12,7 +12,7 @@ namespace Borogove.API.Controllers
     [ODataRoutePrefix("CreatorAliases")]
     public class CreatorAliasesController : ODataController
     {
-        WorkContext db = new WorkContext();
+        WorkContext db = new WorkContext("name=WorkContext");
 
         [EnableQuery]
         public IQueryable<CreatorAliasEntity> Get()

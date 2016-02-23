@@ -12,7 +12,7 @@ namespace Borogove.API.Controllers
     [ODataRoutePrefix("Creators")]
     public class CreatorsController : ODataController
     {
-        WorkContext db = new WorkContext();
+        WorkContext db = new WorkContext("name=WorkContext");
 
         [EnableQuery]
         public IQueryable<CreatorInfoEntity> Get()

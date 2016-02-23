@@ -12,7 +12,7 @@ namespace Borogove.API.Controllers
     [ODataRoutePrefix("Works")]
     public class WorksController : ODataController
     {
-        WorkContext db = new WorkContext();
+        WorkContext db = new WorkContext("name=WorkContext");
 
         [EnableQuery]
         public IQueryable<WorkEntity> Get()
