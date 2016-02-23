@@ -20,6 +20,11 @@ after_build:
   - ..\Wyam\Wyam.exe Borogove.TestSite --output ..\Output --verbose
   - dir Output
 
+artifacts:
+  - path: Output\*.*
+    name: wyam output
+    type: zip
+
 deploy:
   - provider: FTP
     protocol: ftps
