@@ -27,10 +27,11 @@ artifacts:
 
 deploy:
   - provider: WebDeploy
-    server: BorogoveDevo.scm.azurewebsites.net/deploy
+    server: https://borogovedevo.scm.azurewebsites.net:443/msdeploy.axd?site=BorogoveDevo
     website: BorogoveDevo
-    username: BorogoveDevo\commafun
+    username: $BorogoveDevo
     password:
-        secure: uZ0JN3HNXcFOc+xgFgpKsA==
+         secure: NrYg8zLiW7Ex1ll0qVMorkj7+IcwQ1L7bYOXhTQR9KBJ2La9UUw5zyoU91R+hDh1NBpoMZYV5kv27KGGBuTsVA==
     remove_files: true
     app_offline: false
+    ntlm: false
