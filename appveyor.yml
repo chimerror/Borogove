@@ -30,7 +30,6 @@ deploy:
     server: borogovedevo.scm.azurewebsites.net/deploy
     website: BorogoveDevo
     username: $BorogoveDevo
-    password:
-      secure: NrYg8zLiW7Ex1ll0qVMorkj7+IcwQ1L7bYOXhTQR9KBJ2La9UUw5zyoU91R+hDh1NBpoMZYV5kv27KGGBuTsVA==
+    password: 2noL5XFeLNXsPi8ifwpN4AC8PPDg86m7DxJvyZuCHDWlwqj0geRbMkAwpRhk
     remove_files: true
     app_offline: false
