@@ -27,10 +27,10 @@ artifacts:
 
 deploy:
   - provider: WebDeploy
-    server: https://$BorogoveDevo:2noL5XFeLNXsPi8ifwpN4AC8PPDg86m7DxJvyZuCHDWlwqj0geRbMkAwpRhk@BorogoveDevo.scm.azurewebsites.net/deploy
+    server: https://BorogoveDevo.scm.azurewebsites.net/deploy
     website: BorogoveDevo
-    # username: commafun
-    # password:
-    #     secure: uZ0JN3HNXcFOc+xgFgpKsA==
+    username: commafun
+    password:
+        secure: uZ0JN3HNXcFOc+xgFgpKsA==
     remove_files: true
     app_offline: false
