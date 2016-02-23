@@ -29,7 +29,7 @@ deploy:
   - provider: WebDeploy
     server: BorogoveDevo.scm.azurewebsites.net/deploy
     website: BorogoveDevo
-    username: commafun
+    username: BorogoveDevo\commafun
     password:
         secure: uZ0JN3HNXcFOc+xgFgpKsA==
     remove_files: true
