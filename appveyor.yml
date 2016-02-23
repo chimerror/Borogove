@@ -29,8 +29,8 @@ deploy:
   - provider: WebDeploy
     server: borogovedevo.scm.azurewebsites.net/deploy
     website: BorogoveDevo
-    username: checkstyle
+    username: BorogoveDevo\commafun
     password:
-        secure: K+eaSrvQEy4uhClwlMrbMA==
+        secure: uZ0JN3HNXcFOc+xgFgpKsA==
     remove_files: true
     app_offline: false
