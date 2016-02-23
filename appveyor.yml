@@ -29,7 +29,7 @@ deploy:
   - provider: WebDeploy
     server: borogovedevo.scm.azurewebsites.net/deploy
     website: BorogoveDevo
-    username: BorogoveDevo\checkstyle
+    username: checkstyle
     password:
         secure: K+eaSrvQEy4uhClwlMrbMA==
     remove_files: true
