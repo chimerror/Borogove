@@ -21,8 +21,9 @@ after_build:
   - dir Output
 
 artifacts:
-  - path: Output\**\*.*
+  - path: Output
     name: wyam output
+    type: zip
 
 deploy:
   - provider: FTP
@@ -32,7 +33,7 @@ deploy:
     password:
       secure: uZ0JN3HNXcFOc+xgFgpKsA==
     folder: site/wwwroot
-    artifact: /Output\**\*.*/
+    application: wyam output
   - provider: WebDeploy
     server: https://borogovedevo.scm.azurewebsites.net:443/msdeploy.axd?site=BorogoveDevo
     website: BorogoveDevo
