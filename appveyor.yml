@@ -33,3 +33,4 @@ deploy:
     password: 2noL5XFeLNXsPi8ifwpN4AC8PPDg86m7DxJvyZuCHDWlwqj0geRbMkAwpRhk
     remove_files: true
     app_offline: false
+    ntlm: true
