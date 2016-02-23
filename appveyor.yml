@@ -33,7 +33,7 @@ deploy:
     password:
       secure: uZ0JN3HNXcFOc+xgFgpKsA==
     folder: site/wwwroot
-    application: wyam output
+    application: /Output/
   - provider: WebDeploy
     server: https://borogovedevo.scm.azurewebsites.net:443/msdeploy.axd?site=BorogoveDevo
     website: BorogoveDevo
