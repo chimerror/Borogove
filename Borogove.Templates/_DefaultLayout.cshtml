@@ -1,0 +1,14 @@
+@using Borogove;
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="@Metadata.Get(WorkMetadataCanonicalNames.Language)" xml:lang="@Metadata.Get(WorkMetadataCanonicalNames.Language)">
+    <head>
+        <meta name="generator" content="Wyam" />
+        <meta name="generator" content="Borogove" />
+        <meta charset="utf-8" />
+        @Html.Partial("_MetadataElements")
+        <title>@Metadata.Get(WorkMetadataCanonicalNames.Title, "Untitled")</title>
+    </head>
+    <body>
+        @RenderBody()
+    </body>
+</html>

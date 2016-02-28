@@ -1,6 +1,5 @@
 Assemblies
         .LoadDirectory(@"..\Borogove\bin\Debug");
-
 ===
 
 using Borogove;
@@ -19,11 +18,19 @@ Environment.GetEnvironmentVariable("BorogoveConnectionString") ?? WorkMetadataPe
                         return context.GetTagSet();
                 }
         }
+
+        public static string InputFolder { get; set; }
 }
 
 ---
 
 InitialMetadata.Add(Borogove.WorkMetadataYamlUnpacker.DefaultTagSetKey, Helpers.GetTagSet());
+
+Pipelines.Add("Templates",
+              Execute(ctx => { Helpers.InputFolder = ctx.InputFolder; return null; }),
+              CopyFiles(@"..\..\Borogove.Templates\*.*")
+                  .To(x => Path.Combine(Helpers.InputFolder, Path.GetFileName(x)))
+);
 
 Pipelines.Add("Posts",
               ReadFiles(@"posts\*.md"),

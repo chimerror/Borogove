@@ -1,0 +1,25 @@
+@using Borogove;
+@using Borogove.Model;
+@if (Metadata.ContainsKey(WorkMetadataCanonicalNames.Creator))
+{
+    var creators = Metadata.Get<IEnumerable<Creator>>(WorkMetadataCanonicalNames.Creator);
+    if (creators != null)
+    {
+        foreach (var creator in creators)
+        {
+            var name = string.IsNullOrEmpty(creator.FileAs) ? creator.Text : creator.FileAs;
+            if (!string.IsNullOrEmpty(name))
+            {
+                <meta name="author" content="@name" />
+            }
+        }
+    }
+}
+@if (Metadata.ContainsKey(WorkMetadataCanonicalNames.Description))
+{
+    <meta name="description" content="@Metadata.Get(WorkMetadataCanonicalNames.Description)" />
+}
+@if (Metadata.ContainsKey(WorkMetadataCanonicalNames.Tags))
+{
+    <meta name="keywords" content="@string.Join(", ", Metadata.Get<IEnumerable<Tag>>(WorkMetadataCanonicalNames.Tags)?.Select(t => t.Name))" />
+}
