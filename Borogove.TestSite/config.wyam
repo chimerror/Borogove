@@ -41,9 +41,9 @@ Pipelines.Add("Posts",
               Merge(
                   ReadFiles(@"posts\Post.cshtml")
               ),
+              Meta("BorogovePath", string.Format(@"posts\{0}.html", ((string)@doc["title"]).ToLower().Replace(' ', '-'))),
               Razor(),
-              Meta("PostFile", string.Format(@"posts\{0}.html", ((string)@doc["title"]).ToLower().Replace(' ', '-'))),
-              WriteFiles((string)@doc["PostFile"])
+              WriteFiles((string)@doc["BorogovePath"])
 );
 
 Pipelines.Add("Home",

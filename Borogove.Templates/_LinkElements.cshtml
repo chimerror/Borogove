@@ -1,0 +1,51 @@
+@using System.Text;
+@using Borogove;
+@using Borogove.Model;
+@functions
+{
+    string WriteLinks(IEnumerable<Guid> identifiers, string linkType)
+    {
+        if (identifiers != null)
+        {
+            var stringBuilder = new StringBuilder();
+            foreach (Guid identifier in identifiers)
+            {
+                var linkLine = WriteSingleLink(identifier, linkType);
+                if (!string.IsNullOrEmpty(linkLine))
+                {
+                    stringBuilder.AppendLine(linkLine);
+                }
+            }
+            return stringBuilder.ToString();
+        }
+        return string.Empty;
+    }
+
+    string WriteSingleLink(Guid identifier, string linkType)
+    {
+        if (identifier.Equals(Guid.Empty))
+        {
+            return string.Empty;
+        }
+
+        var result = string.Empty;
+        var work = Documents.FirstOrDefault(d =>
+            {
+                var candidateIdentifier = d.Get<Guid>(WorkMetadataCanonicalNames.Identifier, Guid.Empty);
+                return candidateIdentifier.Equals(identifier);
+            });
+        if (work != null && work.ContainsKey("BorogovePath"))
+        {
+            var title = work.Get<string>(WorkMetadataCanonicalNames.Title);
+            result = string.Format(
+                @"<link rel=""{0}"" title""{0}: {1}"" href=""{2}"" />",
+                linkType,
+                string.IsNullOrEmpty(title) ? "Untitled" : title,
+                work.Get("BorogovePath"));
+        }
+        return result;
+    }
+}
+@Html.Raw(WriteSingleLink(Metadata.Get<Guid>(WorkMetadataCanonicalNames.Parent, Guid.Empty), "up"))
+@Html.Raw(WriteLinks(Metadata.Get<IEnumerable<Guid>>(WorkMetadataCanonicalNames.Previous), "prev"))
+@Html.Raw(WriteLinks(Metadata.Get<IEnumerable<Guid>>(WorkMetadataCanonicalNames.Next), "next"))

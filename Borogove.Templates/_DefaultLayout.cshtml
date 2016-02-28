@@ -7,6 +7,7 @@
         <meta charset="utf-8" />
         @Html.Partial("_MetadataElements")
         <title>@Metadata.Get(WorkMetadataCanonicalNames.Title, "Untitled")</title>
+        @Html.Partial("_LinkElements")
     </head>
     <body>
         @RenderBody()
