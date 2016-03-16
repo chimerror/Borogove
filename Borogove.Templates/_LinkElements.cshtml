@@ -34,14 +34,14 @@
                 var candidateIdentifier = d.Get<Guid>(WorkMetadataCanonicalNames.Identifier, Guid.Empty);
                 return candidateIdentifier.Equals(identifier);
             });
-        if (work != null && work.ContainsKey("BorogovePath"))
+        if (work != null && work.ContainsKey(WorkMetadataCanonicalNames.Path))
         {
             var title = work.Get<string>(WorkMetadataCanonicalNames.Title);
             result = string.Format(
-                @"<link rel=""{0}"" title""{0}: {1}"" href=""{2}"" />",
+                @"<link rel=""{0}"" title""{0}: {1}"" href=""/{2}"" />", // We assume the path should be rooted.
                 linkType,
                 string.IsNullOrEmpty(title) ? "Untitled" : title,
-                work.Get("BorogovePath"));
+                work.Get(WorkMetadataCanonicalNames.Path));
         }
         return result;
     }

@@ -33,6 +33,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Posts", "Posts", "{B1797F0A-29ED-434F-9B61-52EC3B73268F}"
 	ProjectSection(SolutionItems) = preProject
 		Borogove.TestSite\Input\Posts\bar.md = Borogove.TestSite\Input\Posts\bar.md
+		Borogove.TestSite\Input\Posts\baz.md = Borogove.TestSite\Input\Posts\baz.md
 		Borogove.TestSite\Input\Posts\foo.md = Borogove.TestSite\Input\Posts\foo.md
 		Borogove.TestSite\Input\Posts\post.cshtml = Borogove.TestSite\Input\Posts\post.cshtml
 	EndProjectSection

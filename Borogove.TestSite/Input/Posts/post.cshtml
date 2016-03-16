@@ -1,4 +1,5 @@
-<h1>@Metadata["title"]</h1>
-<h2>@Metadata["description"]</h2>
+@using Borogove;
+<h1>@Metadata[WorkMetadataCanonicalNames.Title]</h1>
+<h2>@Metadata[WorkMetadataCanonicalNames.Description]</h2>
 <hr />
 @Html.Raw(Metadata["Post"])

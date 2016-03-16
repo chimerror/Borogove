@@ -2,12 +2,19 @@ Assemblies
         .LoadDirectory(@"..\Borogove\bin\Debug");
 ===
 
+using System.Data.Entity;
 using Borogove;
 using Borogove.DataAccess;
 using Borogove.Model;
 
 public static class Helpers
 {
+        static Helpers()
+        {
+            Database.SetInitializer(new DropCreateDatabaseIfModelChanges<WorkContext>());
+        }
+
+
         public static readonly string WorkContextConnectionString =
 Environment.GetEnvironmentVariable("BorogoveConnectionString") ?? WorkMetadataPersister.DefaultDatabaseName;
 
@@ -35,15 +42,15 @@ Pipelines.Add("Templates",
 Pipelines.Add("Posts",
               ReadFiles(@"posts\*.md"),
               WorkMetadataYamlUnpacker(),
+              Meta(WorkMetadataCanonicalNames.Path, string.Format(@"posts\{0}.html", ((string)@doc[WorkMetadataCanonicalNames.Title]).ToLower().Replace(' ', '-'))),
               WorkMetadataPersister(Helpers.WorkContextConnectionString),
               Markdown(),
               Meta("Post", @doc.Content),
               Merge(
                   ReadFiles(@"posts\Post.cshtml")
               ),
-              Meta("BorogovePath", string.Format(@"posts\{0}.html", ((string)@doc["title"]).ToLower().Replace(' ', '-'))),
               Razor(),
-              WriteFiles((string)@doc["BorogovePath"])
+              WriteFiles((string)@doc[WorkMetadataCanonicalNames.Path])
 );
 
 Pipelines.Add("Home",

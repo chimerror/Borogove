@@ -5,6 +5,7 @@
         public const string Identifier = "identifier";
         public const string Title = "title";
         public const string Description = "description";
+        public const string Path = "path";
         public const string Creator = "creator";
         public const string CreatedDate = "createddate";
         public const string ModifiedDate = "modifieddate";

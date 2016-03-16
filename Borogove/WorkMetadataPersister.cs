@@ -64,6 +64,8 @@ namespace Borogove
                         workContext.Entry(work).Reference(w => w.ArtifactOf).Load();
                         workContext.Entry(work).Reference(w => w.CommentsOn).Load();
                     }
+
+                    work.Path = document.Get<string>(Names.Path, null);
                     work.Content = document.Content;
                     UpdateWorkEntityFromMetadata(work, document, workContext);
                     finalProcessedDocuments.Add(context.GetDocument(document, newMetadata));
