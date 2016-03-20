@@ -6,7 +6,7 @@ Creator:
     text: Lewis Carroll
   - role: Author
     text: Jason Mitchell
-Language: en-US
+Language: en-GB
 WorkType: Writing
 Tags: jaberwocky = jabberwock, jaws, claws, jubjub, bandersnatch, nonce words, darius
 Created date: 2016-02-10T06:46:00

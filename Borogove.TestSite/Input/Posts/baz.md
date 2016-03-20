@@ -4,7 +4,7 @@ Description: Faster child, kill kill kill!
 Creator:
   - role: Author
     text: Lewis Carroll
-Language: en-US
+Language: en-GB
 WorkType: Writing
 Tags: nonce words, blade = sword, vorpal sword, jabberwock, violence, galumphing
 Parent: 2af4bebc-b675-4e1c-9764-e688ac796703
