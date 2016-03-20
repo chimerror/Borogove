@@ -20,6 +20,26 @@ namespace Borogove.API.Controllers
             return db.Works;
         }
 
+        [EnableQuery()]
+        [HttpGet]
+        public IQueryable<WorkEntity> Search([FromODataUri] string input)
+        {
+            var matchingTagsByAlias = db.TagAliases
+                .Where(ta => ta.Alias.Contains(input))
+                .Join(db.Tags, ta => ta.TagName, t => t.TagName, (ta, t) => t);
+            var matchingTags = db.Tags
+                .Where(t => t.TagName.Contains(input))
+                .Concat(matchingTagsByAlias);
+
+            return db.Works
+                .Where(w =>
+                    w.Content.Contains(input) ||
+                    w.Description.Contains(input) ||
+                    w.Title.Contains(input) ||
+                    w.Tags.Any(t => matchingTags.Contains(t)) ||
+                    w.WorkCreators.Any(wc => wc.CreatorName.Contains(input) || wc.WorkedAsName.Contains(input)));
+        }
+
         [EnableQuery]
         public SingleResult<WorkEntity> Get([FromODataUri] Guid key)
         {

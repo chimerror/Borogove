@@ -16,6 +16,9 @@ namespace Borogove.API
 
             var workConfiguration = builder.EntitySet<WorkEntity>("Works")
                 .EntityType.HasKey(w => w.Identifier);
+            workConfiguration.Collection.Function("Search")
+                .ReturnsCollectionFromEntitySet<WorkEntity>("Works")
+                .Parameter<string>("input");
 
             var workCreatorsConfiguration = builder.EntitySet<WorkCreatorEntity>("WorkCreators").EntityType;
             workCreatorsConfiguration.HasKey(w => w.WorkIdentifier);
@@ -50,6 +53,7 @@ namespace Borogove.API
             builder.EntitySet<TagAliasEntity>("TagAliases")
                 .EntityType.HasKey(ta => ta.Alias);
 
+            config.EnableUnqualifiedNameCall(true);
             config.MapODataServiceRoute(
                 "ODataRoute",
                 "api",
