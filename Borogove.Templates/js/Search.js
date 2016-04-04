@@ -5,6 +5,11 @@ requirejs.config({
     baseUrl: 'js/lib'
 });
 requirejs(['q', 'o', 'pure'], function (q, o, pure) {
+    var getRootUrl = function () {
+        var reg = new RegExp(/^.*\//);
+        return reg.exec(window.location.href);
+    }
+
     var getQueryString = function (field, url) {
         var href = url ? url : window.location.href;
         var reg = new RegExp('[?&]' + field + '=([^&#]*)', 'i');
@@ -30,7 +35,7 @@ requirejs(['q', 'o', 'pure'], function (q, o, pure) {
     var searchInput = getQueryString('searchInput');
     if (searchInput != null) {
         document.querySelector('input#searchInput').textContent = searchInput;
-        o("/api/Works/Search(input='" + searchInput + "')").get(updateSearchResults);
+        o(getRootUrl + "api/Works/Search(input='" + searchInput + "')").get(updateSearchResults);
         document.querySelector('section#searchSpinner').hidden = false;
     }
 });
