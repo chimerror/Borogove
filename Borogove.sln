@@ -28,6 +28,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Input", "Input", "{08363E02
 		Borogove.TestSite\Input\_ViewStart.cshtml = Borogove.TestSite\Input\_ViewStart.cshtml
 		Borogove.TestSite\Input\favicon.ico = Borogove.TestSite\Input\favicon.ico
 		Borogove.TestSite\Input\home.cshtml = Borogove.TestSite\Input\home.cshtml
+		Borogove.TestSite\Input\search.cshtml = Borogove.TestSite\Input\search.cshtml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Posts", "Posts", "{B1797F0A-29ED-434F-9B61-52EC3B73268F}"
@@ -43,6 +44,24 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Borogove.Templates", "Borog
 		Borogove.Templates\_DefaultLayout.cshtml = Borogove.Templates\_DefaultLayout.cshtml
 		Borogove.Templates\_LinkElements.cshtml = Borogove.Templates\_LinkElements.cshtml
 		Borogove.Templates\_MetadataElements.cshtml = Borogove.Templates\_MetadataElements.cshtml
+		Borogove.Templates\_SearchForm.cshtml = Borogove.Templates\_SearchForm.cshtml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "js", "js", "{5299D2B4-4BF2-4547-AC45-0DF68E057C61}"
+	ProjectSection(SolutionItems) = preProject
+		Borogove.Templates\js\Search.js = Borogove.Templates\js\Search.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lib", "lib", "{EF735FD6-25EB-465E-AC06-FD41880C0A68}"
+	ProjectSection(SolutionItems) = preProject
+		Borogove.Templates\js\lib\o.js = Borogove.Templates\js\lib\o.js
+		Borogove.Templates\js\lib\o.min.js = Borogove.Templates\js\lib\o.min.js
+		Borogove.Templates\js\lib\pure.js = Borogove.Templates\js\lib\pure.js
+		Borogove.Templates\js\lib\pure.min.js = Borogove.Templates\js\lib\pure.min.js
+		Borogove.Templates\js\lib\q.js = Borogove.Templates\js\lib\q.js
+		Borogove.Templates\js\lib\queue.js = Borogove.Templates\js\lib\queue.js
+		Borogove.Templates\js\lib\require.js = Borogove.Templates\js\lib\require.js
+		Borogove.Templates\js\lib\require.min.js = Borogove.Templates\js\lib\require.min.js
 	EndProjectSection
 EndProject
 Global
@@ -78,5 +97,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{08363E02-2717-4E2D-8FB5-5039E6DB48DB} = {C29F7E5B-F83C-4885-9575-ABAD80D7A847}
 		{B1797F0A-29ED-434F-9B61-52EC3B73268F} = {08363E02-2717-4E2D-8FB5-5039E6DB48DB}
+		{5299D2B4-4BF2-4547-AC45-0DF68E057C61} = {8068B26E-3E1B-4C71-BB7F-B72B7AB1A6CE}
+		{EF735FD6-25EB-465E-AC06-FD41880C0A68} = {5299D2B4-4BF2-4547-AC45-0DF68E057C61}
 	EndGlobalSection
 EndGlobal
