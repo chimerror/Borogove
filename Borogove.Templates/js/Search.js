@@ -35,7 +35,7 @@ requirejs(['q', 'o', 'pure'], function (q, o, pure) {
     var searchInput = getQueryString('searchInput');
     if (searchInput != null) {
         document.querySelector('input#searchInput').textContent = searchInput;
-        o(getRootUrl + "api/Works/Search(input='" + searchInput + "')").get(updateSearchResults);
+        o(getRootUrl() + "api/Works/Search(input='" + searchInput + "')").get(updateSearchResults);
         document.querySelector('section#searchSpinner').hidden = false;
     }
 });
