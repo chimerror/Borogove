@@ -32,6 +32,7 @@ requirejs(['q', 'o', 'pure'], function (q, o, pure) {
         $p('article#searchResults').render(data, searchResultDirective);
     };
 
+    document.querySelector('form#searchForm').removeAttribute('action');
     var searchInput = getQueryString('searchInput');
     if (searchInput != null) {
         document.querySelector('input#searchInput').textContent = searchInput;

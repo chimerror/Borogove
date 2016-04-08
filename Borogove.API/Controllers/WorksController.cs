@@ -12,26 +12,35 @@ namespace Borogove.API.Controllers
     [ODataRoutePrefix("Works")]
     public class WorksController : ODataController
     {
-        WorkContext db = new WorkContext("name=WorkContext");
+        public const string SearchInputQueryString = "searchInput";
+
+        private WorkContext _db = new WorkContext("name=WorkContext");
 
         [EnableQuery]
         public IQueryable<WorkEntity> Get()
         {
-            return db.Works;
+            return _db.Works;
         }
 
         [EnableQuery()]
         [HttpGet]
         public IQueryable<WorkEntity> Search([FromODataUri] string input)
         {
-            var matchingTagsByAlias = db.TagAliases
+            if (string.IsNullOrEmpty(input))
+            {
+                input = Request.GetQueryNameValuePairs()
+                    .FirstOrDefault(kvp => kvp.Key.Equals(SearchInputQueryString))
+                    .Value ?? string.Empty;
+            }
+
+            var matchingTagsByAlias = _db.TagAliases
                 .Where(ta => ta.Alias.Contains(input))
-                .Join(db.Tags, ta => ta.TagName, t => t.TagName, (ta, t) => t);
-            var matchingTags = db.Tags
+                .Join(_db.Tags, ta => ta.TagName, t => t.TagName, (ta, t) => t);
+            var matchingTags = _db.Tags
                 .Where(t => t.TagName.Contains(input))
                 .Concat(matchingTagsByAlias);
 
-            return db.Works
+            return _db.Works
                 .Where(w =>
                     w.Content.Contains(input) ||
                     w.Description.Contains(input) ||
@@ -43,7 +52,7 @@ namespace Borogove.API.Controllers
         [EnableQuery]
         public SingleResult<WorkEntity> Get([FromODataUri] Guid key)
         {
-            var result = db.Works.Where(w => w.Identifier.Equals(key));
+            var result = _db.Works.Where(w => w.Identifier.Equals(key));
             return SingleResult.Create(result);
         }
 
@@ -62,7 +71,7 @@ namespace Borogove.API.Controllers
         [EnableQuery]
         public SingleResult<string> GetContent([FromODataUri] Guid key)
         {
-            var result = db.Works.Where(w => w.Identifier.Equals(key)).Select(w => w.Content);
+            var result = _db.Works.Where(w => w.Identifier.Equals(key)).Select(w => w.Content);
             return SingleResult.Create(result);
         }
 
@@ -128,13 +137,13 @@ namespace Borogove.API.Controllers
 
         protected override void Dispose(bool disposing)
         {
-            db.Dispose();
+            _db.Dispose();
             base.Dispose(disposing);
         }
 
         private WorkEntity GetWorkOrThrowNotFound(Guid key)
         {
-            var result = db.Works.SingleOrDefault(w => w.Identifier.Equals(key));
+            var result = _db.Works.SingleOrDefault(w => w.Identifier.Equals(key));
             if (result == null)
             {
                 throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
