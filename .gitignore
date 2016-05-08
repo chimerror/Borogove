@@ -188,3 +188,7 @@ FakesAssemblies/
 
 # Wyam Output
 Output/
+/Borogove.TestSite/Input/_SearchForm.cshtml
+/Borogove.TestSite/Input/_MetadataElements.cshtml
+/Borogove.TestSite/Input/_LinkElements.cshtml
+/Borogove.TestSite/Input/_DefaultLayout.cshtml

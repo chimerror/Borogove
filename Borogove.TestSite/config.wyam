@@ -20,14 +20,25 @@ Environment.GetEnvironmentVariable("BorogoveConnectionString") ?? WorkMetadataPe
 
         public static TagSet GetTagSet()
         {
-                using (var context = new WorkContext(WorkContextConnectionString))
-                {
-                        return context.GetTagSet();
-                }
+            using (var context = new WorkContext(WorkContextConnectionString))
+            {
+                    return context.GetTagSet();
+            }
         }
 
-        public static string InputFolder { get; set; }
-        public static string OutputFolder { get; set; }
+        public static FilePath CombineFilePathAfter(this DirectoryPath directory, FilePath file, string relativePathStart)
+        {
+            var relativeSegments = file.Segments.SkipWhile(s => !s.Equals(relativePathStart)).ToList();
+            var newDirectoryPath = directory;
+            for (int currentSegment = 0; currentSegment < relativeSegments.Count - 1; currentSegment++)
+            {
+                newDirectoryPath = newDirectoryPath.Combine(relativeSegments[currentSegment]);
+            }
+            return newDirectoryPath.CombineFile(relativeSegments.Last());
+        }
+
+        public static DirectoryPath InputFolder { get; set; }
+        public static DirectoryPath OutputFolder { get; set; }
 }
 
 ---
@@ -35,29 +46,29 @@ Environment.GetEnvironmentVariable("BorogoveConnectionString") ?? WorkMetadataPe
 InitialMetadata.Add(Borogove.WorkMetadataYamlUnpacker.DefaultTagSetKey, Helpers.GetTagSet());
 
 Pipelines.Add("Templates",
-              Execute(ctx => { Helpers.InputFolder = ctx.InputFolder; Helpers.OutputFolder = ctx.OutputFolder; return null; }),
+              Execute(ctx => { Helpers.InputFolder = ctx.FileSystem.RootPath.Combine("input"); Helpers.OutputFolder = ctx.FileSystem.OutputPath; return null; }),
               CopyFiles(@"..\..\Borogove.Templates\*.*")
-                  .To(x => Path.Combine(Helpers.InputFolder, Path.GetFileName(x))),
+                  .To(x => Helpers.InputFolder.GetFilePath(x.Path)),
               CopyFiles(@"..\..\Borogove.Templates\js\**")
-                  .To(x => Path.Combine(Helpers.OutputFolder, x.Substring(Path.GetFullPath(@"Borogove.Templates\").Length)))
+                  .To(x => Helpers.OutputFolder.CombineFilePathAfter(x.Path, "js"))
 );
 
 Pipelines.Add("Posts",
-              ReadFiles(@"posts\*.md"),
+              ReadFiles(@"Posts\*.md"),
               WorkMetadataYamlUnpacker(),
-              Meta(WorkMetadataCanonicalNames.Path, string.Format(@"posts\{0}.html", ((string)@doc[WorkMetadataCanonicalNames.Title]).ToLower().Replace(' ', '-'))),
+              Meta(WorkMetadataCanonicalNames.Path, string.Format(@"Posts\{0}.html", ((string)@doc[WorkMetadataCanonicalNames.Title]).ToLower().Replace(' ', '-'))),
               WorkMetadataPersister(Helpers.WorkContextConnectionString),
               Markdown(),
               Meta("Post", @doc.Content),
               Merge(
-                  ReadFiles(@"posts\Post.cshtml")
+                  ReadFiles(@"Posts\post.cshtml")
               ),
               Razor(),
               WriteFiles((string)@doc[WorkMetadataCanonicalNames.Path])
 );
 
 Pipelines.Add("Home",
-              ReadFiles(@"*.cshtml").FromTopDirectoryOnly().Where(x => Path.GetFileName(x)[0] != '_'),
+              ReadFiles(@"{!_,}*.cshtml"),
               Razor(),
               WriteFiles(".html")
  );

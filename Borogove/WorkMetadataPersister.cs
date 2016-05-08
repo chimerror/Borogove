@@ -4,8 +4,8 @@ using System.Data.Entity;
 using System.Globalization;
 using System.Linq;
 using Wyam.Common.Documents;
+using Wyam.Common.Execution;
 using Wyam.Common.Modules;
-using Wyam.Common.Pipelines;
 
 using Borogove.DataAccess;
 using Borogove.Model;
