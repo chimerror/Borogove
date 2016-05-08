@@ -7,7 +7,7 @@ environment:
 install:
   - mkdir ..\Wyam
   - mkdir ..\Output
-  - ps: Start-FileDownload "https://github.com/Wyamio/Wyam/releases/download/v0.11.5-beta/Wyam-v0.11.5-beta.zip" -FileName "..\Wyam\Wyam.zip"
+  - ps: Start-FileDownload "https://github.com/Wyamio/Wyam/releases/download/v0.12.0-beta/Wyam-v0.12.0-beta.zip" -FileName "..\Wyam\Wyam.zip"
   - 7z x ..\Wyam\Wyam.zip -o..\Wyam -r
 
 build:
