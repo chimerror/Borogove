@@ -12,6 +12,10 @@
     @Html.Partial("_LinkElements")
 </head>
 <body>
+    @if (Metadata.ContainsKey(WorkMetadataCanonicalNames.Identifier))
+    {
+        <input type="hidden" id="workIdentifier" value="@Metadata.Get(WorkMetadataCanonicalNames.Identifier)" />
+    }
     @RenderBody()
 </body>
 </html>

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Borogove", "Borogove\Borogove.csproj", "{FF3002AA-B2E5-4D27-B723-F92BDAA5A4B8}"
 EndProject
@@ -41,6 +41,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Posts", "Posts", "{B1797F0A
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Borogove.Templates", "Borogove.Templates", "{8068B26E-3E1B-4C71-BB7F-B72B7AB1A6CE}"
 	ProjectSection(SolutionItems) = preProject
+		Borogove.Templates\_CommentSection.cshtml = Borogove.Templates\_CommentSection.cshtml
 		Borogove.Templates\_DefaultLayout.cshtml = Borogove.Templates\_DefaultLayout.cshtml
 		Borogove.Templates\_LinkElements.cshtml = Borogove.Templates\_LinkElements.cshtml
 		Borogove.Templates\_MetadataElements.cshtml = Borogove.Templates\_MetadataElements.cshtml
@@ -49,11 +50,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Borogove.Templates", "Borog
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "js", "js", "{5299D2B4-4BF2-4547-AC45-0DF68E057C61}"
 	ProjectSection(SolutionItems) = preProject
+		Borogove.Templates\js\Comments.js = Borogove.Templates\js\Comments.js
 		Borogove.Templates\js\Search.js = Borogove.Templates\js\Search.js
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lib", "lib", "{EF735FD6-25EB-465E-AC06-FD41880C0A68}"
 	ProjectSection(SolutionItems) = preProject
+		Borogove.Templates\js\lib\jquery-2.2.3.intellisense.js = Borogove.Templates\js\lib\jquery-2.2.3.intellisense.js
+		Borogove.Templates\js\lib\jquery-2.2.3.js = Borogove.Templates\js\lib\jquery-2.2.3.js
+		Borogove.Templates\js\lib\jquery-2.2.3.min.js = Borogove.Templates\js\lib\jquery-2.2.3.min.js
+		Borogove.Templates\js\lib\jquery-2.2.3.min.map = Borogove.Templates\js\lib\jquery-2.2.3.min.map
 		Borogove.Templates\js\lib\o.js = Borogove.Templates\js\lib\o.js
 		Borogove.Templates\js\lib\o.min.js = Borogove.Templates\js\lib\o.min.js
 		Borogove.Templates\js\lib\pure.js = Borogove.Templates\js\lib\pure.js

@@ -1,5 +1,10 @@
 @using Borogove;
 <h1>@Metadata[WorkMetadataCanonicalNames.Title]</h1>
-<h2>@Metadata[WorkMetadataCanonicalNames.Description]</h2>
+@if (Metadata.ContainsKey(WorkMetadataCanonicalNames.Description))
+{
+    <h2>@Metadata[WorkMetadataCanonicalNames.Description]</h2>
+}
 <hr />
 @Html.Raw(Metadata["Post"])
+<hr />
+@Html.Partial("_CommentSection")

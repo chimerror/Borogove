@@ -1,6 +1,6 @@
-/// <reference path="lib/require.js" />
-/// <reference path="lib/o.js" />
-/// <reference path="lib/pure.js" />
+/// <reference path="./lib/require.js" />
+/// <reference path="./lib/o.js" />
+/// <reference path="./lib/pure.js" />
 document.querySelector('div#searchNoScript').hidden = true;
 requirejs.config({
     baseUrl: 'js/lib'

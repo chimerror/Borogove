@@ -50,14 +50,19 @@ Pipelines.Add("Templates",
               CopyFiles(@"..\..\Borogove.Templates\*.*")
                   .To(x => Helpers.InputFolder.GetFilePath(x.Path)),
               CopyFiles(@"..\..\Borogove.Templates\js\**")
+                  .Where(x => !x.Path.FullPath.Contains("intellisense"))
                   .To(x => Helpers.OutputFolder.CombineFilePathAfter(x.Path, "js"))
 );
 
 Pipelines.Add("Posts",
               ReadFiles(@"Posts\*.md"),
               WorkMetadataYamlUnpacker(),
-              Meta(WorkMetadataCanonicalNames.Path, string.Format(@"Posts/{0}.html", ((string)@doc[WorkMetadataCanonicalNames.Title]).ToLower().Replace(' ', '-'))),
+              Meta(WorkMetadataCanonicalNames.Path, (doc, _) =>
+                  string.Format(@"Posts/{0}.html",
+                      doc.Get<string>(WorkMetadataCanonicalNames.Title, doc.Get<string>("SourceFileBase")))
+                  .ToLower().Replace(' ', '-')),
               WorkMetadataPersister(Helpers.WorkContextConnectionString),
+              Meta(WorkMetadataCanonicalNames.Title, @doc.Get<string>(WorkMetadataCanonicalNames.Title, "Untitled Post")),
               Markdown(),
               Meta("Post", @doc.Content),
               Merge(

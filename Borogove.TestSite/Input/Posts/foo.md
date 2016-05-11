@@ -1,5 +1,4 @@
 Identifier: 2af4bebc-b675-4e1c-9764-e688ac796703
-Title: A Grave Warning
 Description: The son is warned
 Creator:
   - role: Author

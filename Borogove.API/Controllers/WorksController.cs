@@ -22,7 +22,7 @@ namespace Borogove.API.Controllers
             return _db.Works;
         }
 
-        [EnableQuery()]
+        [EnableQuery]
         [HttpGet]
         public IQueryable<WorkEntity> Search([FromODataUri] string input)
         {
@@ -49,7 +49,7 @@ namespace Borogove.API.Controllers
                     w.WorkCreators.Any(wc => wc.CreatorName.Contains(input) || wc.WorkedAsName.Contains(input)));
         }
 
-        [EnableQuery]
+        [EnableQuery()]
         public SingleResult<WorkEntity> Get([FromODataUri] Guid key)
         {
             var result = _db.Works.Where(w => w.Identifier.Equals(key));
@@ -62,7 +62,7 @@ namespace Borogove.API.Controllers
             return GetWorkOrThrowNotFound(key).WorkCreators.AsQueryable();
         }
 
-        [EnableQuery()]
+        [EnableQuery]
         public IQueryable<TagEntity> GetTags([FromODataUri] Guid key)
         {
             return GetWorkOrThrowNotFound(key).Tags.AsQueryable();
@@ -81,19 +81,19 @@ namespace Borogove.API.Controllers
             return GetWorkPropertyOrThrowNoContent(key, w => w.Parent);
         }
 
-        [EnableQuery()]
+        [EnableQuery]
         public IQueryable<WorkEntity> GetChildren([FromODataUri] Guid key)
         {
             return GetWorkOrThrowNotFound(key).Children.AsQueryable();
         }
 
-        [EnableQuery()]
+        [EnableQuery]
         public IQueryable<WorkEntity> GetPreviousWorks([FromODataUri] Guid key)
         {
             return GetWorkOrThrowNotFound(key).PreviousWorks.AsQueryable();
         }
 
-        [EnableQuery()]
+        [EnableQuery]
         public IQueryable<WorkEntity> GetNextWorks([FromODataUri] Guid key)
         {
             return GetWorkOrThrowNotFound(key).NextWorks.AsQueryable();
@@ -105,7 +105,7 @@ namespace Borogove.API.Controllers
             return GetWorkPropertyOrThrowNoContent(key, w => w.DraftOf);
         }
 
-        [EnableQuery()]
+        [EnableQuery]
         public IQueryable<WorkEntity> GetDrafts([FromODataUri] Guid key)
         {
             return GetWorkOrThrowNotFound(key).Drafts.AsQueryable();
@@ -117,7 +117,7 @@ namespace Borogove.API.Controllers
             return GetWorkPropertyOrThrowNoContent(key, w => w.ArtifactOf);
         }
 
-        [EnableQuery()]
+        [EnableQuery]
         public IQueryable<WorkEntity> GetArtifacts([FromODataUri] Guid key)
         {
             return GetWorkOrThrowNotFound(key).Artifacts.AsQueryable();
@@ -129,7 +129,7 @@ namespace Borogove.API.Controllers
             return GetWorkPropertyOrThrowNoContent(key, w => w.CommentsOn);
         }
 
-        [EnableQuery()]
+        [EnableQuery(MaxExpansionDepth = 5)]
         public IQueryable<WorkEntity> GetComments([FromODataUri] Guid key)
         {
             return GetWorkOrThrowNotFound(key).Comments.AsQueryable();
