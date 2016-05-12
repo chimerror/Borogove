@@ -38,7 +38,7 @@
         {
             var title = work.Get<string>(WorkMetadataCanonicalNames.Title);
             result = string.Format(
-                @"<link rel=""{0}"" title""{0}: {1}"" href=""/{2}"" />", // We assume the path should be rooted.
+                @"<link rel=""{0}"" title=""{0}: {1}"" href=""/{2}"" />", // We assume the path should be rooted.
                 linkType,
                 string.IsNullOrEmpty(title) ? "Untitled" : title,
                 work.Get(WorkMetadataCanonicalNames.Path));
