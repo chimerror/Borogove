@@ -1,10 +1,12 @@
 /// <reference path="lib/require.js" />
 /// <reference path="lib/o.js" />
 /// <reference path="lib/pure.js" />
+document.querySelector('div#searchNoScript').hidden = true;
 requirejs.config({
     baseUrl: 'js/lib'
 });
 requirejs(['q', 'o', 'pure'], function (q, o, pure) {
+
     var getRootUrl = function () {
         var reg = new RegExp(/^.*\//);
         return reg.exec(window.location.href);
@@ -18,24 +20,29 @@ requirejs(['q', 'o', 'pure'], function (q, o, pure) {
     };
 
     var searchResultDirective = {
-        'section#searchResult': {
+        'section.searchResult': {
             'searchResult<-': {
-                'a#title@href': 'searchResult.Path',
+                'a.searchResultTitle@href': 'searchResult.Path',
                 'a': 'searchResult.Title',
-                'div#description': 'searchResult.Description'
+                'div.searchResultDescription': 'searchResult.Description'
             }
         }
     };
 
     var updateSearchResults = function (data) {
         document.querySelector('section#searchSpinner').hidden = true;
-        $p('article#searchResults').render(data, searchResultDirective);
+        if (data.length == 0) {
+            document.querySelector('div#searchNoResults').hidden = false;
+        }
+        else {
+            $p('article#searchResults').render(data, searchResultDirective);
+        }
     };
 
     document.querySelector('form#searchForm').removeAttribute('action');
     var searchInput = getQueryString('searchInput');
     if (searchInput != null) {
-        document.querySelector('input#searchInput').textContent = searchInput;
+        document.querySelector('input#searchInput').value = searchInput;
         o(getRootUrl() + "api/Works/Search(input='" + searchInput + "')").get(updateSearchResults);
         document.querySelector('section#searchSpinner').hidden = false;
     }

@@ -4,10 +4,11 @@
 </form>
 <article id="searchResults">
     <section id="searchSpinner" hidden="hidden">Searching...</section>
-    <section id="searchResult">
-        <a href="" id="title"></a>
-        <div id="description"></div>
+    <section class="searchResult">
+        <a href="" class="searchResultTitle"></a>
+        <div class="searchResultDescription"></div>
     </section>
 </article>
+<div id="searchNoScript">Javascript disabled. Search form will redirect to API results.</div>
+<div id="searchNoResults" hidden="hidden">No search results found.</div>
 <script data-main="js/Search" src="js/lib/require.js"></script>
-<noscript>Javascript disabled. Search form will redirect to API results.</noscript>
