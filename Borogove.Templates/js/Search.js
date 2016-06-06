@@ -8,7 +8,7 @@ requirejs.config({
 requirejs(['q', 'o', 'pure'], function (q, o, pure) {
 
     var getRootUrl = function () {
-        var reg = new RegExp(/^.*?\//);
+        var reg = new RegExp(/^https?:\/\/.*?\//);
         return reg.exec(window.location.href);
     }
 
