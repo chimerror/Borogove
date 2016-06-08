@@ -6,6 +6,7 @@ using System.Web.Http;
 using System.Web.OData;
 using System.Web.OData.Routing;
 using Borogove.DataAccess;
+using System.Threading;
 
 namespace Borogove.API.Controllers
 {
@@ -15,6 +16,14 @@ namespace Borogove.API.Controllers
         public const string SearchInputQueryString = "searchInput";
 
         private WorkContext _db = new WorkContext("name=WorkContext");
+
+        [Authorize]
+        [HttpGet]
+        public string AuthTest()
+        {
+            var user = Thread.CurrentPrincipal;
+            return user.Identity.IsAuthenticated ? user.Identity.Name : "User not authenticated";
+        }
 
         [EnableQuery]
         public IQueryable<WorkEntity> Get()

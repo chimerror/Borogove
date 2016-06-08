@@ -72,6 +72,24 @@ Pipelines.Add("Posts",
               WriteFiles((string)@doc[WorkMetadataCanonicalNames.Path])
 );
 
+Pipelines.Add("Secret",
+              ReadFiles(@"Secret\*.md"),
+              WorkMetadataYamlUnpacker(),
+              Meta(WorkMetadataCanonicalNames.Path, (doc, _) =>
+                  string.Format(@"Secret/{0}.html",
+                      doc.Get<string>(WorkMetadataCanonicalNames.Title, doc.Get<string>("SourceFileBase")))
+                  .ToLower().Replace(' ', '-')),
+              WorkMetadataPersister(Helpers.WorkContextConnectionString),
+              Meta(WorkMetadataCanonicalNames.Title, @doc.Get<string>(WorkMetadataCanonicalNames.Title, "Untitled Secret Post")),
+              Markdown(),
+              Meta("Post", @doc.Content),
+              Merge(
+                  ReadFiles(@"Secret\Secret.cshtml")
+              ),
+              Razor(),
+              WriteFiles((string)@doc[WorkMetadataCanonicalNames.Path])
+);
+
 Pipelines.Add("Home",
               ReadFiles(@"{!_,}*.cshtml"),
               Razor(),

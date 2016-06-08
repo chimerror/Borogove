@@ -1,9 +1,11 @@
-﻿using System.Web.Http;
+﻿using System.Web.Configuration;
+using System.Web.Http;
 using System.Web.Http.Dispatcher;
 using System.Web.OData;
 using System.Web.OData.Builder;
 using System.Web.OData.Extensions;
 using Borogove.DataAccess;
+using Borogove.API.App_Start;
 
 namespace Borogove.API
 {
@@ -13,6 +15,8 @@ namespace Borogove.API
         {
             var builder = new ODataConventionModelBuilder();
             builder.Namespace = "Borogove";
+
+            builder.Function("AuthTest").Returns<string>();
 
             var workConfiguration = builder.EntitySet<WorkEntity>("Works")
                 .EntityType.HasKey(w => w.Identifier);
@@ -52,6 +56,15 @@ namespace Borogove.API
 
             builder.EntitySet<TagAliasEntity>("TagAliases")
                 .EntityType.HasKey(ta => ta.Alias);
+
+            var clientID = WebConfigurationManager.AppSettings["auth0:ClientId"];
+            var clientSecret = WebConfigurationManager.AppSettings["auth0:ClientSecret"];
+
+            config.MessageHandlers.Add(new JsonWebTokenValidationHandler()
+            {
+                Audience = clientID,
+                SymmetricKey = clientSecret
+            });
 
             config.EnableUnqualifiedNameCall(true);
             config.MapODataServiceRoute(

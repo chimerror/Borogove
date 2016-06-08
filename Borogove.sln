@@ -28,6 +28,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Input", "Input", "{08363E02
 		Borogove.TestSite\Input\_ViewStart.cshtml = Borogove.TestSite\Input\_ViewStart.cshtml
 		Borogove.TestSite\Input\favicon.ico = Borogove.TestSite\Input\favicon.ico
 		Borogove.TestSite\Input\home.cshtml = Borogove.TestSite\Input\home.cshtml
+		Borogove.TestSite\Input\login.cshtml = Borogove.TestSite\Input\login.cshtml
 		Borogove.TestSite\Input\search.cshtml = Borogove.TestSite\Input\search.cshtml
 	EndProjectSection
 EndProject
@@ -70,6 +71,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lib", "lib", "{EF735FD6-25E
 		Borogove.Templates\js\lib\require.min.js = Borogove.Templates\js\lib\require.min.js
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Secret", "Secret", "{502D13EE-3789-4DB6-9EE2-39FA48C24059}"
+	ProjectSection(SolutionItems) = preProject
+		Borogove.TestSite\Input\Secret\foo.md = Borogove.TestSite\Input\Secret\foo.md
+		Borogove.TestSite\Input\Secret\Secret.cshtml = Borogove.TestSite\Input\Secret\Secret.cshtml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -105,5 +112,6 @@ Global
 		{B1797F0A-29ED-434F-9B61-52EC3B73268F} = {08363E02-2717-4E2D-8FB5-5039E6DB48DB}
 		{5299D2B4-4BF2-4547-AC45-0DF68E057C61} = {8068B26E-3E1B-4C71-BB7F-B72B7AB1A6CE}
 		{EF735FD6-25EB-465E-AC06-FD41880C0A68} = {5299D2B4-4BF2-4547-AC45-0DF68E057C61}
+		{502D13EE-3789-4DB6-9EE2-39FA48C24059} = {08363E02-2717-4E2D-8FB5-5039E6DB48DB}
 	EndGlobalSection
 EndGlobal
