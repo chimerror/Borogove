@@ -5,9 +5,15 @@
 <script type="text/javascript">
   var lock = new Auth0Lock('bZmoX9XKDg68wfSAqbZK4Km8v76ctkO3', 'chimerror.auth0.com');
 
+  var getRootUrl = function () {
+      var reg = new RegExp(/^https?:\/\/.*?\//);
+      return reg.exec(window.location.href);
+  }
+
+
   function signin() {
-    lock.show({
-        callbackURL: ''
+      lock.show({
+      callbackURL: getRootUrl() + 'LoginCallback.aspx'
       , responseType: 'code'
       , authParams: {
         scope: 'openid email'

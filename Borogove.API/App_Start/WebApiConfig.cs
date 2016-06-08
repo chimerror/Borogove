@@ -16,13 +16,12 @@ namespace Borogove.API
             var builder = new ODataConventionModelBuilder();
             builder.Namespace = "Borogove";
 
-            builder.Function("AuthTest").Returns<string>();
-
             var workConfiguration = builder.EntitySet<WorkEntity>("Works")
                 .EntityType.HasKey(w => w.Identifier);
             workConfiguration.Collection.Function("Search")
                 .ReturnsCollectionFromEntitySet<WorkEntity>("Works")
                 .Parameter<string>("input");
+            workConfiguration.Collection.Function("AuthTest").Returns<string>();
 
             var workCreatorsConfiguration = builder.EntitySet<WorkCreatorEntity>("WorkCreators").EntityType;
             workCreatorsConfiguration.HasKey(w => w.WorkIdentifier);
