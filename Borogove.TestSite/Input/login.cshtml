@@ -13,7 +13,7 @@
 
   function signin() {
       lock.show({
-      callbackURL: getRootUrl() + 'LoginCallback.aspx'
+      callbackURL: getRootUrl() + 'LoginCallback.ashx'
       , responseType: 'code'
       , authParams: {
         scope: 'openid email'
