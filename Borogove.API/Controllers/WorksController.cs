@@ -17,14 +17,6 @@ namespace Borogove.API.Controllers
 
         private WorkContext _db = new WorkContext("name=WorkContext");
 
-        [Authorize]
-        [HttpGet]
-        public string AuthTest()
-        {
-            var user = Thread.CurrentPrincipal;
-            return user.Identity.IsAuthenticated ? user.Identity.Name : "User not authenticated";
-        }
-
         [EnableQuery]
         public IQueryable<WorkEntity> Get()
         {

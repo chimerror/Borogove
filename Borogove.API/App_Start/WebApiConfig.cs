@@ -21,7 +21,6 @@ namespace Borogove.API
             workConfiguration.Collection.Function("Search")
                 .ReturnsCollectionFromEntitySet<WorkEntity>("Works")
                 .Parameter<string>("input");
-            workConfiguration.Collection.Function("AuthTest").Returns<string>();
 
             var workCreatorsConfiguration = builder.EntitySet<WorkCreatorEntity>("WorkCreators").EntityType;
             workCreatorsConfiguration.HasKey(w => w.WorkIdentifier);

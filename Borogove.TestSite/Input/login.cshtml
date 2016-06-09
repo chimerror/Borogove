@@ -1,24 +1,4 @@
 @{
     ViewBag.Title = "Borogove Test Site -- Login";
 }
-<script src="https://cdn.auth0.com/js/lock-9.1.min.js"></script>
-<script type="text/javascript">
-  var lock = new Auth0Lock('bZmoX9XKDg68wfSAqbZK4Km8v76ctkO3', 'chimerror.auth0.com');
-
-  var getRootUrl = function () {
-      var reg = new RegExp(/^https?:\/\/.*?\//);
-      return reg.exec(window.location.href);
-  }
-
-
-  function signin() {
-      lock.show({
-      callbackURL: getRootUrl() + 'LoginCallback.ashx'
-      , responseType: 'code'
-      , authParams: {
-        scope: 'openid email'
-      }
-    });
-  }
-</script>
-<button onclick="window.signin();">Login</button>
+@Html.Partial("_LoginPage")

@@ -1,24 +1,15 @@
 /// <reference path="./lib/require.js" />
 /// <reference path="./lib/o.js" />
 /// <reference path="./lib/pure.js" />
+/// <reference path="./Common.js" />
 document.querySelector('div#searchNoScript').hidden = true;
 requirejs.config({
-    baseUrl: 'js/lib'
+    baseUrl: '/js/lib',
+    paths: {
+        'common': '../Common'
+    },
 });
-requirejs(['q', 'o', 'pure'], function (q, o, pure) {
-
-    var getRootUrl = function () {
-        var reg = new RegExp(/^https?:\/\/.*?\//);
-        return reg.exec(window.location.href);
-    }
-
-    var getQueryString = function (field, url) {
-        var href = url ? url : window.location.href;
-        var reg = new RegExp('[?&]' + field + '=([^&#]*)', 'i');
-        var string = reg.exec(href);
-        return string ? string[1] : null;
-    };
-
+requirejs(['q', 'o', 'pure', 'common'], function (q, o, pure, common) {
     var searchResultDirective = {
         'section.searchResult': {
             'searchResult<-': {
@@ -40,10 +31,10 @@ requirejs(['q', 'o', 'pure'], function (q, o, pure) {
     };
 
     document.querySelector('form#searchForm').removeAttribute('action');
-    var searchInput = getQueryString('searchInput');
+    var searchInput = common.getQueryString('searchInput');
     if (searchInput != null) {
         document.querySelector('input#searchInput').value = searchInput;
-        o(getRootUrl() + "api/Works/Search(input='" + searchInput + "')").get(updateSearchResults);
+        o(common.getRootUrl() + "api/Works/Search(input='" + searchInput + "')").get(updateSearchResults);
         document.querySelector('section#searchSpinner').hidden = false;
     }
 });

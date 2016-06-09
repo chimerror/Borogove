@@ -36,20 +36,6 @@ namespace Borogove.API
 
             };
 
-            // NOTE: Uncomment the following code in order to include claims from associated identities
-            //profile.Identities.ToList().ForEach(i =>
-            //{
-            //    user.Add(new KeyValuePair<string, object>(i.Connection + ".access_token", i.AccessToken));
-            //    user.Add(new KeyValuePair<string, object>(i.Connection + ".provider", i.Provider));
-            //    user.Add(new KeyValuePair<string, object>(i.Connection + ".user_id", i.UserId));
-            //});
-
-            // NOTE: uncomment this if you send roles
-            // user.Add(new KeyValuePair<string, object>(ClaimTypes.Role, profile.ExtraProperties["roles"]));
-
-            // NOTE: this will set a cookie with all the user claims that will be converted
-            //       to a ClaimsPrincipal for each request using the SessionAuthenticationModule HttpModule.
-            //       You can choose your own mechanism to keep the user authenticated (FormsAuthentication, Session, etc.)
             FederatedAuthentication.SessionAuthenticationModule.CreateSessionCookie(user);
 
             if (context.Request.QueryString["state"] != null && context.Request.QueryString["state"].StartsWith("ru="))

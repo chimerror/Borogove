@@ -45,6 +45,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Borogove.Templates", "Borog
 		Borogove.Templates\_CommentSection.cshtml = Borogove.Templates\_CommentSection.cshtml
 		Borogove.Templates\_DefaultLayout.cshtml = Borogove.Templates\_DefaultLayout.cshtml
 		Borogove.Templates\_LinkElements.cshtml = Borogove.Templates\_LinkElements.cshtml
+		Borogove.Templates\_LoginPage.cshtml = Borogove.Templates\_LoginPage.cshtml
 		Borogove.Templates\_MetadataElements.cshtml = Borogove.Templates\_MetadataElements.cshtml
 		Borogove.Templates\_SearchForm.cshtml = Borogove.Templates\_SearchForm.cshtml
 	EndProjectSection
@@ -52,6 +53,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "js", "js", "{5299D2B4-4BF2-4547-AC45-0DF68E057C61}"
 	ProjectSection(SolutionItems) = preProject
 		Borogove.Templates\js\Comments.js = Borogove.Templates\js\Comments.js
+		Borogove.Templates\js\Common.js = Borogove.Templates\js\Common.js
+		Borogove.Templates\js\Login.js = Borogove.Templates\js\Login.js
 		Borogove.Templates\js\Search.js = Borogove.Templates\js\Search.js
 	EndProjectSection
 EndProject
