@@ -1,7 +1,7 @@
 version: 0.0.{build}
 
 environment:
-  WebsiteRootUrl: https://borogovedevo.azurewebsites.net/
+  WebsiteRootUrl: https://borogovedevo.azurewebsites.net
   BorogoveConnectionString:
     secure: K8/pTD62RotAYEX0tM/+ea4DmRV8zvkP2/Gl1TYot7Wgtl3nQNrIVCOOiIPuQ/4PHiHVsSIyNeWRytfCk5IVVsLXRF0eTG1JeoQO92q2UseHutXASsOArfIdZ3zAH8RxdXYYfaGIcEXGvA3rZL50YohG+ikhRNGRg3MktGU3IKrej3zl/UxNJy/e+8JAK2eQTdrbZ+rPtg2+ILy8P+WwEFqZFHJgTFg4qKakTJFqh5Uwzyuz5U7UU9OsanB5xzBme6ERT2IWuROEP/UwooHDQ+YG6Q42vGZkYy+lNWdNGfs=
   Auth0ClientId: nJbojohqoR6aD5RaoyrY8K5AYFfUAT6l
