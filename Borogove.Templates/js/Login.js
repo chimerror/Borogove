@@ -8,20 +8,25 @@ requirejs.config({
     }
 });
 requirejs(['common'], function (common) {
-    var lock = new Auth0Lock('bZmoX9XKDg68wfSAqbZK4Km8v76ctkO3', 'chimerror.auth0.com');
+    var clientId = document.querySelector('input#authorizationClientId').getAttribute('value');
+    var domain = document.querySelector('input#authorizationDomain').getAttribute('value');
 
-    var getState = function () {
-        var returnUrl = common.getQueryString('ReturnUrl');
-        return returnUrl ? "ru=" + returnUrl : null;
-    }
+    if (clientId && domain) {
+        var lock = new Auth0Lock(clientId, domain);
 
-    lock.show({
-        container: 'loginContainer',
-        callbackURL: common.getRootUrl() + 'LoginCallback.ashx',
-        responseType: 'code',
-        authParams: {
-            scope: 'openid email name nickname picture',
-            state: getState()
+        var getState = function () {
+            var returnUrl = common.getQueryString('ReturnUrl');
+            return returnUrl ? "ru=" + returnUrl : null;
         }
-    });
+
+        lock.show({
+            container: 'loginContainer',
+            callbackURL: common.getRootUrl() + 'LoginCallback.ashx',
+            responseType: 'code',
+            authParams: {
+                scope: 'openid email name nickname picture',
+                state: getState()
+            }
+        });
+    }
 });

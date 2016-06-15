@@ -1,3 +1,6 @@
-﻿<div id="loginContainer" />
+﻿@using Borogove;
+<input type="hidden" id="authorizationClientId" value="@Metadata.Get(AuthorizationMetadataNames.ClientId)" />
+<input type="hidden" id="authorizationDomain" value="@Metadata.Get(AuthorizationMetadataNames.Domain)" />
+<div id="loginContainer" />
 <script src="https://cdn.auth0.com/js/lock-9.1.min.js"></script>
 <script data-main="/js/Login.js" src="/js/lib/require.js"></script>

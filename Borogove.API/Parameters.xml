@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<parameters>
+  <parameter name="Auth0ClientId" defaultValue="bZmoX9XKDg68wfSAqbZK4Km8v76ctkO3">
+    <parameterEntry kind="XmlFile" scope="\\web.config$" match="/configuration/appSettings/add[@key='auth0:ClientId']/@value" />
+  </parameter>
+  <parameter name="Auth0Domain" defaultValue="chimerror.auth0.com">
+    <parameterEntry kind="XmlFile" scope="\\web.config$" match="/configuration/appSettings/add[@key='auth0:Domain']/@value" />
+  </parameter>
+  <parameter name="Auth0ClientSecret" defaultValue="nA-lBY8MDwnk4Y_tWjbeAAcorqCgLAzMl6_N2vfUwl57RC1R5CKVygDy5M_afz6j">
+    <parameterEntry kind="XmlFile" scope="\\web.config$" match="/configuration/appSettings/add[@key='auth0:ClientSecret']/@value" />
+  </parameter>
+</parameters>
