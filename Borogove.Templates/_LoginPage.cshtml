@@ -1,6 +1,25 @@
 ﻿@using Borogove;
+@functions
+{
+    string WriteLoginLink(string connection)
+    {
+        return "https://" + Metadata.Get<string>(AuthorizationMetadataNames.Domain) + "/authorize" +
+            "?response_type=code&scope=openid%20profile" +
+            "&client_id=" + Metadata.Get<string>(AuthorizationMetadataNames.ClientId) +
+            "&redirect_uri=" + Metadata.Get<string>(WebsiteMetadataNames.WebsiteRootUrl) + "/LoginCallback.ashx" +
+            "&connection=" + connection;
+    }
+}
 <input type="hidden" id="authorizationClientId" value="@Metadata.Get(AuthorizationMetadataNames.ClientId)" />
 <input type="hidden" id="authorizationDomain" value="@Metadata.Get(AuthorizationMetadataNames.Domain)" />
 <div id="loginContainer" />
+<div id="loginNoScript">
+    JavaScript disabled. Please use the following links to log in:
+    <ul>
+        <li><a href="@WriteLoginLink("twitter")">Log in using Twitter</a></li>
+        <li><a href="@WriteLoginLink("google-oauth2")">Log in using Google</a></li>
+    </ul>
+    Please note that User name &amp; password authentication requires JavaScript, and thus is not available.
+</div>
 <script src="https://cdn.auth0.com/js/lock-9.1.min.js"></script>
 <script data-main="/js/Login.js" src="/js/lib/require.js"></script>

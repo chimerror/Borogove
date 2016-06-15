@@ -1,6 +1,7 @@
 ﻿/// <reference path="./lib/require.js" />
 /// <reference path="./Common.js" />
 /// <reference path="https://cdn.auth0.com/js/lock-9.1.min.js" />
+document.querySelector('div#loginNoScript').hidden = true;
 requirejs.config({
     baseUrl: '/js/lib',
     paths: {

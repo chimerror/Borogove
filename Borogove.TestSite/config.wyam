@@ -14,7 +14,7 @@ public static class Helpers
             Database.SetInitializer(new DropCreateDatabaseIfModelChanges<WorkContext>());
         }
 
-
+        public static readonly string WebsiteRootUrl = Environment.GetEnvironmentVariable("WebsiteRootUrl") ?? "http://localhost:57688";
         public static readonly string WorkContextConnectionString =
 Environment.GetEnvironmentVariable("BorogoveConnectionString") ?? WorkMetadataPersister.DefaultDatabaseName;
         public static readonly string AuthorizationClientId = Environment.GetEnvironmentVariable("Auth0ClientId") ?? "bZmoX9XKDg68wfSAqbZK4Km8v76ctkO3";
@@ -45,6 +45,7 @@ Environment.GetEnvironmentVariable("BorogoveConnectionString") ?? WorkMetadataPe
 
 ---
 
+InitialMetadata.Add(Borogove.WebsiteMetadataNames.WebsiteRootUrl, Helpers.WebsiteRootUrl);
 InitialMetadata.Add(Borogove.WorkMetadataYamlUnpacker.DefaultTagSetKey, Helpers.GetTagSet());
 InitialMetadata.Add(Borogove.AuthorizationMetadataNames.ClientId, Helpers.AuthorizationClientId);
 InitialMetadata.Add(Borogove.AuthorizationMetadataNames.Domain, Helpers.AuthorizationDomain);
