@@ -15,7 +15,7 @@ namespace Borogove
 {
     public class WorkMetadataPersister : IModule
     {
-        public const string DefaultDatabaseName = "Borogove";
+        public const string DefaultDatabaseName = "name=WorkContext";
 
         private readonly Dictionary<Guid, WorkEntity> _workDictionary = new Dictionary<Guid, WorkEntity>();
         private readonly string _nameOrConnectionString;
