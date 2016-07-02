@@ -16,6 +16,7 @@ namespace Borogove.DataAccess
         public DbSet<WorkCreatorEntity> WorkCreators { get; set; }
         public DbSet<TagEntity> Tags { get; set; }
         public DbSet<TagAliasEntity> TagAliases { get; set; }
+        public DbSet<WorkWhitelistEntryEntity> WorkWhitelistEntries { get; set; }
 
         public TagSet GetTagSet()
         {
@@ -89,6 +90,10 @@ namespace Borogove.DataAccess
             workEntityModel
                 .HasOptional(w => w.CommentsOn)
                 .WithMany(w => w.Comments);
+            workEntityModel
+                .HasMany(w => w.WhitelistEntries)
+                .WithRequired(ww => ww.Work)
+                .HasForeignKey(ww => ww.WorkIdentifier);
 
             var creatorAliasEntityModel = modelBuilder.Entity<CreatorAliasEntity>()
                 .HasKey(a => a.Alias)
@@ -154,6 +159,25 @@ namespace Borogove.DataAccess
                     m.MapRightKey("Implication");
                     m.ToTable("TagImplications");
                 });
+
+            var workWhitelistEntityModel = modelBuilder.Entity<WorkWhitelistEntryEntity>()
+                .HasKey(ww => new
+                {
+                    ww.WorkIdentifier,
+                    ww.SubjectType,
+                    ww.SubjectName,
+                })
+                .ToTable("WorkWhitelists", "Security");
+            workWhitelistEntityModel.Property(ww => ww.WorkIdentifier)
+                .IsRequired()
+                .HasColumnName("Work");
+            workWhitelistEntityModel.Property(ww => ww.SubjectName)
+                .IsRequired()
+                .HasMaxLength(255);
+            workWhitelistEntityModel
+                .HasRequired(ww => ww.Work)
+                .WithMany(w => w.WhitelistEntries)
+                .HasForeignKey(ww => ww.WorkIdentifier);
         }
     }
 }

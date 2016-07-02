@@ -21,6 +21,7 @@ namespace Borogove.DataAccess
             Drafts = new List<WorkEntity>();
             Artifacts = new List<WorkEntity>();
             Comments = new List<WorkEntity>();
+            WhitelistEntries = new List<WorkWhitelistEntryEntity>();
         }
 
         public WorkEntity(Guid? identifier = null,
@@ -70,5 +71,6 @@ namespace Borogove.DataAccess
         public virtual ICollection<WorkEntity> Artifacts { get; set; }
         public virtual WorkEntity CommentsOn { get; set; }
         public virtual ICollection<WorkEntity> Comments { get; set; }
+        public virtual ICollection<WorkWhitelistEntryEntity> WhitelistEntries { get; set; }
     }
 }

@@ -63,6 +63,7 @@ namespace Borogove
                         workContext.Entry(work).Reference(w => w.DraftOf).Load();
                         workContext.Entry(work).Reference(w => w.ArtifactOf).Load();
                         workContext.Entry(work).Reference(w => w.CommentsOn).Load();
+                        workContext.Entry(work).Collection(w => w.WhitelistEntries).Load();
                     }
 
                     work.Path = document.Get<string>(Names.Path, null);
@@ -158,9 +159,9 @@ namespace Borogove
                         continue;
 
                     case Names.Language:
-                        var langauge = value as CultureInfo ?? CultureInfo.CurrentCulture;
-                        work.Language = workContext.Languages.Find(langauge.Name.ToLowerInvariant()) ??
-                            workContext.Languages.Add(new LanguageEntity(langauge));
+                        var language = value as CultureInfo ?? CultureInfo.CurrentCulture;
+                        work.Language = workContext.Languages.Find(language.Name.ToLowerInvariant()) ??
+                            workContext.Languages.Add(new LanguageEntity(language));
                         continue;
 
                     case Names.WorkType:
