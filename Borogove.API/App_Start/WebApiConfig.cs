@@ -21,6 +21,7 @@ namespace Borogove.API
             workConfiguration.Collection.Function("Search")
                 .ReturnsCollectionFromEntitySet<WorkEntity>("Works")
                 .Parameter<string>("input");
+            workConfiguration.Ignore(w => w.WhitelistEntries);
 
             var workCreatorsConfiguration = builder.EntitySet<WorkCreatorEntity>("WorkCreators").EntityType;
             workCreatorsConfiguration.HasKey(w => w.WorkIdentifier);

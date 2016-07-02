@@ -19,7 +19,7 @@ public static class Helpers
                 !config.ConnectionStrings.ConnectionStrings.Cast<ConnectionStringSettings>()
                     .Any(css => css.Name.Equals(workContextConnectionStringName)))
             {
-                var connectionString = new ConnectionStringSettings(workContextConnectionStringName, WorkContextConnectionString);
+                var connectionString = new ConnectionStringSettings(workContextConnectionStringName, WorkContextConnectionString, "System.Data.SqlClient");
                 config.ConnectionStrings.ConnectionStrings.Add(connectionString);
                 config.Save();
                 ConfigurationManager.RefreshSection("connectionStrings");
