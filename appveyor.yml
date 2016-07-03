@@ -12,7 +12,7 @@ environment:
 install:
   - mkdir ..\Wyam
   - mkdir ..\Output
-  - ps: Start-FileDownload "https://github.com/Wyamio/Wyam/releases/download/v0.12.0-beta/Wyam-v0.12.0-beta.zip" -FileName "..\Wyam\Wyam.zip"
+  - ps: Start-FileDownload "https://github.com/Wyamio/Wyam/releases/download/v0.12.4-beta/Wyam-v0.12.4-beta.zip" -FileName "..\Wyam\Wyam.zip"
   - 7z x ..\Wyam\Wyam.zip -o..\Wyam -r
 
 build:
@@ -22,7 +22,7 @@ before_build:
   - nuget restore
 
 after_build:
-  - ..\Wyam\Wyam.exe Borogove.TestSite --output ..\Output --verbose
+  - ..\Wyam\Wyam.exe Borogove.TestSite --output ..\Output --assembly C:\projects\borogove\Borogove\bin\Debug\** --verbose
   - dir Output
 
 artifacts:

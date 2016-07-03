@@ -1,6 +1,5 @@
-Assemblies
-        .LoadDirectory(@"..\Borogove\bin\Debug");
-===
+#n -p Wyam.Markdown
+#n -p Wyam.Razor
 
 using System.Configuration;
 using System.Data.Entity;

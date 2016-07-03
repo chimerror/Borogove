@@ -7,7 +7,7 @@ using Wyam.Common.Execution;
 using Wyam.Common.Modules;
 using Wyam.Common.Tracing;
 using Wyam.Core.Modules.Control;
-using Wyam.Modules.Yaml;
+using Wyam.Yaml;
 using YamlDotNet.RepresentationModel;
 using YamlDotNet.Dynamic;
 

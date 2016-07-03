@@ -105,16 +105,16 @@
     <Reference Include="UniversalTypeConverter">
       <HintPath>..\packages\UniversalTypeConverter.1.0.2\lib\net40\UniversalTypeConverter.dll</HintPath>
     </Reference>
-    <Reference Include="Wyam.Common, Version=0.12.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Wyam.Common.0.12.0-beta\lib\net46\Wyam.Common.dll</HintPath>
+    <Reference Include="Wyam.Common, Version=0.12.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Wyam.Common.0.12.4-beta\lib\net46\Wyam.Common.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Wyam.Core, Version=0.12.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Wyam.Core.0.12.0-beta\lib\net46\Wyam.Core.dll</HintPath>
+    <Reference Include="Wyam.Core, Version=0.12.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Wyam.Core.0.12.4-beta\lib\net46\Wyam.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Wyam.Modules.Yaml, Version=0.12.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Wyam.Modules.Yaml.0.12.0-beta\lib\net46\Wyam.Modules.Yaml.dll</HintPath>
+    <Reference Include="Wyam.Yaml, Version=0.12.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Wyam.Yaml.0.12.4-beta\lib\net46\Wyam.Yaml.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="YamlDotNet, Version=3.8.0.0, Culture=neutral, processorArchitecture=MSIL">
