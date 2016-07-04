@@ -24,6 +24,8 @@ public static class Helpers
                 ConfigurationManager.RefreshSection("connectionStrings");
             }
 
+            DbConfiguration.SetConfiguration(new PersisterDbConfiguration());
+
             Database.SetInitializer(
                 new MigrateDatabaseToLatestVersion<WorkContext, Borogove.DataAccess.Migrations.Configuration>(workContextConnectionStringName));
         }

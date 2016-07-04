@@ -157,9 +157,11 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\ApiDbConfiguration.cs" />
     <Compile Include="App_Start\JsonWebToken.cs" />
     <Compile Include="App_Start\JsonWebTokenValidationHandler.cs" />
     <Compile Include="App_Start\SessionAuthenticationConfig.cs" />
+    <Compile Include="App_Start\SessionContextDbConnectionInterceptor.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CreatorAliasesController.cs" />
     <Compile Include="Controllers\CreatorsController.cs" />

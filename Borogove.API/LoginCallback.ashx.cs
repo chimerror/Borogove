@@ -1,16 +1,18 @@
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.IdentityModel.Services;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web;
+using Auth0.AspNet;
+using Auth0.AuthenticationApi;
+using Auth0.AuthenticationApi.Models;
+using System.Security.Claims;
+using Newtonsoft.Json.Linq;
+
 namespace Borogove.API
 {
-    using System;
-    using System.Threading.Tasks;
-    using Auth0.AuthenticationApi;
-    using Auth0.AuthenticationApi.Models;
-    using Auth0.AspNet;
-    using System.Collections.Generic;
-    using System.Configuration;
-    using System.IdentityModel.Services;
-    using System.Linq;
-    using System.Web;
-
     public class LoginCallback : HttpTaskAsyncHandler
     {
         public override async Task ProcessRequestAsync(HttpContext context)
@@ -43,6 +45,9 @@ namespace Borogove.API
                 new KeyValuePair<string, object>("connection", profile.Identities.First().Connection),
                 new KeyValuePair<string, object>("provider", profile.Identities.First().Provider)
             };
+
+            JArray groups = profile.AppMetadata.authorization.groups;
+            user.Add(new KeyValuePair<string, object>(ClaimTypes.GroupSid, groups.Select(g => (string)g).ToArray()));
 
             FederatedAuthentication.SessionAuthenticationModule.CreateSessionCookie(user);
 

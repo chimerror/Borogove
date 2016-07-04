@@ -188,8 +188,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdministratorsDbConnectionInterceptor.cs" />
     <Compile Include="AuthorizationMetadataNames.cs" />
     <Compile Include="ListExtensions.cs" />
+    <Compile Include="PersisterDbConfiguration.cs" />
     <Compile Include="WebsiteMetadataNames.cs" />
     <Compile Include="WorkMetadataCanonicalNames.cs" />
     <Compile Include="WorkMetadataPersister.cs" />
