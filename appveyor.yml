@@ -8,6 +8,8 @@ environment:
   Auth0Domain: chimerror.auth0.com
   Auth0ClientSecret:
     secure: L+OFLeAaQrpEvHkS3/r7S59v4LmQH23gzFaIL4L3zxsjGF605RwN1mtLRnhRYqO59asbLbqDOkci464nahKcBoGIu3hRdHdA+vzbN7SZUXg=
+  Auth0ManagementToken:
+    secure: qjXx3IP0+XIS+aO6/+QY3tlR/0zxkxS/Mo5ZusItKiHClXCUALmVarlIXZvwPNMvuxKqj4s/FqYZtqPeAZnXHGfBI9aKdm76wfUtG9PiWaOa2wwl8iAnkrbJki95D37akEOMtVcDKDbxzLzinfk2axxqNIK4xgmOiZTP8GE2c6lDhiFRVkKKdPNk/rqZO9IdWswtaNzQqzKgpZ4DVcTsVAMoo4LuEb6YlBxBo/DX8/70d8BXZfLOYjvfRmxk1H+h7ssCdhvi2+f/f2/kBzRz+LLhzi5TIGf+PAlkCTHvSw/p/kuSVz4TSNez+zAxk7D4M/LI/jZXlq7FWYGJD/aOzTJSTJCoVeg6jQWajNhwJU8=
 
 install:
   - mkdir ..\Wyam
