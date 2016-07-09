@@ -75,40 +75,22 @@ Pipelines.Add("Templates",
                   .To(x => Helpers.OutputFolder.CombineFilePathAfter(x.Path, "js"))
 );
 
-Pipelines.Add("Posts",
-              ReadFiles(@"Posts\*.md"),
+Pipelines.Add("Works",
+              ReadFiles(@"**\*.md"),
               WorkMetadataYamlUnpacker(),
               AuthorizationMetadataResolver(Helpers.AuthorizationDomain, Helpers.AuthorizationManagementToken, true, true),
               Meta(WorkMetadataCanonicalNames.Path, (doc, _) =>
-                  string.Format(@"Posts/{0}.html",
+                  string.Format(@"{0}/{1}.html",
+                      doc.Get<string>("RelativeFileDir", string.Empty),
                       doc.Get<string>(WorkMetadataCanonicalNames.Title, doc.Get<string>("SourceFileBase")))
                   .ToLower().Replace(' ', '-')),
               WorkMetadataPersister(Helpers.WorkContextConnectionString),
-              Meta(WorkMetadataCanonicalNames.Title, @doc.Get<string>(WorkMetadataCanonicalNames.Title, "Untitled Post")),
+              Meta(WorkMetadataCanonicalNames.Title, @doc.Get<string>(WorkMetadataCanonicalNames.Title, "Untitled Work")),
               Markdown(),
-              Meta("Post", @doc.Content),
+              Meta("WorkContent", @doc.Content),
               Merge(
-                  ReadFiles(@"Posts\post.cshtml")
-              ),
-              Razor(),
-              WriteFiles((string)@doc[WorkMetadataCanonicalNames.Path])
-);
-
-Pipelines.Add("Secret",
-              ReadFiles(@"Secret\*.md"),
-              WorkMetadataYamlUnpacker(),
-              AuthorizationMetadataResolver(Helpers.AuthorizationDomain, Helpers.AuthorizationManagementToken, true, true),
-              Meta(WorkMetadataCanonicalNames.Path, (doc, _) =>
-                  string.Format(@"Secret/{0}.html",
-                      doc.Get<string>(WorkMetadataCanonicalNames.Title, doc.Get<string>("SourceFileBase")))
-                  .ToLower().Replace(' ', '-')),
-              WorkMetadataPersister(Helpers.WorkContextConnectionString),
-              Meta(WorkMetadataCanonicalNames.Title, @doc.Get<string>(WorkMetadataCanonicalNames.Title, "Untitled Secret Post")),
-              Markdown(),
-              Meta("Post", @doc.Content),
-              Merge(
-                  ReadFiles(@"Secret\Secret.cshtml")
-              ),
+                  ReadFiles((doc, _) => string.Format(@"{0}\*.cshtml", doc.Get<string>("RelativeFileDir", string.Empty)))
+              ).ForEachDocument(),
               Razor(),
               WriteFiles((string)@doc[WorkMetadataCanonicalNames.Path])
 );

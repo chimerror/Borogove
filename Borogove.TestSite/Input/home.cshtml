@@ -1,6 +1,17 @@
+@using System.Linq;
 @using Borogove;
 @{
     ViewBag.Title = "Borogove Test Site";
+}
+@functions
+{
+    bool DocumentHasWhiteList(IDocument document)
+    {
+        var whitelistedUsers = document.Get<IEnumerable<string>>(AuthorizationMetadataNames.WhitelistedUsers);
+        var whitelistedGroups = document.Get<IEnumerable<string>>(AuthorizationMetadataNames.WhitelistedGroups);
+        return (whitelistedUsers != null && whitelistedUsers.Any()) ||
+            (whitelistedGroups != null && whitelistedGroups.Any());
+    }
 }
 <h1>Borogove Test Site</h1>
 <hr />
@@ -9,8 +20,11 @@
 </p>
 <h2>It seems very pretty, but it's rather hard to understand:</h2>
 <ul>
-    @foreach (var doc in Documents.FromPipeline("Posts"))
+    @foreach (var doc in Documents.FromPipeline("Works"))
     {
-        <li><a href="@doc[WorkMetadataCanonicalNames.Path]">@doc[WorkMetadataCanonicalNames.Title]</a> - @doc[WorkMetadataCanonicalNames.CreatedDate]</li>
+        if (!DocumentHasWhiteList(doc))
+        {
+            <li><a href="@doc[WorkMetadataCanonicalNames.Path]">@doc[WorkMetadataCanonicalNames.Title]</a> - @doc[WorkMetadataCanonicalNames.CreatedDate]</li>
+        }
     }
 </ul>
