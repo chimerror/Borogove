@@ -12,6 +12,8 @@ Tags: blade, victory, jabberwock, chortling
 Created date: 2016-06-07T06:46:00
 Modified date: 2016-06-07T06:46:00
 Published date: 2016-06-07T06:46:00
+Whitelisted Users: foobardog@gmail.com, auth0|576afc085a4e338035604d5b
+Whitelisted Groups: Secret Club
 
 ---
 

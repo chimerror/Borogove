@@ -34,6 +34,7 @@ public static class Helpers
         public static readonly string WorkContextConnectionString = Environment.GetEnvironmentVariable("BorogoveConnectionString") ?? WorkMetadataPersister.DefaultDatabaseName;
         public static readonly string AuthorizationClientId = Environment.GetEnvironmentVariable("Auth0ClientId") ?? "bZmoX9XKDg68wfSAqbZK4Km8v76ctkO3";
         public static readonly string AuthorizationDomain = Environment.GetEnvironmentVariable("Auth0Domain") ?? "chimerror.auth0.com";
+        public static readonly string AuthorizationManagementToken = Environment.GetEnvironmentVariable("Auth0ManagementToken");
 
         public static TagSet GetTagSet()
         {
@@ -77,6 +78,7 @@ Pipelines.Add("Templates",
 Pipelines.Add("Posts",
               ReadFiles(@"Posts\*.md"),
               WorkMetadataYamlUnpacker(),
+              AuthorizationMetadataResolver(Helpers.AuthorizationDomain, Helpers.AuthorizationManagementToken, true, true),
               Meta(WorkMetadataCanonicalNames.Path, (doc, _) =>
                   string.Format(@"Posts/{0}.html",
                       doc.Get<string>(WorkMetadataCanonicalNames.Title, doc.Get<string>("SourceFileBase")))
@@ -95,6 +97,7 @@ Pipelines.Add("Posts",
 Pipelines.Add("Secret",
               ReadFiles(@"Secret\*.md"),
               WorkMetadataYamlUnpacker(),
+              AuthorizationMetadataResolver(Helpers.AuthorizationDomain, Helpers.AuthorizationManagementToken, true, true),
               Meta(WorkMetadataCanonicalNames.Path, (doc, _) =>
                   string.Format(@"Secret/{0}.html",
                       doc.Get<string>(WorkMetadataCanonicalNames.Title, doc.Get<string>("SourceFileBase")))

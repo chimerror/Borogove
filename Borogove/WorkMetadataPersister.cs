@@ -11,6 +11,8 @@ using Borogove.DataAccess;
 using Borogove.Model;
 using Names = Borogove.WorkMetadataCanonicalNames;
 
+using static Borogove.MetadataHelpers;
+
 namespace Borogove
 {
     public class WorkMetadataPersister : IModule
@@ -39,7 +41,7 @@ namespace Borogove
                     Dictionary<string, object> newMetadata = new Dictionary<string, object>();
 
                     Guid? workGuid = document
-                        .SingleOrDefault(kvp => Names.CanonicalizeString(kvp.Key).Equals(Names.Identifier) && kvp.Value is Guid)
+                        .SingleOrDefault(kvp => CanonicalizeString(kvp.Key).Equals(Names.Identifier) && kvp.Value is Guid)
                         .Value as Guid?;
                     if (!workGuid.HasValue)
                     {
@@ -92,7 +94,7 @@ namespace Borogove
 
             foreach (var keyValuePair in metadata)
             {
-                string canonicalizedKey = Names.CanonicalizeString(keyValuePair.Key);
+                string canonicalizedKey = CanonicalizeString(keyValuePair.Key);
                 object value = keyValuePair.Value;
                 switch (canonicalizedKey)
                 {

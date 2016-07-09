@@ -24,15 +24,5 @@
         public const string DraftOf = "draftof";
         public const string ArtifactOf = "artifactof";
         public const string CommentsOn = "commentson";
-
-        public static string CanonicalizeString(string input)
-        {
-            if (string.IsNullOrEmpty(input))
-            {
-                return input;
-            }
-
-            return input.ToLowerInvariant().Replace(" ", string.Empty);
-        }
     }
 }

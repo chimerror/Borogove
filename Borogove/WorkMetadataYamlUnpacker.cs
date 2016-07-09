@@ -12,6 +12,7 @@ using YamlDotNet.RepresentationModel;
 using YamlDotNet.Dynamic;
 
 using static Borogove.WorkMetadataCanonicalNames;
+using static Borogove.MetadataHelpers;
 
 namespace Borogove
 {
@@ -20,9 +21,6 @@ namespace Borogove
         public const string DefaultKeyName = "Borogove";
         public const string TagSetKeySuffix = "TagSet";
         public const string DefaultTagSetKey = DefaultKeyName + TagSetKeySuffix;
-        public const char ListSeparator = ',';
-
-        private static readonly char[] _listSeparatorArray = new char[] { ListSeparator };
 
         private readonly string _key;
         private readonly bool _flatten;
@@ -112,7 +110,7 @@ namespace Borogove
                         case Next:
                             newMetadata.Add(canonicalizedKey,
                                 stringValue
-                                    .Split(_listSeparatorArray, StringSplitOptions.RemoveEmptyEntries)
+                                    .SeparateList()
                                     .Select(w => Guid.Parse(w))
                                     .ToList());
                             continue;
