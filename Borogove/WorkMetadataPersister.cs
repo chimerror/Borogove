@@ -10,6 +10,7 @@ using Wyam.Common.Modules;
 using Borogove.DataAccess;
 using Borogove.Model;
 using Names = Borogove.WorkMetadataCanonicalNames;
+using AuthorizationNames = Borogove.AuthorizationMetadataNames;
 
 using static Borogove.MetadataHelpers;
 
@@ -71,6 +72,7 @@ namespace Borogove
                     work.Path = document.Get<string>(Names.Path, null);
                     work.Content = document.Content;
                     UpdateWorkEntityFromMetadata(work, document, workContext);
+                    UpdateAuhtorizationEntitiesFromMetadata(work, document, workContext);
                     finalProcessedDocuments.Add(context.GetDocument(document, newMetadata));
                 }
 
@@ -90,6 +92,11 @@ namespace Borogove
             if (metadata == null)
             {
                 throw new ArgumentNullException(nameof(metadata));
+            }
+
+            if (workContext == null)
+            {
+                throw new ArgumentNullException(nameof(workContext));
             }
 
             foreach (var keyValuePair in metadata)
@@ -322,6 +329,38 @@ namespace Borogove
                         continue;
                 }
             }
+        }
+        private static void UpdateAuhtorizationEntitiesFromMetadata(WorkEntity work, IDocument document, WorkContext workContext)
+        {
+            if (work == null)
+            {
+                throw new ArgumentNullException(nameof(work));
+            }
+
+            if (document == null)
+            {
+                throw new ArgumentNullException(nameof(document));
+            }
+
+            if (workContext == null)
+            {
+                throw new ArgumentNullException(nameof(workContext));
+            }
+
+            var whitelistedUsers = document
+                .FirstOrDefault(kvp => CanonicalizeString(kvp.Key).Equals(AuthorizationNames.WhitelistedUsers))
+                .Value as IEnumerable<string> ?? new List<string>();
+            var whitelistedGroups = document
+                .FirstOrDefault(kvp => CanonicalizeString(kvp.Key).Equals(AuthorizationNames.WhitelistedGroups))
+                .Value as IEnumerable<string> ?? new List<string>();
+
+            var whitelistedUserEntities = whitelistedUsers
+                .Select(u => workContext.WorkWhitelistEntries.Find(work.Identifier, SubjectType.User, u) ??
+                            new WorkWhitelistEntryEntity(work, SubjectType.User, u));
+            var whitelistedGroupEntities = whitelistedGroups
+                .Select(g => workContext.WorkWhitelistEntries.Find(work.Identifier, SubjectType.Group, g) ??
+                            new WorkWhitelistEntryEntity(work, SubjectType.Group, g));
+            work.WhitelistEntries = whitelistedUserEntities.Concat(whitelistedGroupEntities).ToList();
         }
     }
 }

@@ -1,13 +1,31 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Borogove.DataAccess
 {
     public class WorkWhitelistEntryEntity
     {
+        public WorkWhitelistEntryEntity()
+        {
+        }
+
+        public WorkWhitelistEntryEntity(WorkEntity work, SubjectType subjectType, string subjectName)
+        {
+            if (work == null)
+            {
+                throw new ArgumentNullException(nameof(work));
+            }
+
+            if (subjectName == null)
+            {
+                throw new ArgumentNullException(nameof(subjectName));
+            }
+
+            Work = work;
+            WorkIdentifier = Work.Identifier;
+            SubjectType = subjectType;
+            SubjectName = subjectName;
+        }
+
         public Guid WorkIdentifier { get; set; }
         public WorkEntity Work { get; set; }
         public SubjectType SubjectType { get; set; }
