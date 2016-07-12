@@ -30,7 +30,7 @@ public static class Helpers
                 new MigrateDatabaseToLatestVersion<WorkContext, Borogove.DataAccess.Migrations.Configuration>(workContextConnectionStringName));
         }
 
-        public static readonly string WebsiteRootUrl = Environment.GetEnvironmentVariable("WebsiteRootUrl") ?? "http://localhost:57688";
+        public static readonly string WebsiteRootUrl = Environment.GetEnvironmentVariable("WebsiteRootUrl") ?? "https://localhost:44342";
         public static readonly string WorkContextConnectionString = Environment.GetEnvironmentVariable("BorogoveConnectionString") ?? WorkMetadataPersister.DefaultDatabaseName;
         public static readonly string AuthorizationClientId = Environment.GetEnvironmentVariable("Auth0ClientId") ?? "bZmoX9XKDg68wfSAqbZK4Km8v76ctkO3";
         public static readonly string AuthorizationDomain = Environment.GetEnvironmentVariable("Auth0Domain") ?? "chimerror.auth0.com";

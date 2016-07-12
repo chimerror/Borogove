@@ -49,7 +49,7 @@ namespace Borogove.API
             JArray groups = profile.AppMetadata.authorization.groups;
             user.Add(new KeyValuePair<string, object>(ClaimTypes.GroupSid, groups.Select(g => (string)g).ToArray()));
 
-            FederatedAuthentication.SessionAuthenticationModule.CreateSessionCookie(user);
+            FederatedAuthentication.SessionAuthenticationModule.CreateSessionCookie(user, requireSsl: true);
 
             if (context.Request.QueryString["state"] != null && context.Request.QueryString["state"].StartsWith("ru="))
             {
