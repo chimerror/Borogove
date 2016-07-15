@@ -12,7 +12,7 @@
 }
 <input type="hidden" id="authorizationClientId" value="@Metadata.Get(AuthorizationMetadataNames.ClientId)" />
 <input type="hidden" id="authorizationDomain" value="@Metadata.Get(AuthorizationMetadataNames.Domain)" />
-<div id="loginContainer" />
+<div id="loginContainer"></div>
 <div id="loginNoScript">
     JavaScript disabled. Please use the following links to log in:
     <ul>
@@ -21,5 +21,4 @@
     </ul>
     Please note that User name &amp; password authentication requires JavaScript, and thus is not available.
 </div>
-<script src="https://cdn.auth0.com/js/lock-9.1.min.js"></script>
-<script data-main="/js/Login.js" src="/js/lib/require.js"></script>
+<script src="/js/Login.js"></script>

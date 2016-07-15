@@ -37,6 +37,7 @@ namespace Borogove.API
                 new KeyValuePair<string, object>("family_name", profile.LastName),
                 new KeyValuePair<string, object>("given_name", profile.FirstName),
                 new KeyValuePair<string, object>("nickname", profile.NickName),
+                new KeyValuePair<string, object>("username", profile.UserName ?? string.Empty),
                 new KeyValuePair<string, object>("picture", profile.Picture),
                 new KeyValuePair<string, object>("user_id", profile.UserId),
                 new KeyValuePair<string, object>("id_token", token.IdToken),
@@ -51,6 +52,10 @@ namespace Borogove.API
 
             FederatedAuthentication.SessionAuthenticationModule.CreateSessionCookie(user, requireSsl: true);
 
+            var profileCookie = new HttpCookie("BorogoveProfile", token.IdToken);
+            profileCookie.Secure = true;
+            context.Response.Cookies.Set(profileCookie);
+
             if (context.Request.QueryString["state"] != null && context.Request.QueryString["state"].StartsWith("ru="))
             {
                 var state = HttpUtility.ParseQueryString(context.Request.QueryString["state"]);
@@ -60,7 +65,7 @@ namespace Borogove.API
             context.Response.Redirect("/");
         }
 
-        public bool IsReusable
+        public override bool IsReusable
         {
             get { return false; }
         }

@@ -1,0 +1,40 @@
+﻿@using System.Text;
+@using System.Web;
+@using Borogove;
+@functions
+{
+    string GetLoginPath()
+    {
+        var stringBuilder =
+            new StringBuilder(Metadata.Get<string>(WebsiteMetadataNames.WebsiteLoginPage, "/login.html"));
+        if (Metadata.ContainsKey(WorkMetadataCanonicalNames.Path))
+        {
+            // TODO: Remove site from this URL before uploading
+            stringBuilder.AppendFormat("?ReturnUrl={0}",
+                HttpUtility.UrlEncode(Metadata.Get<string>(WebsiteMetadataNames.WebsiteRootUrl) + "/site/" + Metadata.Get<string>(WorkMetadataCanonicalNames.Path)));
+        }
+        return stringBuilder.ToString();
+    }
+
+    string GetLogoutPath()
+    {
+        var stringBuilder =
+            new StringBuilder(Metadata.Get<string>(WebsiteMetadataNames.WebsiteLogoutPage, "/Logout.ashx"));
+        if (Metadata.ContainsKey(WorkMetadataCanonicalNames.Path))
+        {
+            // TODO: Remove site from this URL before uploading
+            stringBuilder.AppendFormat("?ReturnUrl={0}",
+                HttpUtility.UrlEncode(Metadata.Get<string>(WebsiteMetadataNames.WebsiteRootUrl) + "/site/" + Metadata.Get<string>(WorkMetadataCanonicalNames.Path)));
+        }
+        return stringBuilder.ToString();
+    }
+}
+<div id="loginLink" hidden="hidden"><a href="@GetLoginPath()">Login</a></div>
+<div id="userWidget" hidden="hidden">
+    <div id="userInformation">
+        <img id="userPicture" src="/img/DefaultAvatar.png" alt="User Avatar" />
+        <div id="userName"></div>
+    </div>
+    <div id="logoutLink"><a href="@GetLogoutPath()">Logout</a></div>
+    <div id="emailNotVerifiedWarning" hidden="hidden">Email unverified, please check your email for the verification email.</div>
+</div>

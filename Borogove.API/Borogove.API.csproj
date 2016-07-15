@@ -176,11 +176,15 @@
     <Compile Include="LoginCallback.ashx.cs">
       <DependentUpon>LoginCallback.ashx</DependentUpon>
     </Compile>
+    <Compile Include="Logout.ashx.cs">
+      <DependentUpon>Logout.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
     <Content Include="LoginCallback.ashx" />
+    <Content Include="Logout.ashx" />
     <None Include="Properties\PublishProfiles\Local.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

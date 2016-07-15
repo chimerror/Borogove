@@ -12,10 +12,22 @@
     @Html.Partial("_LinkElements")
 </head>
 <body>
+    <script src="/js/lib/require.js"></script>
+    <script src="/js/RequireConfig.js"></script>
+    <header>
+        @if (ViewBag.ShowUserWidget == null || ViewBag.ShowUserWidget)
+        {
+            @Html.Partial("_UserWidget.cshtml")
+        }
+    </header>
     @if (Metadata.ContainsKey(WorkMetadataCanonicalNames.Identifier))
     {
         <input type="hidden" id="workIdentifier" value="@Metadata.Get(WorkMetadataCanonicalNames.Identifier)" />
     }
     @RenderBody()
+    @if (ViewBag.ShowUserWidget == null || ViewBag.ShowUserWidget)
+    {
+        <script src="/js/UserWidget.js"></script>
+    }
 </body>
 </html>

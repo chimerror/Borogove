@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Borogove", "Borogove\Borogove.csproj", "{FF3002AA-B2E5-4D27-B723-F92BDAA5A4B8}"
 EndProject
@@ -48,6 +48,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Borogove.Templates", "Borog
 		Borogove.Templates\_LoginPage.cshtml = Borogove.Templates\_LoginPage.cshtml
 		Borogove.Templates\_MetadataElements.cshtml = Borogove.Templates\_MetadataElements.cshtml
 		Borogove.Templates\_SearchForm.cshtml = Borogove.Templates\_SearchForm.cshtml
+		Borogove.Templates\_UserWidget.cshtml = Borogove.Templates\_UserWidget.cshtml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "js", "js", "{5299D2B4-4BF2-4547-AC45-0DF68E057C61}"
@@ -55,7 +56,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "js", "js", "{5299D2B4-4BF2-
 		Borogove.Templates\js\Comments.js = Borogove.Templates\js\Comments.js
 		Borogove.Templates\js\Common.js = Borogove.Templates\js\Common.js
 		Borogove.Templates\js\Login.js = Borogove.Templates\js\Login.js
+		Borogove.Templates\js\RequireConfig.js = Borogove.Templates\js\RequireConfig.js
 		Borogove.Templates\js\Search.js = Borogove.Templates\js\Search.js
+		Borogove.Templates\js\UserWidget.js = Borogove.Templates\js\UserWidget.js
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lib", "lib", "{EF735FD6-25EB-465E-AC06-FD41880C0A68}"
@@ -64,6 +67,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lib", "lib", "{EF735FD6-25E
 		Borogove.Templates\js\lib\jquery-2.2.3.js = Borogove.Templates\js\lib\jquery-2.2.3.js
 		Borogove.Templates\js\lib\jquery-2.2.3.min.js = Borogove.Templates\js\lib\jquery-2.2.3.min.js
 		Borogove.Templates\js\lib\jquery-2.2.3.min.map = Borogove.Templates\js\lib\jquery-2.2.3.min.map
+		Borogove.Templates\js\lib\js.cookie-2.1.2.min.js = Borogove.Templates\js\lib\js.cookie-2.1.2.min.js
+		Borogove.Templates\js\lib\js.cookie.js = Borogove.Templates\js\lib\js.cookie.js
+		Borogove.Templates\js\lib\lock-9.2.1.min.js = Borogove.Templates\js\lib\lock-9.2.1.min.js
 		Borogove.Templates\js\lib\o.js = Borogove.Templates\js\lib\o.js
 		Borogove.Templates\js\lib\o.min.js = Borogove.Templates\js\lib\o.min.js
 		Borogove.Templates\js\lib\pure.js = Borogove.Templates\js\lib\pure.js
@@ -78,6 +84,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Secret", "Secret", "{502D13
 	ProjectSection(SolutionItems) = preProject
 		Borogove.TestSite\Input\Secret\foo.md = Borogove.TestSite\Input\Secret\foo.md
 		Borogove.TestSite\Input\Secret\Secret.cshtml = Borogove.TestSite\Input\Secret\Secret.cshtml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "img", "img", "{193867C1-A0A1-4C1C-A353-3445784B9471}"
+	ProjectSection(SolutionItems) = preProject
+		Borogove.Templates\img\DefaultAvatar.png = Borogove.Templates\img\DefaultAvatar.png
 	EndProjectSection
 EndProject
 Global
@@ -116,5 +127,6 @@ Global
 		{5299D2B4-4BF2-4547-AC45-0DF68E057C61} = {8068B26E-3E1B-4C71-BB7F-B72B7AB1A6CE}
 		{EF735FD6-25EB-465E-AC06-FD41880C0A68} = {5299D2B4-4BF2-4547-AC45-0DF68E057C61}
 		{502D13EE-3789-4DB6-9EE2-39FA48C24059} = {08363E02-2717-4E2D-8FB5-5039E6DB48DB}
+		{193867C1-A0A1-4C1C-A353-3445784B9471} = {8068B26E-3E1B-4C71-BB7F-B72B7AB1A6CE}
 	EndGlobalSection
 EndGlobal

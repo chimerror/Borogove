@@ -2,14 +2,9 @@
 /// <reference path="./lib/o.js" />
 /// <reference path="./lib/pure.js" />
 /// <reference path="./Common.js" />
-document.querySelector('div#searchNoScript').hidden = true;
-requirejs.config({
-    baseUrl: '/js/lib',
-    paths: {
-        'common': '../Common'
-    },
-});
-requirejs(['q', 'o', 'pure', 'common'], function (q, o, pure, common) {
+requirejs(['../RequireConfig', 'q', 'o', 'pure', 'common'], function (config, q, o, pure, common) {
+    document.querySelector('div#searchNoScript').hidden = true;
+
     var searchResultDirective = {
         'section.searchResult': {
             'searchResult<-': {

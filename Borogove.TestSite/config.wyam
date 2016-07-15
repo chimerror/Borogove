@@ -31,6 +31,8 @@ public static class Helpers
         }
 
         public static readonly string WebsiteRootUrl = Environment.GetEnvironmentVariable("WebsiteRootUrl") ?? "https://localhost:44342";
+        public static readonly string WebsiteLoginPage = $"{WebsiteRootUrl}/{ Environment.GetEnvironmentVariable("WebsiteLoginPage") ?? "site/login.html" }";
+        public static readonly string WebsiteLogoutPage = $"{WebsiteRootUrl}/{ Environment.GetEnvironmentVariable("WebsiteLogoutPage") ?? "Logout.ashx" }";
         public static readonly string WorkContextConnectionString = Environment.GetEnvironmentVariable("BorogoveConnectionString") ?? WorkMetadataPersister.DefaultDatabaseName;
         public static readonly string AuthorizationClientId = Environment.GetEnvironmentVariable("Auth0ClientId") ?? "bZmoX9XKDg68wfSAqbZK4Km8v76ctkO3";
         public static readonly string AuthorizationDomain = Environment.GetEnvironmentVariable("Auth0Domain") ?? "chimerror.auth0.com";
@@ -62,6 +64,8 @@ public static class Helpers
 ---
 
 InitialMetadata.Add(Borogove.WebsiteMetadataNames.WebsiteRootUrl, Helpers.WebsiteRootUrl);
+InitialMetadata.Add(Borogove.WebsiteMetadataNames.WebsiteLoginPage, Helpers.WebsiteLoginPage);
+InitialMetadata.Add(Borogove.WebsiteMetadataNames.WebsiteLogoutPage, Helpers.WebsiteLogoutPage);
 InitialMetadata.Add(Borogove.WorkMetadataYamlUnpacker.DefaultTagSetKey, Helpers.GetTagSet());
 InitialMetadata.Add(Borogove.AuthorizationMetadataNames.ClientId, Helpers.AuthorizationClientId);
 InitialMetadata.Add(Borogove.AuthorizationMetadataNames.Domain, Helpers.AuthorizationDomain);
@@ -72,7 +76,9 @@ Pipelines.Add("Templates",
                   .To(x => Helpers.InputFolder.GetFilePath(x.Path)),
               CopyFiles(@"..\..\Borogove.Templates\js\**")
                   .Where(x => !x.Path.FullPath.Contains("intellisense"))
-                  .To(x => Helpers.OutputFolder.CombineFilePathAfter(x.Path, "js"))
+                  .To(x => Helpers.OutputFolder.CombineFilePathAfter(x.Path, "js")),
+              CopyFiles(@"..\..\Borogove.Templates\img\**")
+                  .To(x => Helpers.OutputFolder.CombineFilePathAfter(x.Path, "img"))
 );
 
 Pipelines.Add("Works",
@@ -97,6 +103,7 @@ Pipelines.Add("Works",
 
 Pipelines.Add("Home",
               ReadFiles(@"{!_,}*.cshtml"),
+              Meta(WorkMetadataCanonicalNames.Path, (doc, _) => $"{ doc.Get<string>("RelativeFilePathBase") }.html"),
               Razor(),
               WriteFiles(".html")
  );
