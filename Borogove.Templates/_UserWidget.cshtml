@@ -9,9 +9,9 @@
             new StringBuilder(Metadata.Get<string>(WebsiteMetadataNames.WebsiteLoginPage, "/login.html"));
         if (Metadata.ContainsKey(WorkMetadataCanonicalNames.Path))
         {
-            // TODO: Remove site from this URL before uploading
+            // TODO: Add site to this URL before local testing
             stringBuilder.AppendFormat("?ReturnUrl={0}",
-                HttpUtility.UrlEncode(Metadata.Get<string>(WebsiteMetadataNames.WebsiteRootUrl) + "/site/" + Metadata.Get<string>(WorkMetadataCanonicalNames.Path)));
+                HttpUtility.UrlEncode(Metadata.Get<string>(WebsiteMetadataNames.WebsiteRootUrl) + Metadata.Get<string>(WorkMetadataCanonicalNames.Path)));
         }
         return stringBuilder.ToString();
     }
@@ -22,9 +22,9 @@
             new StringBuilder(Metadata.Get<string>(WebsiteMetadataNames.WebsiteLogoutPage, "/Logout.ashx"));
         if (Metadata.ContainsKey(WorkMetadataCanonicalNames.Path))
         {
-            // TODO: Remove site from this URL before uploading
+            // TODO: Add site to this URL before local testing
             stringBuilder.AppendFormat("?ReturnUrl={0}",
-                HttpUtility.UrlEncode(Metadata.Get<string>(WebsiteMetadataNames.WebsiteRootUrl) + "/site/" + Metadata.Get<string>(WorkMetadataCanonicalNames.Path)));
+                HttpUtility.UrlEncode(Metadata.Get<string>(WebsiteMetadataNames.WebsiteRootUrl) + Metadata.Get<string>(WorkMetadataCanonicalNames.Path)));
         }
         return stringBuilder.ToString();
     }
