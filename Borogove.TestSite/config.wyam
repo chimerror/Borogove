@@ -12,22 +12,10 @@ public static class Helpers
 {
         static Helpers()
         {
-            const string workContextConnectionStringName = "WorkContext";
-            var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            if (!WorkContextConnectionString.Equals(WorkMetadataPersister.DefaultDatabaseName) &&
-                !config.ConnectionStrings.ConnectionStrings.Cast<ConnectionStringSettings>()
-                    .Any(css => css.Name.Equals(workContextConnectionStringName)))
-            {
-                var connectionString = new ConnectionStringSettings(workContextConnectionStringName, WorkContextConnectionString, "System.Data.SqlClient");
-                config.ConnectionStrings.ConnectionStrings.Add(connectionString);
-                config.Save();
-                ConfigurationManager.RefreshSection("connectionStrings");
-            }
-
             DbConfiguration.SetConfiguration(new PersisterDbConfiguration());
 
             Database.SetInitializer(
-                new MigrateDatabaseToLatestVersion<WorkContext, Borogove.DataAccess.Migrations.Configuration>(workContextConnectionStringName));
+                new MigrateDatabaseToLatestVersion<WorkContext, Borogove.DataAccess.Migrations.Configuration>(true));
         }
 
         public static readonly string WebsiteRootUrl = Environment.GetEnvironmentVariable("WebsiteRootUrl") ?? "https://localhost:44342";
