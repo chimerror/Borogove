@@ -1,7 +1,9 @@
 // JavaScript source code
 /// <reference path="./lib/require.js" />
 /// <reference path="./lib/js.cookie.js" />
-define(['../RequireConfig', 'js.cookie'], function (config, cookie) {
+/// <reference path="./lib/TextEncoderLite-1.0.0.js" />
+/// <reference path="./lib/base64-js-1.1.2.js" />
+define(['../RequireConfig', 'js.cookie', 'textencoderlite', 'base64'], function (config, cookie, tel, b64) {
     return {
         getRootUrl: function () {
             return /^https?:\/\/.*?\//.exec(window.location.href);
@@ -21,7 +23,10 @@ define(['../RequireConfig', 'js.cookie'], function (config, cookie) {
         getLoggedInUser: function () {
             var rawJwt = cookie.get('BorogoveProfile');
             var regMatches = /^.+\.([A-Za-z0-9+\/=]+)\..+$/.exec(rawJwt);
-            return regMatches ? JSON.parse(atob(regMatches[1])) : null;
+            var base64Bytes = regMatches ? b64.toByteArray(regMatches[1]) : null;
+            var decoder = new tel.TextDecoderLite('utf-8');
+            var jsonString = base64Bytes ? decoder.decode(base64Bytes) : null;
+            return jsonString ? JSON.parse(jsonString) : null;
         }
     }
 });

@@ -63,6 +63,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "js", "js", "{5299D2B4-4BF2-
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lib", "lib", "{EF735FD6-25EB-465E-AC06-FD41880C0A68}"
 	ProjectSection(SolutionItems) = preProject
+		Borogove.Templates\js\lib\base64-js-1.1.2.js = Borogove.Templates\js\lib\base64-js-1.1.2.js
 		Borogove.Templates\js\lib\jquery-2.2.3.intellisense.js = Borogove.Templates\js\lib\jquery-2.2.3.intellisense.js
 		Borogove.Templates\js\lib\jquery-2.2.3.js = Borogove.Templates\js\lib\jquery-2.2.3.js
 		Borogove.Templates\js\lib\jquery-2.2.3.min.js = Borogove.Templates\js\lib\jquery-2.2.3.min.js
@@ -78,6 +79,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lib", "lib", "{EF735FD6-25E
 		Borogove.Templates\js\lib\queue.js = Borogove.Templates\js\lib\queue.js
 		Borogove.Templates\js\lib\require.js = Borogove.Templates\js\lib\require.js
 		Borogove.Templates\js\lib\require.min.js = Borogove.Templates\js\lib\require.min.js
+		Borogove.Templates\js\lib\TextEncoderLite-1.0.0.js = Borogove.Templates\js\lib\TextEncoderLite-1.0.0.js
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Secret", "Secret", "{502D13EE-3789-4DB6-9EE2-39FA48C24059}"

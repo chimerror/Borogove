@@ -195,3 +195,4 @@ Output/
 /Borogove.TestSite/Input/_DefaultLayout.cshtml
 /Borogove.TestSite/Input/_LoginPage.cshtml
 /Borogove.TestSite/Input/_UserWidget.cshtml
+/LocalTestSetup.ps1
