@@ -20,12 +20,27 @@ define(['../RequireConfig', 'js.cookie', 'textencoderlite', 'base64'], function 
             return document.querySelector('input#workIdentifier').getAttribute('value');
         },
 
+        decodeUtf8Base64String: function (base64String) {
+            var length = base64String.length;
+            var paddingNeeded = 0
+            if ((base64String[length - 1] != '=') && (length % 4 > 0)) {
+                paddingNeeded = 4 - (length % 4);
+            }
+
+            var paddedString = base64String;
+            for (i = 0; i < paddingNeeded; i++) {
+                paddedString += '=';
+            }
+
+            var base64Bytes = b64.toByteArray(paddedString);
+            var decoder = new tel.TextDecoderLite('utf-8');
+            return decoder.decode(base64Bytes);
+        },
+
         getLoggedInUser: function () {
             var rawJwt = cookie.get('BorogoveProfile');
-            var regMatches = /^.+\.([A-Za-z0-9+\/=]+)\..+$/.exec(rawJwt);
-            var base64Bytes = regMatches ? b64.toByteArray(regMatches[1]) : null;
-            var decoder = new tel.TextDecoderLite('utf-8');
-            var jsonString = base64Bytes ? decoder.decode(base64Bytes) : null;
+            var regMatches = /^.+\.([A-Za-z0-9+\/=\-_]+)\..+$/.exec(rawJwt);
+            var jsonString = regMatches ? this.decodeUtf8Base64String(regMatches[1]) : null;
             return jsonString ? JSON.parse(jsonString) : null;
         }
     }
