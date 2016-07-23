@@ -10,6 +10,11 @@ namespace Borogove
         {
             var command = connection.CreateCommand();
             command.CommandText = "EXEC sp_set_session_context @key=N'Groups', @value=N'|Administrators|'";
+
+            if (connection.State != ConnectionState.Open)
+            {
+                connection.Open();
+            }
             command.ExecuteNonQuery();
         }
 
