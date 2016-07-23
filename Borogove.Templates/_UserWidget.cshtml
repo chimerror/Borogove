@@ -11,7 +11,7 @@
         {
             // TODO: Add site to this URL before local testing
             stringBuilder.AppendFormat("?ReturnUrl={0}",
-                HttpUtility.UrlEncode(Metadata.Get<string>(WebsiteMetadataNames.WebsiteRootUrl) + Metadata.Get<string>(WorkMetadataCanonicalNames.Path)));
+                HttpUtility.UrlEncode(Metadata.Get<string>(WebsiteMetadataNames.WebsiteRootUrl) + "/" + Metadata.Get<string>(WorkMetadataCanonicalNames.Path)));
         }
         return stringBuilder.ToString();
     }
@@ -24,7 +24,7 @@
         {
             // TODO: Add site to this URL before local testing
             stringBuilder.AppendFormat("?ReturnUrl={0}",
-                HttpUtility.UrlEncode(Metadata.Get<string>(WebsiteMetadataNames.WebsiteRootUrl) + Metadata.Get<string>(WorkMetadataCanonicalNames.Path)));
+                HttpUtility.UrlEncode(Metadata.Get<string>(WebsiteMetadataNames.WebsiteRootUrl) + "/" + Metadata.Get<string>(WorkMetadataCanonicalNames.Path)));
         }
         return stringBuilder.ToString();
     }
