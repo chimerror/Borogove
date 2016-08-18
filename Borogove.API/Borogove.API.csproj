@@ -51,12 +51,12 @@
       <HintPath>..\packages\Auth0-ASPNET.1.5.0\lib\net45\Auth0.AspNet.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Auth0.AuthenticationApi, Version=3.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Auth0.AuthenticationApi.3.2.1\lib\portable-net45+win8+wpa81\Auth0.AuthenticationApi.dll</HintPath>
+    <Reference Include="Auth0.AuthenticationApi, Version=3.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Auth0.AuthenticationApi.3.3.0\lib\portable-net45+win8+wpa81\Auth0.AuthenticationApi.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Auth0.Core, Version=3.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Auth0.Core.3.2.0\lib\portable-net45+win8+wpa81\Auth0.Core.dll</HintPath>
+    <Reference Include="Auth0.Core, Version=3.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Auth0.Core.3.3.0\lib\portable-net45+win8+wpa81\Auth0.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
