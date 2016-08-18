@@ -1,5 +1,5 @@
-#n -p Wyam.Markdown
-#n -p Wyam.Razor
+#n -p -v 0.13.5-beta Wyam.Markdown
+#n -p -v 0.13.5-beta Wyam.Razor
 
 using System.Configuration;
 using System.Data.Entity;
@@ -48,8 +48,6 @@ public static class Helpers
         public static DirectoryPath InputFolder { get; set; }
         public static DirectoryPath OutputFolder { get; set; }
 }
-
----
 
 InitialMetadata.Add(Borogove.WebsiteMetadataNames.WebsiteRootUrl, Helpers.WebsiteRootUrl);
 InitialMetadata.Add(Borogove.WebsiteMetadataNames.WebsiteLoginPage, Helpers.WebsiteLoginPage);
