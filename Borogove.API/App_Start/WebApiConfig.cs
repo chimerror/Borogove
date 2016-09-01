@@ -4,6 +4,7 @@ using System.Web.Http.Dispatcher;
 using System.Web.OData;
 using System.Web.OData.Builder;
 using System.Web.OData.Extensions;
+using Auth0.Core;
 using Borogove.DataAccess;
 using Borogove.API.App_Start;
 
@@ -55,6 +56,11 @@ namespace Borogove.API
 
             builder.EntitySet<TagAliasEntity>("TagAliases")
                 .EntityType.HasKey(ta => ta.Alias);
+
+            var usersConfiguration = builder.EntitySet<User>("Users")
+                .EntityType.HasKey(u => u.UserId);
+            usersConfiguration.Ignore(u => u.Identities);
+            usersConfiguration.Ignore(u => u.ProviderAttributes);
 
             var clientID = WebConfigurationManager.AppSettings["auth0:ClientId"];
             var clientSecret = WebConfigurationManager.AppSettings["auth0:ClientSecret"];
