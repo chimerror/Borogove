@@ -2,31 +2,33 @@
 /// <reference path="./lib/jquery-2.2.3.js" />
 /// <reference path="./lib/pure.js" />
 /// <reference path="./Common.js" />
-requirejs(['../RequireConfig', 'jquery', 'pure', 'common'], function (config, jQuery, pure, common) {
+requirejs(['../RequireConfig', 'jquery', 'q', 'o', 'pure', 'common'], function (config, jQuery, q, o, pure, common) {
     var informationDirective = {
-        'img#userPicture@src': 'picture',
+        'img#userPicture@src': 'Picture',
         'div#userName': function (user) {
-            var displayName = user.context.nickname || user.context.name || user.context.username || 'Nameless User'; // Last one should never happen.
-            if (user.context.email && user.context.email != displayName) {
-                displayName += ' (' + user.context.email + ')'
+            var displayName = user.context.NickName || user.context.FullName || user.context.UserName || 'Nameless User'; // Last one should never happen.
+            if (user.context.Email && user.context.Email != displayName) {
+                displayName += ' (' + user.context.Email + ')'
             }
-            else if (user.context.username && user.context.username != displayName) {
-                displayName += ' (' + user.context.username + ')'
+            else if (user.context.UserName && user.context.UserName != displayName) {
+                displayName += ' (' + user.context.UserName + ')'
             }
             return displayName;
         }
     };
 
-    var loggedInUser = common.getLoggedInUser();
-
-    if (loggedInUser) {
-        $('div#userWidget').attr('hidden', false);
-        $('div#userInformation').render(loggedInUser, informationDirective)
-        if (loggedInUser.email_verified == false) {
-            $('div#emailNotVerifiedWarning').attr('hidden', false);
+    var updateUserWidget = function (data) {
+        if (jQuery.isPlainObject(data)) { // o.js returns an empty array for 204 NoContent
+            $('div#userWidget').attr('hidden', false);
+            $('div#userInformation').render(data, informationDirective)
+            if (data.EmailVerified == false) {
+                $('div#emailNotVerifiedWarning').attr('hidden', false);
+            }
+        }
+        else {
+            $('div#loginLink').attr('hidden', false);
         }
     }
-    else {
-        $('div#loginLink').attr('hidden', false);
-    }
+
+    o(common.getRootUrl() + "api/Users/LoggedInUser").get(updateUserWidget);
 });

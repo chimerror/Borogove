@@ -61,6 +61,8 @@ namespace Borogove.API
                 .EntityType.HasKey(u => u.UserId);
             usersConfiguration.Ignore(u => u.Identities);
             usersConfiguration.Ignore(u => u.ProviderAttributes);
+            usersConfiguration.Collection.Function("LoggedInUser")
+                .ReturnsFromEntitySet<User>("Users");
 
             var clientID = WebConfigurationManager.AppSettings["auth0:ClientId"];
             var clientSecret = WebConfigurationManager.AppSettings["auth0:ClientSecret"];

@@ -87,6 +87,8 @@ namespace Borogove.API.App_Start
                 list.Add(new Claim(NameClaimType, jwtData[userNameClaimType].ToString(), StringClaimValueType, issuer, issuer));
             }
 
+            list.Add(new Claim(ClaimTypes.NameIdentifier, jwtData["sub"].ToString(), StringClaimValueType, issuer, issuer));
+
             // set claims for roles array
             list.Where(c => c.Type == "roles").ToList().ForEach(r =>
             {

@@ -35,13 +35,6 @@ define(['../RequireConfig', 'js.cookie', 'textencoderlite', 'base64'], function 
             var base64Bytes = b64.toByteArray(paddedString);
             var decoder = new tel.TextDecoderLite('utf-8');
             return decoder.decode(base64Bytes);
-        },
-
-        getLoggedInUser: function () {
-            var rawJwt = cookie.get('BorogoveProfile');
-            var regMatches = /^.+\.([A-Za-z0-9+\/=\-_]+)\..+$/.exec(rawJwt);
-            var jsonString = regMatches ? this.decodeUtf8Base64String(regMatches[1]) : null;
-            return jsonString ? JSON.parse(jsonString) : null;
         }
     }
 });

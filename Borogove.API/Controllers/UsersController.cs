@@ -1,19 +1,18 @@
 ﻿using System;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
+using System.Security.Claims;
+using System.Threading;
 using System.Web.Configuration;
 using System.Web.Http;
 using System.Web.OData;
 using System.Web.OData.Routing;
-using Auth0.ManagementApi;
-using Borogove.DataAccess;
 using Auth0.Core;
-using System.Collections.Generic;
+using Auth0.Core.Exceptions;
+using Auth0.ManagementApi;
 
 namespace Borogove.API.Controllers
 {
-    [Authorize]
     [ODataRoutePrefix("Users")]
     public class UsersController : ODataController
     {
@@ -34,7 +33,45 @@ namespace Borogove.API.Controllers
         [EnableQuery]
         public User Get([FromODataUri] string key)
         {
-            return _client.Users.GetAsync(key).Result;
+            try
+            {
+                return _client.Users
+                    .GetAsync(key)
+                    .Result;
+            }
+            catch (AggregateException ex) when (ex.InnerException is ApiException)
+            {
+                var apiException = ex.InnerException as ApiException;
+                if (apiException.ApiError.StatusCode == (int)HttpStatusCode.NotFound)
+                {
+                    throw new HttpResponseException(HttpStatusCode.NotFound);
+                }
+                else
+                {
+                    throw;
+                }
+            }
+        }
+
+        [EnableQuery]
+        [HttpGet]
+        public User LoggedInUser()
+        {
+            var principal = Thread.CurrentPrincipal as ClaimsPrincipal;
+            if (principal == null)
+            {
+                throw new HttpResponseException(HttpStatusCode.NoContent);
+            }
+
+            var userId = principal.Claims.ToList().FirstOrDefault(c => c.Type.Equals(ClaimTypes.NameIdentifier))?.Value;
+            if (string.IsNullOrEmpty(userId))
+            {
+                throw new HttpResponseException(HttpStatusCode.NoContent);
+            }
+            else
+            {
+                return Get(userId);
+            }
         }
     }
 }

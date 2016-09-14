@@ -52,10 +52,6 @@ namespace Borogove.API
 
             FederatedAuthentication.SessionAuthenticationModule.CreateSessionCookie(user, requireSsl: true);
 
-            var profileCookie = new HttpCookie("BorogoveProfile", token.IdToken);
-            profileCookie.Secure = true;
-            context.Response.Cookies.Set(profileCookie);
-
             if (context.Request.QueryString["state"] != null && context.Request.QueryString["state"].StartsWith("ru="))
             {
                 var state = HttpUtility.ParseQueryString(context.Request.QueryString["state"]);
